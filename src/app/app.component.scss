@@ -28,6 +28,78 @@
   @include center;
   height: 40vh;
   font-size: 4rem;
+
+  span {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .name {
+    position: relative;
+  }
+
+  .letters {
+    display: flex;
+  }
+
+  .name:hover {
+    span:nth-child(1) {
+      transform: translateY(-60%);
+    }
+    span:nth-child(2) {
+      transform: translateY(-60%);
+      transition-delay: 0.05s;
+    }
+    span:nth-child(3) {
+      transform: translateY(-60%);
+      transition-delay: 0.1s;
+    }
+    span:nth-child(4) {
+      transform: translateY(-60%);
+      transition-delay: 0.15s;
+    }
+    span:nth-child(5) {
+      transform: translateY(-60%);
+      transition-delay: 0.2s;
+    }
+    span:nth-child(6) {
+      transform: translateY(-60%);
+      transition-delay: 0.25s;
+    }
+    span:nth-child(7) {
+      transform: translateY(-60%);
+      transition-delay: 0.3s;
+    }
+    span:nth-child(8) {
+      transform: translateY(-60%);
+      transition-delay: 0.35s;
+    }
+    span:nth-child(9) {
+      transform: translateY(-60%);
+      transition-delay: 0.4s;
+    }
+
+    span {
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s;
+    }
+
+    .letters span {
+      opacity: 0;
+    }
+
+    .letters-below span {
+      opacity: 1;
+    }
+  }
+
+  .letters-below {
+    position: absolute;
+    display: flex;
+    top: 60%;
+
+    span {
+      opacity: 0;
+    }
+  }
 }
 
 .links {
@@ -51,6 +123,7 @@
   background: gray;
   cursor: pointer;
   user-select: none;
+  border-radius: 1rem;
 
   .content {
     @include bounce;
@@ -73,6 +146,8 @@
       // this also increases .link's hitbox so that
       // hovering on edge doesn't cause flickering
       scale: 1.1;
+      opacity: 0 !important;
+      background: blue;
     }
   }
 
@@ -150,6 +225,34 @@
     animation: slide-down-more 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s
       forwards;
   }
+
+  .link-hover {
+    @include bounce;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    @include center;
+    justify-content: flex-start;
+    overflow: hidden;
+
+    span {
+      margin-left: 1rem;
+      white-space: nowrap;
+      font-size: 3rem;
+      font-weight: 900;
+      opacity: 0;
+      translate: 0%;
+    }
+  }
+
+  &:hover .link-hover span {
+    transition: translate 3s cubic-bezier(0.13, -0.04, 0.43, 0.47), opacity 0.4s;
+    opacity: 1;
+    translate: -10%;
+    animation: slide-left 3s linear 3s infinite;
+  }
 }
 
 /* Responsive Styles */
@@ -214,5 +317,14 @@
   }
   100% {
     transform: translateY(15%);
+  }
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-10%);
   }
 }
