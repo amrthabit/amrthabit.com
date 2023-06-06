@@ -1,59 +1,218 @@
-:host {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 14px;
-  color: #333;
-  box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-body {
-  background: black;
-}
-
 @mixin center {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+@mixin bounce($seconds: 0.3s) {
+  transition: all $seconds cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@mixin background-image($image, $invert: 1) {
+  &::before {
+    @include bounce;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url($image) no-repeat center center;
+    background-size: min(40%, 20vh);
+    filter: invert($invert);
+    opacity: 0.3;
+  }
+}
+
 .title {
   @include center;
   height: 40vh;
-  background: darksalmon;
+  font-size: 4rem;
 }
 
 .links {
+  box-sizing: border-box;
+  height: 60vh;
+  padding: 0.5rem;
+  display: grid;
+  grid-template-areas:
+    "desc desc projects about"
+    "desc desc contact contact";
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 0.5rem;
+  overflow: hidden;
+}
 
-  background: salmon;
+.link {
+  @include bounce;
+  position: relative;
+  padding: 0.5rem;
+  background: gray;
+  cursor: pointer;
+  user-select: none;
+
+  .content {
+    @include bounce;
+    padding: 1rem;
+  }
+
+  &:hover {
+    scale: 0.98;
+    padding: 0.75rem;
+    border-radius: 2rem;
+
+    .content {
+      scale: 1.05;
+      padding: 0.75rem;
+      width: fit-content;
+    }
+
+    &::before {
+      // in addtion to scaling the background image
+      // this also increases .link's hitbox so that
+      // hovering on edge doesn't cause flickering
+      scale: 1.1;
+    }
+  }
+
+  &:active {
+    @include bounce(0.1s);
+    scale: 0.95;
+  }
+
+  &.desc {
+    grid-area: desc;
+    background: radial-gradient(
+      ellipse at 0% 0%,
+      rgb(0, 89, 255) 0%,
+      rgb(26, 0, 197) 100%
+    );
+
+    @include background-image("/assets/icons/code.svg");
+  }
+
+  &.projects {
+    grid-area: projects;
+    background: radial-gradient(
+      ellipse at 0% 0%,
+      rgb(43, 43, 43) 0%,
+      #141414 100%
+    );
+
+    @include background-image("/assets/icons/terminal.svg");
+
+    &::after {
+      filter: invert(1) contrast(0.5);
+    }
+  }
+
+  &.about {
+    grid-area: about;
+    background: radial-gradient(ellipse at 0% 0%, #ff6200 0%, #b04400 100%);
+
+    @include background-image("/assets/icons/info.svg");
+  }
+
+  &.contact {
+    grid-area: contact;
+    background: radial-gradient(
+      ellipse at 0% 0%,
+      rgb(255, 249, 241) 0%,
+      #ffdebe 100%
+    );
+    color: black;
+
+    @include background-image("/assets/icons/mail.svg", 0);
+  }
+
+  &::after {
+    @include bounce;
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    aspect-ratio: 1/1;
+    height: 30%;
+    border-radius: 0.5rem;
+    background: url("/assets/icons/chevron-down.svg") no-repeat center center;
+    background-size: 100%;
+    opacity: 0;
+  }
+
+  &:hover::after {
+    opacity: 1;
+    animation: slide-down 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s
+      forwards;
+  }
+
+  &:active::after {
+    animation: slide-down-more 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s
+      forwards;
+  }
 }
 
 /* Responsive Styles */
 @media screen and (max-width: 767px) {
-  .card-container > *:not(.circle-link),
-  .terminal {
-    width: 100%;
+  .title {
+    font-size: 3rem;
   }
 
-  .card:not(.highlight-card) {
-    height: 16px;
-    margin: 8px 0;
-  }
+  .links {
+    height: 80vh;
+    grid-template-areas:
+      "desc desc"
+      "projects about"
+      "contact contact";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
 
-  .card.highlight-card span {
-    margin-left: 72px;
-  }
+    .link {
+      padding: 0.5rem;
 
-  svg#rocket-smoke {
-    right: 120px;
-    transform: rotate(-5deg);
+      .content {
+        padding: 0.5rem;
+      }
+
+      &:hover {
+        border-radius: 1rem;
+        padding: 0.75rem;
+
+        .content {
+          padding: 0.25rem;
+        }
+      }
+    }
   }
 }
 
 @media screen and (max-width: 575px) {
-  svg#rocket-smoke {
-    display: none;
-    visibility: hidden;
+  .link {
+    &:active {
+      @include bounce(0.3s);
+      scale: 0.95;
+    }
+    &:active::after {
+      animation: slide-down-more 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s
+        forwards;
+    }
+  }
+}
+
+@keyframes slide-down {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down-more {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(15%);
   }
 }
