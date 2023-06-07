@@ -28,6 +28,7 @@
 .title {
   @include center;
   height: 40vh;
+  overflow: hidden;
   font-size: 4rem;
 
   span {
@@ -172,6 +173,12 @@
         rgb(26, 0, 197) 100%
       );
 
+      &:hover {
+        .content {
+          opacity: 0;
+        }
+      }
+
       @include background-image("/assets/icons/code.svg");
     }
 
@@ -268,10 +275,17 @@
 .about-slide {
   display: flex;
   // min-height: 100vh;
-  background: rgb(48, 48, 48);
+  // background: rgb(48, 48, 48);
+  background: linear-gradient(
+    180deg,
+    rgba(48, 48, 48, 1) 0%,
+    rgba(48, 48, 48, 1) 30%,
+    rgb(17, 17, 17) 100%
+  );
   // margin: 0.5rem;
   padding: 1.5rem;
   // border-radius: 1rem;
+  overflow: hidden;
 
   .about-content {
     display: grid;

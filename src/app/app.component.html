@@ -27,7 +27,7 @@
 </div>
 
 <div class="links">
-  <div class="link desc">
+  <button class="link desc" (click)="scroll(about_slide)">
     <div class="content">
       <span>
         Hello, I'm Amr Thabit, a software developer based in Ontario, Canada. I
@@ -40,8 +40,8 @@
         site. View site. View site. View site.&nbsp;</span
       >
     </div>
-  </div>
-  <div class="link projects">
+  </button>
+  <button class="link projects">
     <div class="content">Projects</div>
     <div class="link-hover">
       <span
@@ -50,8 +50,8 @@
         projects. See my projects.&nbsp;</span
       >
     </div>
-  </div>
-  <div class="link about">
+  </button>
+  <button class="link about" (click)="scroll(about_slide)">
     <div class="content">About</div>
     <div class="link-hover">
       <span
@@ -60,8 +60,8 @@
         Read more about me. Read more about me. Read more about me.&nbsp;</span
       >
     </div>
-  </div>
-  <div class="link contact">
+  </button>
+  <button class="link contact">
     <div class="content">Contact</div>
     <div class="link-hover">
       <span
@@ -70,10 +70,10 @@
         Shoot me a message! Shoot me a message! Shoot me a message!&nbsp;</span
       >
     </div>
-  </div>
+  </button>
 </div>
 
-<div class="about-slide">
+<div #about_slide class="about-slide">
   <div class="about-content">
     <div class="about-title">About Me</div>
     <div class="about-text">
@@ -82,16 +82,12 @@
         backend systems and web applications.
       </p>
       <p>
-        I'm currently working at
-        <a href="https://www.ontario.ca/page/ontario-public-service"
-          >Ontario Public Service</a
-        >, where I'm building a web application that helps people find
-        government services.
+        I'v worked with a startup where I built a web application that helps
+        people search and participate in raffles.
       </p>
       <p>
         I'm also working on a few side projects, including a web application
-        that helps people find and book appointments with healthcare
-        professionals.
+        that helps people post and share topics they're interested in.
       </p>
       <p>
         I'm always looking for new opportunities to learn and grow. If you'd
