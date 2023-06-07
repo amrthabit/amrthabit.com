@@ -89,3 +89,15 @@ button {
 ::-webkit-scrollbar-thumb:hover {
   background: #3e3e3e;
 }
+
+@property --color-1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #fff;
+}
+
+@property --color-2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #fff;
+}

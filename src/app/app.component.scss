@@ -274,27 +274,25 @@
 
 .about-slide {
   display: flex;
-  // min-height: 100vh;
-  // background: rgb(48, 48, 48);
   background: linear-gradient(
     180deg,
     rgba(48, 48, 48, 1) 0%,
     rgba(48, 48, 48, 1) 30%,
     rgb(0, 0, 0) 100%
   );
-  // margin: 0.5rem;
-  padding: 1.5rem;
-  // border-radius: 1rem;
+  padding: 5rem 1.5rem;
   overflow: hidden;
 
   .about-content {
+    max-width: 1000px;
+    margin: auto;
     display: grid;
     grid-template-areas:
       "title title title"
       "text github linkedin"
       "text mail instagram";
     grid-template-columns: 4fr 1fr 1fr;
-    grid-template-rows: 5rem 1fr 1fr;
+    grid-template-rows: 10rem 1fr 1fr;
     grid-gap: 0.5rem;
   }
 
@@ -391,18 +389,173 @@
 .projects-slide {
   display: flex;
   min-height: 50vh;
-  padding: 0.5rem;
+  padding: 5rem 1.5rem;
   background: #1f1f1f;
   border-radius: 1rem;
 
   .content {
     width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .projects {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
   }
 
   .title {
+    height: 10rem;
     font-size: 3rem;
     font-weight: 900;
     @include center;
+  }
+
+  .project {
+    display: flex;
+    .project-desc {
+      width: calc(100% - 400px);
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.5rem;
+      z-index: 1;
+    }
+
+    .project-title {
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    .project-title:before {
+      content: "Project";
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #a9a9a9;
+      padding: 0 0.08rem;
+    }
+
+    .project-text {
+      @include bounce;
+      position: relative;
+      width: 130%;
+      padding: 0 1rem;
+
+      &:before {
+        @include bounce;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 1rem;
+        background: radial-gradient(
+          ellipse at 10% 10%,
+          rgba(183, 183, 183) 0%,
+          rgba(78, 78, 78) 100%
+        );
+        opacity: 0.8;
+        z-index: -1;
+      }
+
+      &:hover {
+        scale: 1.03;
+
+        &::before {
+          opacity: 1;
+        }
+      }
+    }
+
+    .project-stack {
+      display: flex;
+      gap: 0.5rem;
+      font-family: monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+
+      span {
+        padding: 0.2rem 0.5rem;
+        border-radius: 0.5rem;
+        // background: #e4e4e4;
+        background: radial-gradient(
+          ellipse at 10% 20%,
+          rgb(255, 255, 255) 0%,
+          rgb(175, 175, 175) 100%
+        );
+        color: #1f1f1f;
+      }
+    }
+
+    .project-image {
+      position: relative;
+      width: 400px;
+
+      // &::after {
+      //   content: "khalskjdfakjf;";
+      //   position: absolute;
+      //   top: 0;
+      //   right: 0;
+      //   width: 400px;
+      //   height: 400px;
+      //   z-index: 0;
+
+      // }
+      img {
+        @include bounce(0.4s);
+        position: absolute;
+        height: 400px;
+        right: 0;
+        top: 0;
+        object-fit: cover;
+        border-radius: 1rem;
+        z-index: 0;
+      }
+
+      img.hover-image {
+        opacity: 0;
+        z-index: 1;
+        visibility: hidden;
+      }
+
+      &:hover {
+        img {
+          scale: 1.03;
+        }
+
+        img.hover-image {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+    }
+  }
+
+  .project:nth-child(2n + 1) {
+    flex-direction: row-reverse;
+
+    .project-desc {
+      text-align: right;
+    }
+
+    .project-text {
+      align-self: flex-end;
+    }
+
+    .project-stack {
+      justify-content: right;
+    }
+
+    .project-image {
+      img {
+        left: 0;
+        right: auto;
+      }
+    }
   }
 }
 
@@ -482,6 +635,13 @@
       grid-template-rows: 5rem 3fr 1fr 1fr;
     }
   }
+
+  .projects-slide {
+    .project-text {
+      width: 200% !important;
+      min-width: 400px;
+    }
+  }
 }
 
 @media screen and (max-width: 575px) {
@@ -493,6 +653,17 @@
     &:active::after {
       animation: slide-down-more 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s
         forwards;
+    }
+  }
+
+  .projects-slide {
+
+    .project-desc {
+      width: 100% !important;
+    }
+
+    .project-text {
+      width: 100% !important;
     }
   }
 }
