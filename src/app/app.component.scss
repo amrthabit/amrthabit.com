@@ -649,6 +649,41 @@
   }
 }
 
+.contact-slide {
+  display: flex;
+  min-height: 50vh;
+  padding: 2rem 0.5rem 4rem 0.5rem;
+
+  .content {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 3rem;
+    font-weight: 900;
+    @include center;
+  }
+
+  .text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+
+    a {
+      color: #5673ff;
+      text-decoration: none;
+      border-bottom: 2px solid #1f1f1f;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        color: #0008ff;
+        border-bottom: 2px solid #000477;
+        scale: 1.05;
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 575px) {
   .link {
     &:active {
