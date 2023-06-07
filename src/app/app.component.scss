@@ -179,7 +179,7 @@
         }
       }
 
-      @include background-image("/assets/icons/code.svg");
+      @include background-image("/assets/icons/terminal.svg");
     }
 
     &.projects {
@@ -190,7 +190,7 @@
         #141414 100%
       );
 
-      @include background-image("/assets/icons/terminal.svg");
+      @include background-image("/assets/icons/code.svg");
 
       &::after {
         filter: invert(1) contrast(0.5);
@@ -280,7 +280,7 @@
     180deg,
     rgba(48, 48, 48, 1) 0%,
     rgba(48, 48, 48, 1) 30%,
-    rgb(17, 17, 17) 100%
+    rgb(0, 0, 0) 100%
   );
   // margin: 0.5rem;
   padding: 1.5rem;
@@ -385,6 +385,40 @@
     @include background-image("/assets/icons/instagram.svg");
     grid-area: instagram;
     background: radial-gradient(ellipse at 20% 10%, #fcaf45 0%, #e1306c 100%);
+  }
+}
+
+.projects-slide {
+  display: flex;
+  min-height: 50vh;
+  padding: 0.5rem;
+  background: #1f1f1f;
+  border-radius: 1rem;
+
+  .content {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 3rem;
+    font-weight: 900;
+    @include center;
+  }
+}
+
+.contact-slide {
+  display: flex;
+  min-height: 50vh;
+  padding: 0.5rem;
+
+  .content {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 3rem;
+    font-weight: 900;
+    @include center;
   }
 }
 

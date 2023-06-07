@@ -11,6 +11,6 @@ export class AppComponent {
   constructor() {}
 
   scroll(el: HTMLElement) {
-    el.scrollIntoView({ behavior: 'smooth' });
+    el.scrollIntoView({ behavior: 'smooth' });  
   }
 }
