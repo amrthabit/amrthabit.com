@@ -280,7 +280,7 @@
     rgba(48, 48, 48, 1) 30%,
     rgb(0, 0, 0) 100%
   );
-  padding: 5rem 1.5rem;
+  padding: 8rem 1.5rem 5rem 1.5rem;
   overflow: hidden;
 
   .about-content {
@@ -299,6 +299,7 @@
   .about-title {
     grid-area: title;
     font-size: 3rem;
+    margin-bottom: 5rem;
     font-weight: 900;
     @include center;
   }
@@ -389,7 +390,7 @@
 .projects-slide {
   display: flex;
   min-height: 50vh;
-  padding: 5rem 1.5rem;
+  padding: 4rem 1.5rem 5rem 1.5rem;
   background: #1f1f1f;
   border-radius: 1rem;
   white-space: nowrap;
@@ -408,6 +409,7 @@
 
   .title {
     height: 10rem;
+    margin-bottom: 4rem; 
     font-size: 3rem;
     font-weight: 900;
     @include center;
