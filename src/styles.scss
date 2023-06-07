@@ -21,6 +21,11 @@ body {
   background: black;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 @font-face {
   font-family: "Satoshi";
   src: url("./assets/fonts/Satoshi-Variable.ttf") format("truetype");
