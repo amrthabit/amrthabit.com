@@ -339,12 +339,14 @@
     .about-title-hover {
       position: absolute;
       width: 360px;
+        max-width: 50vw;
       height: 100px;
 
       div {
         position: absolute;
         width: 100%;
         height: 100%;
+
 
         &:hover {
           span {
@@ -534,6 +536,7 @@
   background: #1f1f1f;
   border-radius: 1rem;
   white-space: nowrap;
+  overflow: hidden;
 
   .content {
     width: 100%;
@@ -841,6 +844,12 @@
 
   .about-slide {
     padding: 8rem 0.5rem 5rem 0.5rem !important;
+
+    .about-title-text {
+      &:hover, &:active {
+        scale: 1.05 !important;
+      }
+    }
   }
 
   .projects-slide {
