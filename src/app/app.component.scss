@@ -318,10 +318,132 @@
     margin-bottom: 5rem;
     font-weight: 900;
     @include center;
+
+    .about-title-text {
+      @include center;
+      @include bounce(0.2s);
+
+      span {
+        animation: about-letter-reverse 0.3s
+          cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s forwards;
+        @include bounce(0.2s);
+      }
+
+      &:hover {
+        scale: 1.2;
+      }
+    }
+
+    .about-title-hover {
+      position: absolute;
+      width: 360px;
+      height: 100px;
+
+      div {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+
+        &:hover {
+          span {
+            animation: about-letter 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+              0s forwards;
+          }
+        }
+
+        &:not(.about-title-text) {
+          opacity: 0;
+        }
+
+        &:nth-child(1) {
+          background: green;
+          opacity: 0;
+          scale: 2;
+
+          &:hover ~ div.about-title-text span:nth-child(-n + 1) {
+            animation: about-letter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+              0s forwards;
+          }
+        }
+
+        &:nth-child(2) {
+          background: yellow;
+          scale: 1.9;
+
+          &:hover ~ div.about-title-text span:nth-child(-n + 2) {
+            animation: about-letter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+              0s forwards;
+          }
+        }
+
+        &:nth-child(3) {
+          background: pink;
+          scale: 1.8;
+
+          &:hover ~ div.about-title-text span:nth-child(-n + 3) {
+            animation: about-letter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+              0s forwards;
+          }
+        }
+
+        &:nth-child(4) {
+          background: purple;
+          scale: 1.7;
+
+          &:hover ~ div.about-title-text span:nth-child(-n + 4) {
+            animation: about-letter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+              0s forwards;
+          }
+        }
+
+        &:nth-child(5) {
+          background: orange;
+          scale: 1.6;
+
+          &:hover ~ div.about-title-text span:nth-child(-n + 5) {
+            animation: about-letter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+              0s forwards;
+          }
+        }
+
+        &:nth-child(6) {
+          background: brown;
+          scale: 1.5;
+
+          &:hover ~ div.about-title-text span:nth-child(-n + 6) {
+            animation: about-letter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+              0s forwards;
+          }
+        }
+
+        &:nth-child(7) {
+          background: rgb(114, 81, 81);
+          scale: 1.4;
+
+          &:hover ~ div.about-title-text span:nth-child(-n + 7) {
+            animation: about-letter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+              0s forwards;
+          }
+        }
+
+        &:nth-child(8) {
+          background: rgb(8, 0, 255);
+          scale: 1.3;
+
+          &:hover ~ div.about-title-text span:nth-child(-n + 8) {
+            animation: about-letter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+              0s forwards;
+          }
+        }
+      }
+    }
   }
 
   .about-text {
     grid-area: text;
+    background: rgb(22, 22, 22);
+    border-radius: 1rem;
+    padding: 0 1rem;
   }
 
   .link {
@@ -504,7 +626,6 @@
       span {
         padding: 0.2rem 0.5rem;
         border-radius: 0.5rem;
-        // background: #e4e4e4;
         background: radial-gradient(
           ellipse at 10% 20%,
           rgb(255, 255, 255) 0%,
@@ -801,5 +922,27 @@
   100% {
     bottom: 10%;
     right: 10%;
+  }
+}
+
+@keyframes about-letter {
+  0% {
+    font-size: 3rem;
+    font-weight: 900;
+  }
+  100% {
+    font-size: 4rem;
+    font-weight: 500;
+  }
+}
+
+@keyframes about-letter-reverse {
+  0% {
+    font-size: 4rem;
+    font-weight: 500;
+  }
+  100% {
+    font-size: 3rem;
+    font-weight: 900;
   }
 }
