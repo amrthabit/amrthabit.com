@@ -154,6 +154,7 @@
     .content {
       @include bounce;
       padding: 1rem;
+      font-size: 1.5rem;
     }
 
     &:hover {
@@ -823,6 +824,10 @@
 
 @media screen and (max-width: 575px) {
   .link {
+    .content {
+      font-size: 1.2rem !important;
+    }
+
     &:active {
       @include bounce(0.3s);
       scale: 0.95;
