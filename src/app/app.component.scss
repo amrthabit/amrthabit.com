@@ -131,8 +131,8 @@
 }
 
 .links {
-  box-sizing: border-box;
-  height: 60vh;
+  box-sizing: unset;
+  min-height: 60vh;
   padding: 0.5rem;
   display: grid;
   grid-template-areas:
@@ -151,6 +151,7 @@
     cursor: pointer;
     user-select: none;
     border-radius: 1rem;
+    overflow: hidden;
 
     .content {
       @include bounce;
@@ -985,6 +986,12 @@
         );
       }
     }
+  }
+}
+
+@media screen and (orientation: landscape) and (max-width: 767px) {
+  .links {
+    height: 130vh;
   }
 }
 
