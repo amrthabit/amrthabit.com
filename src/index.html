@@ -7,16 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <script>
-      (function onLoad() {
-        console.log("script loaded");
-      })();
+      const start = new Date().getTime();
+      console.log("script loaded at " + new Date().toISOString() + "s ");
 
-      function onScroll() {
-        // console.log("scrolled");
+      function onBodyLoad() {
+        console.log(
+          "body loaded after " + (new Date().getTime() - start) + "ms "
+        );
       }
     </script>
   </head>
-  <body onload="onScroll()">
+  <body onload="onBodyLoad()">
     <app-root></app-root>
   </body>
 </html>
