@@ -26,7 +26,7 @@
 }
 
 .links {
-  box-sizing: unset;
+  box-sizing: border-box;
   min-height: 60vh;
   padding: 0.5rem;
   display: grid;
@@ -45,7 +45,6 @@
     cursor: pointer;
     user-select: none;
     border-radius: 1rem;
-    // overflow: hidden;
 
     .content {
       @include bounce;

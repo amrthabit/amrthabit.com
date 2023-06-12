@@ -25,6 +25,246 @@
   }
 }
 
+
+.about-slide {
+  display: flex;
+  background: linear-gradient(
+    180deg,
+    rgba(48, 48, 48, 1) 0%,
+    rgba(48, 48, 48, 1) 30%,
+    rgb(0, 0, 0) 100%
+  );
+  padding: 8rem 1.5rem 5rem 1.5rem;
+  overflow: hidden;
+
+  .about-content {
+    max-width: 1000px;
+    margin: auto;
+    display: grid;
+    grid-template-areas:
+      "title title title"
+      "text github linkedin"
+      "text mail instagram";
+    grid-template-columns: 4fr 1fr 1fr;
+    grid-template-rows: 10rem 1fr 1fr;
+    grid-gap: 0.5rem;
+  }
+
+  .about-title {
+    grid-area: title;
+    font-size: 3rem;
+    margin-bottom: 5rem;
+    font-weight: 900;
+    @include center;
+
+    .about-title-text {
+      @include center;
+      @include bounce(0.2s);
+
+      span {
+        animation: about-letter-reverse 0.3s
+          cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s forwards;
+        @include bounce(0.2s);
+      }
+
+      &:hover,
+      &:active {
+        scale: 1.2;
+      }
+    }
+
+    .about-title-hover {
+      position: absolute;
+      width: 360px;
+      max-width: 50vw;
+      height: 100px;
+
+      div {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+
+        &:hover {
+          span {
+            animation: about-letter 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+              0s forwards;
+          }
+        }
+
+        &:not(.about-title-text) {
+          opacity: 0;
+        }
+
+        &:nth-child(1) {
+          background: green;
+          opacity: 0;
+          scale: 2;
+
+          &:hover ~ div.about-title-text span:nth-child(-n + 1) {
+            animation: about-letter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+              0s forwards;
+          }
+        }
+
+        &:nth-child(2) {
+          background: yellow;
+          scale: 1.9;
+
+          &:hover ~ div.about-title-text span:nth-child(-n + 2) {
+            animation: about-letter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+              0s forwards;
+          }
+        }
+
+        &:nth-child(3) {
+          background: pink;
+          scale: 1.8;
+
+          &:hover ~ div.about-title-text span:nth-child(-n + 3) {
+            animation: about-letter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+              0s forwards;
+          }
+        }
+
+        &:nth-child(4) {
+          background: purple;
+          scale: 1.7;
+
+          &:hover ~ div.about-title-text span:nth-child(-n + 4) {
+            animation: about-letter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+              0s forwards;
+          }
+        }
+
+        &:nth-child(5) {
+          background: orange;
+          scale: 1.6;
+
+          &:hover ~ div.about-title-text span:nth-child(-n + 5) {
+            animation: about-letter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+              0s forwards;
+          }
+        }
+
+        &:nth-child(6) {
+          background: brown;
+          scale: 1.5;
+
+          &:hover ~ div.about-title-text span:nth-child(-n + 6) {
+            animation: about-letter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+              0s forwards;
+          }
+        }
+
+        &:nth-child(7) {
+          background: rgb(114, 81, 81);
+          scale: 1.4;
+
+          &:hover ~ div.about-title-text span:nth-child(-n + 7) {
+            animation: about-letter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+              0s forwards;
+          }
+        }
+
+        &:nth-child(8) {
+          background: rgb(8, 0, 255);
+          scale: 1.3;
+
+          &:hover ~ div.about-title-text span:nth-child(-n + 8) {
+            animation: about-letter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+              0s forwards;
+          }
+        }
+      }
+    }
+  }
+
+  .about-text {
+    grid-area: text;
+    background: rgb(22, 22, 22);
+    border-radius: 1rem;
+    padding: 0 1rem;
+  }
+
+  .link {
+    box-sizing: border-box;
+    min-height: 120px;
+    min-width: 150px;
+    padding: 1rem;
+    position: relative;
+    color: #e4e4e4;
+    border-radius: 1rem;
+    font-weight: 700;
+
+    @include bounce;
+
+    &::after {
+      @include bounce(0.2s);
+      content: "";
+      position: absolute;
+      bottom: 10%;
+      right: 10%;
+      aspect-ratio: 1/1;
+      width: 20%;
+      background: url("/assets/icons/external-link.svg") no-repeat center center;
+      background-size: contain;
+      filter: invert(1);
+      opacity: 0;
+    }
+
+    &:hover,
+    &:focus {
+      scale: 0.98;
+      border-radius: 2rem;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: white;
+
+      &::before {
+        // in addtion to scaling the background image
+        // this also increases .link's hitbox so that
+        // hovering on edge doesn't cause flickering
+        scale: 1.2;
+      }
+
+      &::after {
+        animation: external-link 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s
+          forwards;
+        opacity: 0.8;
+      }
+    }
+
+    &:active {
+      @include bounce(0.1s);
+      scale: 0.96;
+    }
+  }
+
+  .github {
+    @include background-image("/assets/icons/github.svg");
+    grid-area: github;
+    background: radial-gradient(ellipse at 20% 10%, #3d3d3d 0%, #141414 100%);
+  }
+
+  .linkedin {
+    @include background-image("/assets/icons/linkedin.svg");
+    grid-area: linkedin;
+    background: radial-gradient(ellipse at 20% 10%, #42a1ff 0%, #0a66c2 100%);
+  }
+
+  .mail {
+    @include background-image("/assets/icons/mail.svg");
+    grid-area: mail;
+    background: radial-gradient(ellipse at 20% 10%, #ff873d 0%, #b04400 100%);
+  }
+
+  .instagram {
+    @include background-image("/assets/icons/instagram.svg");
+    grid-area: instagram;
+    background: radial-gradient(ellipse at 20% 10%, #fcaf45 0%, #e1306c 100%);
+  }
+}
+
 .projects-slide {
   display: flex;
   min-height: 50vh;
@@ -280,11 +520,11 @@
   }
 }
 
+
 .contact-slide {
-  display: flex;
+  display: flex;  
   min-height: 50vh;
   padding: 4rem 0.5rem;
-  text-align: center;
 
   .content {
     width: 100%;
@@ -317,9 +557,34 @@
 }
 
 @media screen and (max-width: 1023px) {
+  .about-slide {
+    .about-content {
+      grid-template-areas:
+        "title title title"
+        "text text github"
+        "text text linkedin"
+        "text text mail"
+        "text text instagram";
+
+      grid-template-columns: 4fr 1fr 1fr;
+      grid-template-rows: 5rem 1fr 1fr 1fr 1fr;
+    }
+  }
 }
 
+/* Responsive Styles */
 @media screen and (max-width: 767px) {
+  .about-slide {
+    .about-content {
+      grid-template-areas:
+        "title title"
+        "text text"
+        "github linkedin"
+        "mail instagram";
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 5rem 3fr 1fr 1fr;
+    }
+  }
 
   .projects-slide {
     .project-text {
@@ -333,7 +598,19 @@
   }
 }
 
+
 @media screen and (max-width: 575px) {
+
+  .about-slide {
+    padding: 8rem 0.5rem 5rem 0.5rem !important;
+
+    .about-title-text {
+      &:hover,
+      &:active {
+        scale: 1.05 !important;
+      }
+    }
+  }
 
   .projects-slide {
     .project-desc {
@@ -404,6 +681,8 @@
     transform: translateY(0);
   }
 }
+
+
 
 @keyframes external-link {
   0% {
