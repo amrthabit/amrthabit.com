@@ -1,0 +1,384 @@
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin bounce($seconds: 0.3s) {
+  transition: all $seconds cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@mixin background-image($image, $invert: 1) {
+  &::before {
+    @include bounce;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url($image) no-repeat center center;
+    background-size: min(min(40%, 12vh), 20vw);
+    filter: invert($invert);
+    opacity: 0.3;
+    z-index: 1;
+  }
+}
+
+.projects-slide {
+  display: flex;
+  min-height: 50vh;
+  padding: 4rem 1.5rem 5rem 1.5rem;
+  background: #1f1f1f;
+  border-radius: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+
+  .content {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .projects {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .title {
+    height: 10rem;
+    margin-bottom: 4rem;
+    font-size: 3rem;
+    font-weight: 900;
+    @include center;
+  }
+
+  .project {
+    display: flex;
+    position: relative;
+
+    .project-desc {
+      width: calc(100% - 400px);
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.5rem;
+      z-index: 0;
+    }
+
+    .project-title {
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    .project-title:before {
+      content: "Project";
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #a9a9a9;
+      padding: 0 0.08rem;
+    }
+
+    .project-text {
+      @include bounce;
+      position: relative;
+      width: 130%;
+      padding: 0 1rem;
+      white-space: pre-wrap;
+
+      &:before {
+        @include bounce;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 1rem;
+        background: radial-gradient(
+          ellipse at 10% 10%,
+          rgba(183, 183, 183) 0%,
+          rgba(78, 78, 78) 100%
+        );
+        opacity: 0.9;
+        z-index: -1;
+      }
+
+      &:hover {
+        scale: 1.03;
+
+        &::before {
+          opacity: 1;
+        }
+      }
+    }
+    .project-links {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .project-link {
+      box-sizing: border-box;
+      @include bounce;
+      @include center;
+      gap: 0.1rem;
+      padding: 0.1rem 0.25rem;
+      border-radius: 0.5rem;
+      font-weight: 400;
+      font-size: 0.8rem;
+      position: relative;
+      border: 1px solid #e4e4e4;
+      overflow: hidden;
+
+      &.github {
+        &:after {
+          transition: all 0.3s ease;
+          content: "";
+          height: 0.8rem;
+          width: 1rem;
+          display: inline-block;
+          background: url("/assets/icons/github.svg") no-repeat center center;
+          background-size: contain;
+          filter: invert(1);
+        }
+      }
+
+      &.site {
+        &:after {
+          transition: all 0.3s ease;
+          content: "";
+          height: 0.8rem;
+          width: 1rem;
+          display: inline-block;
+          background: url("/assets/icons/external-link.svg") no-repeat center
+            center;
+          background-size: contain;
+          filter: invert(1);
+        }
+      }
+
+      &:hover {
+        border: 1px solid #e4e4e400;
+        &:after {
+          filter: invert(0);
+        }
+      }
+
+      &::before {
+        transition: all 0.3s ease;
+        content: "";
+        position: absolute;
+        top: -5%;
+        left: 0;
+        width: 110%;
+        height: 110%;
+        border-radius: 0.4rem;
+        background: radial-gradient(
+          ellipse at 10% 10%,
+          rgb(255, 255, 255) 0%,
+          rgb(202, 202, 202) 100%
+        );
+        animation: slide-right-more 0.3s ease 0s forwards;
+        z-index: -1;
+      }
+
+      &:hover {
+        color: black;
+        &::before {
+          animation: slide-right 0.3s ease 0s forwards;
+        }
+      }
+    }
+
+    .project-stack,
+    .project-stack > div {
+      display: flex;
+      gap: 0.5rem;
+      font-family: monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+
+      span {
+        padding: 0.2rem 0.5rem;
+        border-radius: 0.5rem;
+        background: radial-gradient(
+          ellipse at 10% 20%,
+          rgb(255, 255, 255) 0%,
+          rgb(175, 175, 175) 100%
+        );
+        color: #1f1f1f;
+      }
+    }
+
+    .project-image {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 400px;
+      height: 400px;
+
+      img {
+        @include bounce(0.4s);
+        position: absolute;
+        height: 400px;
+        top: 0;
+        right: 0;
+        object-fit: cover;
+        border-radius: 1rem;
+        background-color: blue;
+      }
+
+      img.hover-image {
+        opacity: 0;
+        z-index: 1;
+        visibility: hidden;
+        position: absolute;
+      }
+
+      &:hover {
+        img {
+          scale: 1.03;
+        }
+
+        img.hover-image {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+    }
+  }
+
+  .project:nth-child(2n + 1) {
+    flex-direction: row-reverse;
+
+    .project-desc {
+      text-align: right;
+    }
+
+    .project-text {
+      align-self: flex-end;
+    }
+
+    .project-stack {
+      justify-content: right;
+      align-items: end;
+    }
+
+    .project-links {
+      align-self: flex-end;
+    }
+
+    .project-image {
+      left: 0;
+      img {
+        left: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1023px) {
+}
+
+@media screen and (max-width: 767px) {
+  .projects-slide {
+    .project-text {
+      width: 200% !important;
+      min-width: 400px;
+    }
+
+    .project-stack {
+      flex-direction: column;
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .projects-slide {
+    .project-desc {
+      width: 100% !important;
+      height: 600px !important;
+    }
+
+    .project-text {
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+
+    .project-image img {
+      width: calc(100vw - 3rem) !important;
+      height: 600px !important;
+      opacity: 0.2;
+      filter: grayscale(1) brightness(0.5);
+      scale: 1.05;
+      mask-image: linear-gradient(
+        to left,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.5) 40%,
+        rgba(0, 0, 0, 0.3) 50%,
+        rgba(0, 0, 0, 0.1) 100%
+      );
+    }
+
+    // remove all hover effects
+    .project:hover {
+      .project-image img {
+        scale: 1;
+        opacity: 1;
+        filter: grayscale(0) brightness(1);
+
+        &.hover-image {
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
+    }
+
+    .project:nth-child(2n + 1) {
+      .project-image img {
+        mask-image: linear-gradient(
+          to right,
+          rgba(0, 0, 0, 1) 0%,
+          rgba(0, 0, 0, 0.5) 40%,
+          rgba(0, 0, 0, 0.3) 50%,
+          rgba(0, 0, 0, 0.1) 100%
+        );
+      }
+    }
+  }
+}
+
+@media screen and (orientation: landscape) and (max-width: 767px) {
+}
+
+@keyframes external-link {
+  0% {
+    bottom: 5%;
+    right: 15%;
+  }
+  100% {
+    bottom: 10%;
+    right: 10%;
+  }
+}
+
+@keyframes slide-right {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-right-more {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
