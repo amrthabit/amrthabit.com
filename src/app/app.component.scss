@@ -546,14 +546,15 @@
         }
       }
 
-      &.site{
+      &.site {
         &:after {
           transition: all 0.3s ease;
           content: "";
           height: 0.8rem;
           width: 1rem;
           display: inline-block;
-          background: url("/assets/icons/external-link.svg") no-repeat center center;
+          background: url("/assets/icons/external-link.svg") no-repeat center
+            center;
           background-size: contain;
           filter: invert(1);
         }
@@ -713,7 +714,6 @@
 
 /* Responsive Styles */
 @media screen and (max-width: 767px) {
-
   .links {
     height: 80vh;
     grid-template-areas:
@@ -765,18 +765,18 @@
 }
 
 .contact-slide {
-  display: flex;
+  display: flex;  
   min-height: 50vh;
-  padding: 2rem 0.5rem 4rem 0.5rem;
+  padding: 4rem 0.5rem;
 
   .content {
     width: 100%;
   }
 
   .title {
+    height: 10rem;
     font-size: 3rem;
     font-weight: 900;
-    @include center;
   }
 
   .text {
@@ -887,8 +887,7 @@
 }
 
 #onLoad {
-  animation: slide-down 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s
-    forwards;
+  animation: slide-down 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s forwards;
 }
 
 @keyframes slide-down {
