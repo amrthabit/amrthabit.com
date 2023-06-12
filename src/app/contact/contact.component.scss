@@ -1,0 +1,47 @@
+.contact-slide {
+  display: flex;
+  min-height: 50vh;
+  padding: 4rem 0.5rem;
+  text-align: center;
+
+  .content {
+    width: 100%;
+  }
+
+  .title {
+    height: 10rem;
+    font-size: 3rem;
+    font-weight: 900;
+  }
+
+  .text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+
+    a {
+      color: #5673ff;
+      text-decoration: none;
+      border-bottom: 2px solid #1f1f1f;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        color: #0008ff;
+        border-bottom: 2px solid #000477;
+        scale: 1.05;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1023px) {
+}
+
+@media screen and (max-width: 767px) {
+}
+
+@media screen and (max-width: 575px) {
+}
+
+@media screen and (orientation: landscape) and (max-width: 767px) {
+}
