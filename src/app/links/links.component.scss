@@ -60,33 +60,25 @@
     cursor: pointer;
     user-select: none;
     border-radius: 1rem;
-    transform: scale(1);
     will-change: transform;
 
     .content {
       @include bounce;
       padding: 1rem;
       font-size: 1.5rem;
-      will-change: transform;
-      text-shadow: 0 0 0;
-      transform: scale(1);
+      line-height: 1.5rem;
       height: 100%;
     }
 
     &:hover {
       transform: scale(0.98);
-      padding: 0.75rem;
       border-radius: 2rem;
 
       .content {
-        transform: scale(1.05);
-        padding: 0.75rem;
+        font-size: 1.65rem;
       }
 
       &::before {
-        // in addtion to scaling the background image
-        // this also increases .link's hitbox so that
-        // hovering on edge doesn't cause flickering
         transform: scale(1.05);
         background: blue;
         opacity: 0 !important;
