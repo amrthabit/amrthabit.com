@@ -38,6 +38,21 @@
   grid-gap: 0.5rem;
   overflow: hidden;
 
+  * {
+    backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: transform;
+    // force hardware acceleration
+    transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    background-clip: padding-box;
+  }
+
   .link {
     @include bounce;
     position: relative;
@@ -45,29 +60,34 @@
     cursor: pointer;
     user-select: none;
     border-radius: 1rem;
+    transform: scale(1);
+    will-change: transform;
 
     .content {
       @include bounce;
       padding: 1rem;
       font-size: 1.5rem;
+      will-change: transform;
+      text-shadow: 0 0 0;
+      transform: scale(1);
+      height: 100%;
     }
 
     &:hover {
-      scale: 0.98;
+      transform: scale(0.98);
       padding: 0.75rem;
       border-radius: 2rem;
 
       .content {
-        scale: 1.05;
+        transform: scale(1.05);
         padding: 0.75rem;
-        width: fit-content;
       }
 
       &::before {
         // in addtion to scaling the background image
         // this also increases .link's hitbox so that
         // hovering on edge doesn't cause flickering
-        scale: 1.05;
+        transform: scale(1.05);
         background: blue;
         opacity: 0 !important;
       }
@@ -75,7 +95,7 @@
 
     &:active {
       @include bounce(0.1s);
-      scale: 0.95;
+      transform: scale(0.95);
     }
 
     &.desc {
@@ -141,6 +161,14 @@
       background: url("/assets/icons/chevron-down.svg") no-repeat center center;
       background-size: 100%;
       opacity: 0;
+      border: none;
+      mask-image: radial-gradient(
+        ellipse at center,
+        black 0%,
+        transparent 130%
+      );
+      // this padding removes artifact from animation on moz
+      padding: 0.5rem;
     }
 
     &:hover::after {
