@@ -37,21 +37,23 @@
   grid-template-rows: 1fr 1fr;
   grid-gap: 0.5rem;
   overflow: hidden;
+  max-width: 1000px;
+  margin: 0 auto;
 
-  * {
-    backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    transform: translateZ(0);
-    -moz-transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    will-change: transform;
-    // force hardware acceleration
-    transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    -webkit-transform: translate3d(0, 0, 0);
-    background-clip: padding-box;
-  }
+  // * {
+  //   backface-visibility: hidden;
+  //   -moz-backface-visibility: hidden;
+  //   -webkit-backface-visibility: hidden;
+  //   transform: translateZ(0);
+  //   -moz-transform: translateZ(0);
+  //   -webkit-transform: translateZ(0);
+  //   will-change: transform;
+  //   // force hardware acceleration
+  //   transform: translate3d(0, 0, 0);
+  //   -moz-transform: translate3d(0, 0, 0);
+  //   -webkit-transform: translate3d(0, 0, 0);
+  //   background-clip: padding-box;
+  // }
 
   .link {
     @include bounce;
@@ -94,8 +96,8 @@
       grid-area: desc;
       background: radial-gradient(
         ellipse at 0% 0%,
-        rgb(0, 89, 255) 0%,
-        rgb(26, 0, 197) 100%
+        #0059ff82 0%,
+        #1a00c57a 100%
       );
 
       &:hover {
@@ -124,7 +126,7 @@
 
     &.about {
       grid-area: about;
-      background: radial-gradient(ellipse at 0% 0%, #ff6200 0%, #b04400 100%);
+      background: radial-gradient(ellipse at 0% 0%, #ff6200e8 0%, #b04300e8 100%);
 
       @include background-image("/assets/icons/info.svg");
     }
@@ -133,7 +135,7 @@
       grid-area: contact;
       background: radial-gradient(
         ellipse at 0% 0%,
-        rgb(255, 249, 241) 0%,
+        #fff9f1 0%,
         #ffdebe 100%
       );
       color: black;

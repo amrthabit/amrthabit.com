@@ -77,9 +77,8 @@
     padding: 1.5rem;
     border-radius: 1rem;
     // blur the background
-    backdrop-filter: blur(3px);
   }
-  
+
   .title {
     height: 10rem;
     margin-bottom: 4rem;
@@ -91,6 +90,17 @@
   .project {
     display: flex;
     position: relative;
+    border-radius: 1rem;
+    padding: 1rem;
+    // background: linear-gradient(
+    //   90deg,
+    //   rgba(255, 255, 255, 0.01) 0%,
+    //   rgba(255, 255, 255, 0.005) 100%
+    // );
+    backdrop-filter: blur(5px);
+    // inset
+    box-shadow: 0 0 2px -1px rgb(31, 31, 31);
+    backface-visibility: hidden;
 
     .project-desc {
       width: calc(100% - 400px);
@@ -100,6 +110,10 @@
       justify-content: center;
       gap: 0.5rem;
       z-index: 0;
+
+      > :not(.project-image) {
+        z-index: 1;
+      }
     }
 
     .project-title {
@@ -109,10 +123,10 @@
 
     .project-title:before {
       content: "Project";
+      color: #ff8400;
       display: block;
       font-size: 1rem;
       font-weight: 600;
-      color: #a9a9a9;
       padding: 0 0.08rem;
     }
 
@@ -122,6 +136,7 @@
       width: 130%;
       padding: 0 1rem;
       white-space: pre-wrap;
+      backdrop-filter: blur(1px);
 
       &:before {
         @include bounce;
@@ -166,6 +181,7 @@
       position: relative;
       border: 1px solid #e4e4e4;
       overflow: hidden;
+      z-index: 1;
 
       &.github {
         &:after {
@@ -249,17 +265,15 @@
 
     .project-image {
       position: absolute;
-      top: 0;
-      right: 0;
       width: 400px;
       height: 400px;
+      z-index: auto;
 
       img {
+        z-index: -1;
         @include bounce(0.4s);
         position: absolute;
         height: 400px;
-        top: 0;
-        right: 0;
         object-fit: cover;
         border-radius: 1rem;
         background-color: blue;
@@ -267,7 +281,7 @@
 
       img.hover-image {
         opacity: 0;
-        z-index: 1;
+        z-index: 2;
         visibility: hidden;
         position: absolute;
       }
@@ -288,6 +302,9 @@
   .project:nth-child(2n) {
     flex-direction: row;
 
+    .project-title {
+    }
+
     .project-desc {
       text-align: left;
     }
@@ -306,14 +323,18 @@
     }
 
     .project-image {
-      right: 0;
+      right: 0.5rem;
       img {
-        right: 0;
+        right: 0.5rem;
       }
     }
   }
   .project:nth-child(2n + 1) {
     flex-direction: row-reverse;
+
+    .project-title {
+      direction: rtl;
+    }
 
     .project-desc {
       text-align: right;
@@ -333,9 +354,10 @@
     }
 
     .project-image {
-      left: 0;
+      align-self: flex-end;
+      left: 0.5rem;
       img {
-        left: 0;
+        left: 0.5rem;
       }
     }
   }
@@ -346,6 +368,16 @@
 
 @media screen and (max-width: 767px) {
   .projects-slide {
+    padding: 4rem 0.5rem 5rem 0.5rem;
+
+    .projects {
+      padding: 0.5rem;
+
+      .project {
+        padding: 0.5rem;
+      }
+    }
+
     .project-text {
       width: 200% !important;
       min-width: 400px;
@@ -360,6 +392,7 @@
       width: 350px !important;
 
       img {
+        position: absolute !important;
         top: 25px !important;
         height: 350px !important;
       }
@@ -369,56 +402,76 @@
 
 @media screen and (max-width: 575px) {
   .projects-slide {
-    .project-desc {
-      width: 100% !important;
-      height: 600px !important;
-    }
-
     .project-text {
       width: 100% !important;
       min-width: 0 !important;
     }
 
-    .project-image img {
-      width: calc(100vw - 3rem) !important;
-      height: 600px !important;
-      opacity: 0.2;
-      filter: grayscale(1) brightness(0.5);
-      scale: 1.05;
-      mask-image: linear-gradient(
-        to left,
-        rgba(0, 0, 0, 1) 0%,
-        rgba(0, 0, 0, 0.5) 40%,
-        rgba(0, 0, 0, 0.3) 50%,
-        rgba(0, 0, 0, 0.1) 100%
-      );
-    }
+    .projects {
+      .project {
+        .project-desc {
+          width: 100% !important;
+          height: unset;
+        }
+        .project-image {
+          position: unset !important;
+          display: flex !important;
+          width: 300px !important;
+          height: 300px !important;
 
-    // remove all hover effects
-    .project:hover {
-      .project-image img {
-        scale: 1;
-        opacity: 1;
-        filter: grayscale(0) brightness(1);
+          img {
+            position: unset !important;
+            height: 300px !important;
+            width: 300px !important;
 
-        &.hover-image {
-          opacity: 0;
-          visibility: hidden;
+            &.hover-image {
+              display: none;
+            }
+          }
         }
       }
     }
 
-    .project:nth-child(2n + 1) {
-      .project-image img {
-        mask-image: linear-gradient(
-          to right,
-          rgba(0, 0, 0, 1) 0%,
-          rgba(0, 0, 0, 0.5) 40%,
-          rgba(0, 0, 0, 0.3) 50%,
-          rgba(0, 0, 0, 0.1) 100%
-        );
-      }
-    }
+    // .project-image img {
+    //   width: calc(100vw - 3rem) !important;
+    //   height: 600px !important;
+    //   opacity: 0.2;
+    //   filter: grayscale(1) brightness(0.5);
+    //   scale: 1.05;
+    //   mask-image: linear-gradient(
+    //     to left,
+    //     rgba(0, 0, 0, 1) 0%,
+    //     rgba(0, 0, 0, 0.5) 40%,
+    //     rgba(0, 0, 0, 0.3) 50%,
+    //     rgba(0, 0, 0, 0.1) 100%
+    //   );
+    // }
+
+    // // remove all hover effects
+    // .project:hover {
+    //   .project-image img {
+    //     scale: 1;
+    //     opacity: 1;
+    //     filter: grayscale(0) brightness(1);
+
+    //     &.hover-image {
+    //       opacity: 0;
+    //       visibility: hidden;
+    //     }
+    //   }
+    // }
+
+    // .project:nth-child(2n + 1) {
+    //   .project-image img {
+    //     mask-image: linear-gradient(
+    //       to right,
+    //       rgba(0, 0, 0, 1) 0%,
+    //       rgba(0, 0, 0, 0.5) 40%,
+    //       rgba(0, 0, 0, 0.3) 50%,
+    //       rgba(0, 0, 0, 0.1) 100%
+    //     );
+    //   }
+    // }
   }
 }
 

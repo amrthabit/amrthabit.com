@@ -74,6 +74,22 @@ button {
   font-style: italic;
 }
 
+// gilroy font otf
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("./assets/fonts/Gilroy-ExtraBold.otf") format("opentype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+// @font-face {
+//   font-family: "Gilroy";
+//   src: url("./assets/fonts/Gilroy-Light.otf") format("opentype");
+//   font-weight: 100 900;
+//   font-style: italic;
+// }
+
 // make scrollbar smaller
 ::-webkit-scrollbar {
   width: 0.5rem;
