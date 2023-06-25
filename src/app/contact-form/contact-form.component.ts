@@ -59,6 +59,7 @@ export class ContactFormComponent {
       form.controls['name'].markAsTouched();
     }
     if (!form.valid) {
+      navigator.vibrate([5, 100, 5]);
       document.getElementById('submit')?.classList.add('error');
       setTimeout(() => {
         document.getElementById('submit')?.classList.remove('error');
@@ -108,8 +109,8 @@ export class ContactFormComponent {
   }
 
   contact = {
-    name: 'asdfaf',
-    email: 'asdf@lsjdfsd.sdfsf',
-    message: 'asdfadfasdfasdf',
+    name: '',
+    email: '',
+    message: '',
   };
 }

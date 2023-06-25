@@ -1,10 +1,12 @@
 .contact-slide {
   display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 50vh;
-  padding: 4rem 0.5rem;
+  padding: 8rem 0.5rem;
+  min-height: 100vh;
   max-width: 1000px;
   margin: 0 auto;
-  padding: 1rem;
 
   .content {
     width: 100%;
@@ -35,6 +37,10 @@
       padding-right: 0.25rem;
 
       &:hover {
+        p {
+          font-weight: 700;
+        }
+
         h3 {
           text-decoration: underline solid #ff6f00;
           color: #ff6f00;
@@ -73,6 +79,7 @@
         font-weight: 500;
         margin: 0;
         margin-top: auto;
+        transition: all 0.15s ease;
         color: #b4b4b4;
       }
       h3 {
@@ -97,10 +104,8 @@
 }
 
 @media screen and (max-width: 1023px) {
-}
-
-@media screen and (max-width: 767px) {
   .contact-slide {
+    padding: 8rem 3rem;
     .content {
       flex-direction: column;
       gap: 2rem;
@@ -108,7 +113,16 @@
   }
 }
 
+@media screen and (max-width: 767px) {
+  .contact-slide {
+    padding: 8rem 2rem;
+  }
+}
+
 @media screen and (max-width: 575px) {
+  .contact-slide {
+    padding: 8rem 1rem;
+  }
 }
 
 @media screen and (orientation: landscape) and (max-width: 767px) {
