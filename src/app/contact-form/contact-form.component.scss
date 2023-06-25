@@ -119,8 +119,6 @@ form {
 
     .loading-container {
       position: relative;
-      // top: 0px;
-      // right: 0px;
       display: inline-block;
       width: 2.5rem;
       height: 2.5rem;
@@ -135,6 +133,38 @@ form {
         height: 1.5rem;
         animation: loading-bar 1s linear infinite;
       }
+    }
+  }
+}
+
+.dialog {
+  h1.dialog-title {
+    margin: 0;
+  }
+
+  button.dialog-button {
+    width: 100%;
+    margin: 0;
+    padding: 0.25rem;
+    border: 2px solid #b9b9b9;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    font-weight: 700; 
+    color: #000000;
+    background-color: #9f9f9f;
+    transition: all 0.15s ease;
+    display: block;
+    text-align: center;
+
+    &:hover {
+      background-color: #000000;
+      color: inherit;
+    }
+    &:focus {
+      outline: none;
+    }
+    &:active {
+      outline: 2px solid #a3a3a3;
     }
   }
 }

@@ -73,12 +73,7 @@
       </div>
     </div>
   </div>
-  <button
-    type="submit"
-    class="submit"
-    id="submit"
-    [disabled]="loading"
-  >
+  <button type="submit" class="submit" id="submit" [disabled]="loading">
     <span>Submit</span>
     <div class="loading-container" [@loadingSlide] *ngIf="loading">
       <!-- <div class="loading-bars">
@@ -115,3 +110,17 @@
     </div>
   </button>
 </form>
+
+<app-dialog [open]="success || error" class="dialog">
+  <h1 class="dialog-title" *ngIf="success">Message Sent!</h1>
+  <h1 class="dialog-title" *ngIf="error">Error Sending Message</h1>
+  <p class="dialog-message" *ngIf="success">
+    Thanks for reaching out. I will get back to you as soon as possible.
+  </p>
+  <p class="dialog-message" *ngIf="error">
+    There was an error sending your message. Please try again later.
+  </p>
+  <button type="button" class="dialog-button" (click)="closeDialog()">
+    Close
+  </button>
+</app-dialog>

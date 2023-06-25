@@ -1,13 +1,8 @@
+import { animate, style, transition, trigger } from '@angular/animations';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import {
-  trigger,
-  style,
-  animate,
-  transition,
-  state,
-} from '@angular/animations';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { NgForm } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-contact-form',
@@ -36,25 +31,29 @@ import { NgForm } from '@angular/forms';
     ]),
   ],
   styleUrls: ['./contact-form.component.scss'],
+  imports: [DialogComponent, CommonModule, FormsModule],
+  standalone: true,
 })
 export class ContactFormComponent {
   loading = false;
   success = false;
   error = false;
 
+  closeDialog() {
+    this.success = false;
+    this.error = false;
+  }
+
   async onSubmit(form: NgForm) {
     if (this.loading) return;
 
     if (!form.controls['message'].valid) {
-      console.log('Message is not valid');
       document.getElementById('message')?.focus();
     }
     if (!form.controls['email'].valid) {
-      console.log('Email is not valid');
       document.getElementById('email')?.focus();
     }
     if (!form.controls['name'].valid) {
-      console.log('Name is not valid');
       document.getElementById('name')?.focus();
       form.controls['name'].markAsDirty();
       form.controls['name'].markAsTouched();
@@ -65,12 +64,21 @@ export class ContactFormComponent {
         document.getElementById('submit')?.classList.remove('error');
       }, 500);
 
-      console.log('Form is not valid');
       return;
     }
 
     this.loading = true;
-    // function endpoints https://uynr3m7gfcirffdr45lwiqpfsq0ptjos.lambda-url.us-east-1.on.aws/
+
+    /* function endpoint https://uynr3m7gfcirffdr45lwiqpfsq0ptjos.lambda-url.us-east-1.on.aws/
+     *
+     * takes a json body with the following properties:
+     * { name: string, email: string, message: string }
+     *
+     * validates input and sends email to me
+     *
+     * returns 200 if successful
+     * returns 500 if unsuccessful
+     */
 
     await fetch(
       'https://uynr3m7gfcirffdr45lwiqpfsq0ptjos.lambda-url.us-east-1.on.aws/',
@@ -95,9 +103,8 @@ export class ContactFormComponent {
         this.error = true;
       });
 
-    setTimeout(() => {
-      this.loading = false;
-    }, 2000);
+    form.resetForm();
+    this.loading = false;
   }
 
   contact = {
