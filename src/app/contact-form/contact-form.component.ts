@@ -39,8 +39,10 @@ import { NgForm } from '@angular/forms';
 })
 export class ContactFormComponent {
   loading = false;
+  success = false;
+  error = false;
 
-  onSubmit(form: NgForm) {
+  async onSubmit(form: NgForm) {
     if (this.loading) return;
 
     if (!form.controls['message'].valid) {
@@ -68,6 +70,31 @@ export class ContactFormComponent {
     }
 
     this.loading = true;
+    // function endpoints https://uynr3m7gfcirffdr45lwiqpfsq0ptjos.lambda-url.us-east-1.on.aws/
+
+    await fetch(
+      'https://uynr3m7gfcirffdr45lwiqpfsq0ptjos.lambda-url.us-east-1.on.aws/',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(this.contact),
+      }
+    )
+      .then(async (response) => {
+        console.log(response);
+        if (response.status === 200) {
+          this.success = true;
+        } else {
+          this.error = true;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        this.error = true;
+      });
+
     setTimeout(() => {
       this.loading = false;
     }, 2000);
