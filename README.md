@@ -5,6 +5,4 @@ Hello and welcome to my site's source code. The site is made with Angular and SC
 # Client
 
 [Angular CLI](https://github.com/angular/angular-cli) version 16.0.4.  
-Styles with [SCSS](https://github.com/sass/sass).  
-Tests by [Karma](https://karma-runner.github.io).  
-E2E tests via `ng e2e`.
+Styles with [SCSS](https://github.com/sass/sass).
