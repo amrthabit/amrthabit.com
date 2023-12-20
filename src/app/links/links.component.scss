@@ -27,9 +27,11 @@
   }
 }
 
+
+
 .links {
   box-sizing: border-box;
-  min-height: 60vh;
+  min-height: 500px;
   padding: 0.5rem;
   display: grid;
   grid-template-areas:
@@ -41,6 +43,7 @@
   overflow: hidden;
   max-width: 1000px;
   margin: 0 auto;
+  margin-top: calc(60vh - 500px);
 
   // * {
   //   backface-visibility: hidden;
