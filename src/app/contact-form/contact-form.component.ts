@@ -45,12 +45,6 @@ export class ContactFormComponent {
   }
 
   async onSubmit(form: NgForm) {
-    // moke true for testing
-    this.success = true;
-    this.error = false;
-    this.loading = false;
-    return;
-
     if (this.loading) return;
 
     if (!form.controls['message'].valid) {
