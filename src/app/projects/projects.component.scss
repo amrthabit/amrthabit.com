@@ -1,3 +1,5 @@
+@import "../../mixins.scss";
+
 @mixin center {
   display: flex;
   justify-content: center;
@@ -151,7 +153,7 @@
         z-index: -1;
       }
 
-      &:hover {
+      @include on-hover {
         scale: 1.03;
 
         &::before {
@@ -205,7 +207,7 @@
         }
       }
 
-      &:hover {
+      @include on-hover {
         border: 1px solid #e4e4e400;
         &:after {
           filter: invert(0);
@@ -281,7 +283,7 @@
         position: absolute;
       }
 
-      &:hover {
+      @include on-hover {
         img {
           scale: 1.03;
         }
@@ -296,9 +298,6 @@
 
   .project:nth-child(2n) {
     flex-direction: row;
-
-    .project-title {
-    }
 
     .project-desc {
       text-align: left;
@@ -324,6 +323,7 @@
       }
     }
   }
+
   .project:nth-child(2n + 1) {
     flex-direction: row-reverse;
 
@@ -351,6 +351,7 @@
     .project-image {
       align-self: flex-end;
       left: 0.5rem;
+
       img {
         left: 0.5rem;
       }
@@ -408,6 +409,7 @@
           width: 100% !important;
           height: unset;
         }
+        
         .project-image {
           position: unset !important;
           display: flex !important;
@@ -426,47 +428,6 @@
         }
       }
     }
-
-    // .project-image img {
-    //   width: calc(100vw - 3rem) !important;
-    //   height: 600px !important;
-    //   opacity: 0.2;
-    //   filter: grayscale(1) brightness(0.5);
-    //   scale: 1.05;
-    //   mask-image: linear-gradient(
-    //     to left,
-    //     rgba(0, 0, 0, 1) 0%,
-    //     rgba(0, 0, 0, 0.5) 40%,
-    //     rgba(0, 0, 0, 0.3) 50%,
-    //     rgba(0, 0, 0, 0.1) 100%
-    //   );
-    // }
-
-    // // remove all hover effects
-    // .project:hover {
-    //   .project-image img {
-    //     scale: 1;
-    //     opacity: 1;
-    //     filter: grayscale(0) brightness(1);
-
-    //     &.hover-image {
-    //       opacity: 0;
-    //       visibility: hidden;
-    //     }
-    //   }
-    // }
-
-    // .project:nth-child(2n + 1) {
-    //   .project-image img {
-    //     mask-image: linear-gradient(
-    //       to right,
-    //       rgba(0, 0, 0, 1) 0%,
-    //       rgba(0, 0, 0, 0.5) 40%,
-    //       rgba(0, 0, 0, 0.3) 50%,
-    //       rgba(0, 0, 0, 0.1) 100%
-    //     );
-    //   }
-    // }
   }
 }
 
