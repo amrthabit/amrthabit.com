@@ -1,3 +1,5 @@
+@import "../../mixins.scss";
+
 @mixin center {
   display: flex;
   justify-content: center;
@@ -72,7 +74,7 @@
       height: 100%;
     }
 
-    &:hover {
+    @include on-hover {
       transform: scale(0.98);
       border-radius: 2rem;
 
@@ -100,7 +102,7 @@
         #1a00c57a 100%
       );
 
-      &:hover {
+      @include on-hover {
         .content {
           opacity: 0;
         }
@@ -126,18 +128,18 @@
 
     &.about {
       grid-area: about;
-      background: radial-gradient(ellipse at 0% 0%, #ff6200e8 0%, #b04300e8 100%);
+      background: radial-gradient(
+        ellipse at 0% 0%,
+        #ff6200e8 0%,
+        #b04300e8 100%
+      );
 
       @include background-image("/assets/icons/info.svg");
     }
 
     &.contact {
       grid-area: contact;
-      background: radial-gradient(
-        ellipse at 0% 0%,
-        #fff9f1 0%,
-        #ffdebe 100%
-      );
+      background: radial-gradient(ellipse at 0% 0%, #fff9f1 0%, #ffdebe 100%);
       color: black;
 
       @include background-image("/assets/icons/mail.svg", 0);
@@ -165,10 +167,12 @@
       padding: 0.5rem;
     }
 
-    &:hover::after {
-      opacity: 1;
-      animation: slide-down 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s
-        forwards;
+    @include on-hover {
+      &::after {
+        opacity: 1;
+        animation: slide-down 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s
+          forwards;
+      }
     }
 
     &:active::after {
@@ -197,12 +201,14 @@
       }
     }
 
-    &:hover .link-hover span {
-      transition: translate 3s cubic-bezier(0.13, -0.04, 0.43, 0.47),
-        opacity 0.4s;
-      opacity: 1;
-      translate: -10%;
-      animation: slide-left 3s linear 3s infinite;
+    @include on-hover {
+      .link-hover span {
+        transition: translate 3s cubic-bezier(0.13, -0.04, 0.43, 0.47),
+          opacity 0.4s;
+        opacity: 1;
+        translate: -10%;
+        animation: slide-left 3s linear 3s infinite;
+      }
     }
   }
 }
@@ -227,7 +233,7 @@
         padding: 0.5rem;
       }
 
-      &:hover {
+      @include on-hover {
         padding: 0.75rem;
 
         .content {
