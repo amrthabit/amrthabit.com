@@ -87,7 +87,7 @@
       }
     }
 
-    .about-title-hover {
+    .about-title-hove {
       position: absolute;
       width: 360px;
       max-width: 50vw;
@@ -220,6 +220,12 @@
     padding: 1rem;
   }
 
+  .goofy {
+    font-family: "matisan";
+    // margin: -10px;
+    color: #515151;
+  }
+
   .about-text {
     flex: 1.5;
     border-radius: 1rem;
@@ -251,6 +257,10 @@
     flex: 1;
     border-radius: 1rem;
 
+    * {
+      margin: 1rem;
+    }
+
     h2 {
       margin: 1rem;
       font-size: 1.75rem;
@@ -267,7 +277,7 @@
     }
 
     button.contact-button {
-      margin: 3rem 1rem;
+      margin: 1rem 1rem;
       padding: 0.5rem 1rem;
       border-radius: 1rem;
       border: none;

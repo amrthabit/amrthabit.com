@@ -36,6 +36,10 @@ a {
   outline: 2px solid #fff;
 }
 
+p {
+  font-family: 'Merriweather', serif;
+}
+
 button {
   font-family: inherit;
   font-size: inherit;
@@ -94,6 +98,42 @@ button {
   src: url("./assets/fonts/Gilroy-ExtraBold.otf") format("opentype");
   font-weight: 100 900;
   font-style: normal;
+}
+
+@font-face {
+  font-family: "MD Primer";
+  src: url("./assets/fonts/MDPrimer/MDPrimer-Regular.otf") format("opentype");
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Merriweather";
+  src: url("./assets/fonts/Merriweather/Merriweather-Light.ttf") format("truetype");
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'blanco';
+  src: url('./assets/fonts/blanco/BLANCO.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'matisan';
+  src: url('./assets/fonts/matisan_script/MatisanScript_PERSONAL_USE_ONLY.otf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'coolvetica';
+  src: url('./assets/fonts/coolvetica/coolvetica rg.otf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+.matisan {
+  font-family: 'matisan', sans-serif;
 }
 
 ::-webkit-scrollbar {

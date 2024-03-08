@@ -9,6 +9,7 @@ form {
   align-items: center;
   height: 100%;
 
+
   .form-group {
     width: 100%;
     display: flex;
@@ -135,6 +136,10 @@ form {
       }
     }
   }
+  
+  input, textarea {
+    font-family: "Merriweather", serif !important;
+  }
 }
 
 .dialog {
@@ -149,7 +154,7 @@ form {
     border: 2px solid #b9b9b9;
     border-radius: 0.25rem;
     font-size: 1rem;
-    font-weight: 700; 
+    font-weight: 700;
     color: #000000;
     background-color: #9f9f9f;
     transition: all 0.15s ease;

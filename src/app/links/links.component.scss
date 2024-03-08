@@ -100,14 +100,16 @@
       background: radial-gradient(
         ellipse at 0% 0%,
         #0059ff82 0%,
-        #0000007a 50%,
+        #00218d7a 60%,
+        #ff00007a 90%,
         #ff0000 100%
       );
       background-size: 300% 300%;
       background-position: 50% 50%;
 
       @include on-hover {
-        background-size: 10% 10%;
+        background-size: 600% 600%;
+        background-position: 95% 95%;
 
         .content {
           opacity: 0;
