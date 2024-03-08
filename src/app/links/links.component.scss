@@ -27,8 +27,6 @@
   }
 }
 
-
-
 .links {
   box-sizing: border-box;
   min-height: 500px;
@@ -102,10 +100,15 @@
       background: radial-gradient(
         ellipse at 0% 0%,
         #0059ff82 0%,
-        #1a00c57a 100%
+        #0000007a 50%,
+        #ff0000 100%
       );
+      background-size: 300% 300%;
+      background-position: 50% 50%;
 
       @include on-hover {
+        background-size: 10% 10%;
+
         .content {
           opacity: 0;
         }
