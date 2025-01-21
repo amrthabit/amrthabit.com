@@ -1,0 +1,73 @@
+.about-text {
+  flex: 1.5;
+  border-radius: $border-radius-lg;
+  padding: 0 $spacing-lg;
+
+  p {
+    font-size: $font-size-md;
+    color: $about-text-color;
+    position: relative;
+    text-shadow: 0 0 8px rgba(0, 255, 149, 0.1);
+
+    &.main {
+      font-size: $font-size-lg;
+      color: $about-text-color-main;
+
+      &::before,
+      &::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        clip: rect(0, 900px, 0, 0);
+        animation: glitch-text $random-duration3 infinite linear alternate-reverse;
+      }
+
+      &::before {
+        left: 2px;
+        text-shadow: 1px 0 $color-glitch-green;
+        animation-delay: -$random-delay1;
+      }
+
+      &::after {
+        left: -2px;
+        text-shadow: -1px 0 $color-glitch-shadow;
+        animation-delay: -$random-delay2;
+      }
+    }
+  }
+
+  a {
+    color: $about-link-color;
+    text-decoration: underline solid transparent;
+    transition: all $duration-fast ease;
+    position: relative;
+    display: inline-block;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: $color-glitch-shadow;
+      opacity: 0;
+      transform: skewX(-15deg);
+      transition: all 0.3s ease;
+    }
+
+    @include hover-interaction {
+      color: $color-glitch-green;
+      text-shadow: 0 0 8px $color-glitch-shadow;
+      animation: link-glitch $random-duration2 infinite;
+
+      &::before {
+        opacity: 0.2;
+        animation: link-slide $random-duration3 infinite;
+      }
+    }
+  }
+}

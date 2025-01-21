@@ -1,0 +1,15 @@
+// Glitch variables
+$color-glitch-green: #00ff95;
+$color-glitch-shadow: rgba(0, 255, 149, 0.2);
+$glitch-timing: 4s;
+
+// Random durations for more unpredictable animations
+$random-duration1: random(6) + 2 + s;
+$random-duration2: random(4) + 1 + s;
+$random-duration3: random(3) + 2 + s;
+$random-delay1: random(2) + s;
+$random-delay2: random(1) + s;
+
+@function random-float() {
+  @return random(100) / 100;
+}

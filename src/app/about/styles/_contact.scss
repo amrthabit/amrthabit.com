@@ -1,0 +1,88 @@
+.about-contact {
+  flex: 1;
+  border-radius: $border-radius-lg;
+
+  * {
+    margin: $spacing-lg;
+  }
+
+  h2 {
+    font-size: $font-size-xl;
+    line-height: 1.6;
+    font-weight: $font-weight-black;
+    text-shadow: 0 0 8px $color-glitch-shadow;
+    animation: text-flicker $random-duration3 infinite;
+  }
+
+  h3 {
+    font-size: $font-size-md;
+    line-height: 1.6;
+    font-weight: $font-weight-bold;
+    color: $about-text-color;
+    animation: text-flicker $random-duration2 infinite;
+    animation-delay: -$random-delay1;
+  }
+
+  button.contact-button {
+    margin: $spacing-lg $spacing-lg;
+    padding: $spacing-md $spacing-lg;
+    border-radius: $border-radius-lg;
+    border: 2px solid transparent;
+    background: $about-link-color;
+    color: $color-background;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-md;
+    cursor: pointer;
+    transition: $transition-default;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(
+        circle,
+        transparent 30%,
+        $color-glitch-shadow 70%
+      );
+      opacity: 0;
+      transform: translate(-100%, -100%);
+      transition: opacity 0.3s ease;
+    }
+
+    &::after {
+      content: "";
+      display: inline-block;
+      background: url("/assets/icons/arrow-right.svg") no-repeat center center;
+      background-size: contain;
+      height: 1.25rem;
+      width: 1.25rem;
+      margin-left: $spacing-md;
+      @include bounce;
+    }
+
+    @include hover-interaction {
+      background: $color-background-hover;
+      color: $color-glitch-green;
+      border: 2px solid $color-glitch-green;
+      text-shadow: 0 0 8px $color-glitch-shadow;
+      animation: button-pulse $random-duration2 infinite;
+
+      &::before {
+        opacity: 0.2;
+        transform: translate(0, 0);
+        animation: button-glitch $random-duration1 infinite ease-in-out;
+      }
+
+      &::after {
+        filter: invert(1);
+        transform: translateX($spacing-md);
+        animation: arrow-glitch $random-duration3 infinite;
+      }
+    }
+  }
+}
