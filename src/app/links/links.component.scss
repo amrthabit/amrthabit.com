@@ -62,21 +62,6 @@
   margin: 0 auto;
   margin-top: calc(50vh - 600px);
 
-  // * {
-  //   backface-visibility: hidden;
-  //   -moz-backface-visibility: hidden;
-  //   -webkit-backface-visibility: hidden;
-  //   transform: translateZ(0);
-  //   -moz-transform: translateZ(0);
-  //   -webkit-transform: translateZ(0);
-  //   will-change: transform;
-  //   // force hardware acceleration
-  //   transform: translate3d(0, 0, 0);
-  //   -moz-transform: translate3d(0, 0, 0);
-  //   -webkit-transform: translate3d(0, 0, 0);
-  //   background-clip: padding-box;
-  // }
-
   .link {
     @include bounce;
     position: relative;
@@ -240,9 +225,6 @@
   }
 }
 
-@media screen and (max-width: 1023px) {
-}
-
 @media screen and (max-width: 767px) {
   .links {
     height: 50vh;
@@ -253,7 +235,6 @@
       "scroll scroll";
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
-
     margin-top: calc(50vh - 473px);
 
     .link {
@@ -340,7 +321,6 @@
   overflow: hidden;
   position: relative;
 
-  // New repeating background styles
   .content {
     position: absolute;
     inset: 0;
@@ -366,10 +346,11 @@
       font-size: 1.25rem;
       line-height: 0.7rem;
       letter-spacing: 0.1em;
-      animation: scroll-text 2s linear infinite;
-      animation-delay: -#{$i * 5}s; // Stagger the animations
-      opacity: #{0.7 - $i * 0.15}; // Fade out lower rows
+      opacity: #{0.7 - $i * 0.15};
       transform: translateY(#{$i * 1.5}rem);
+      translate: -10%;
+      animation: scroll-text 1s linear infinite;
+      animation-delay: -#{$i * 0.6}s;
     }
   }
 
@@ -390,31 +371,32 @@
     margin-top: 0.3rem;
   }
 
-  .text-row-0,
-  .text-row-1,
-  .text-row-2,
-  .text-row-3,
-  .text-row-4 {
-    transform: translateX(4rem);
-  }
-
   &:hover {
     color: $color-background;
     &::before {
       transform: translateX(0);
     }
+
     .text-row-0,
     .text-row-1,
     .text-row-2,
     .text-row-3,
     .text-row-4 {
       animation-play-state: paused;
-
     }
 
     &:active {
-      background-color: red;
-      filter: sepia(1) hue-rotate(180deg) saturate(5) brightness(0.5) contrast(1.5) invert(1) drop-shadow(0 0 0.5rem red);
+      background-color: $color-text;
+      
+      .text-row-0,
+      .text-row-1,
+      .text-row-2,
+      .text-row-3,
+      .text-row-4 {
+        animation-play-state: running;
+        animation-direction: reverse;
+        animation-duration: 2s;
+      }
     }
   }
 
@@ -430,54 +412,9 @@
 
 @keyframes scroll-text {
   0% {
-    transform: translateX(0%);
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
-  }
-}
-
-.scroll-button {
-  height: 10vh;
-  width: 100%;
-  grid-area: scroll;
-  padding: 0.5rem 2rem;
-  background: transparent;
-  border: 2px solid $color-text;
-  border-radius: 1rem;
-  color: $color-text;
-  font-family: $font-family-primary;
-  font-size: $font-size-md;
-  cursor: pointer;
-  transition: all $duration-normal $curve-smooth;
-  overflow: hidden;
-  position: relative;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: $color-text;
-    transform: translateX(-100%);
-    transition: transform $duration-normal $curve-smooth;
-    z-index: -1;
-  }
-
-  &:hover {
-    color: $color-background;
-    &::before {
-      transform: translateX(0);
-    }
-  }
-
-  // Add bounce animation
-  .arrow {
-    display: block;
-    margin-top: 0.5rem;
-    font-size: 1.5rem;
-    animation: bounce 2s infinite;
+    transform: translateX(-231px);
   }
 }

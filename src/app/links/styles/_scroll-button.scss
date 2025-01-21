@@ -1,0 +1,120 @@
+.scroll-button {
+  height: 10vh;
+  width: 100%;
+  grid-area: scroll;
+  padding: 0.5rem 2rem;
+  background: transparent;
+  border: 2px solid $color-text;
+  border-radius: 1rem;
+  color: $color-text;
+  font-family: $font-family-primary;
+  font-size: $font-size-md;
+  cursor: pointer;
+  transition: all $duration-normal $curve-smooth;
+  overflow: hidden;
+  position: relative;
+
+  // Text content container
+  .content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transform: skew(-15deg);
+    pointer-events: none;
+    overflow: hidden;
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      black 10%,
+      black 90%,
+      transparent
+    );
+  }
+
+  // Row styles and animations
+  @for $i from 0 through 4 {
+    .text-row-#{$i} {
+      white-space: nowrap;
+      font-weight: bold;
+      font-size: 1.25rem;
+      line-height: 0.7rem;
+      letter-spacing: 0.1em;
+      opacity: #{0.7 - $i * 0.15}; // Fade out lower rows
+      transform: translateY(#{$i * 1.5}rem);
+      translate: -10%;  // Initial offset
+      animation: scroll-text 0.5s linear infinite;  // Match the link timing
+      animation-delay: -#{$i * 0.6}s; // Stagger the animations
+    }
+  }
+
+  // Background transition
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: $color-text;
+    transform: translateX(-100%);
+    transition: transform $duration-normal $curve-smooth;
+    z-index: -1;
+  }
+
+  // First row adjustment
+  .text-row-0 {
+    margin-top: 0.3rem;
+  }
+
+  // Hover states
+  &:hover {
+    color: $color-background;
+    &::before {
+      transform: translateX(0);
+    }
+    .text-row-0,
+    .text-row-1,
+    .text-row-2,
+    .text-row-3,
+    .text-row-4 {
+      animation-play-state: paused;
+    }
+
+    // Active state
+    &:active {
+      background-color: $color-text;
+      
+      .text-row-0,
+      .text-row-1,
+      .text-row-2,
+      .text-row-3,
+      .text-row-4 {
+        animation-play-state: running;
+        animation-direction: reverse;
+        animation-duration: 0.6s;
+      }
+    }
+  }
+
+  // Arrow styling
+  .arrow {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    animation: bounce 2s infinite;
+    position: relative;
+    z-index: 2;
+  }
+}
+
+// Animation keyframes
+@keyframes scroll-text {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-10%);  // Match the link animation distance
+  }
+}
