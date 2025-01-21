@@ -98,4 +98,16 @@
       <app-contact-form></app-contact-form>
     </div>
   </div>
+
+  <!-- Build Info -->
+  <div *ngIf="buildInfo" class="build-info" (mouseenter)="toggleDetails()" (mouseleave)="toggleDetails()">
+    Build at: {{buildInfo.timestamp}} - Hash: {{buildInfo.hash}}
+    
+    <div *ngIf="showDetails" class="build-details">
+      <div>Build Time: {{buildInfo.buildTime}}ms - Build Location: {{buildInfo.buildLocation}}</div>
+      <div class="chunk-info">
+        <div *ngFor="let chunk of buildInfo.chunks">{{chunk}}</div>
+      </div>
+    </div>
+  </div>
 </div>

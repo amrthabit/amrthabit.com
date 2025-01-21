@@ -7,6 +7,7 @@
   min-height: 100vh;
   max-width: 1000px;
   margin: 0 auto;
+  position: relative;
 
   .content {
     width: 100%;
@@ -101,6 +102,50 @@
       flex: 1;
     }
   }
+
+  
+.build-info {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: color 0.3s ease;
+  
+  &:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.build-details {
+  position: absolute;
+  bottom: 30px;
+  right: 0px;
+  border-radius: 5px;
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+  white-space: pre;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: fadeIn 0.3s ease forwards;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .chunk-info {
+    margin-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 10px;
+  }
+}
 }
 
 @media screen and (max-width: 1023px) {

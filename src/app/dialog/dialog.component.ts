@@ -6,6 +6,8 @@ import {
   ElementRef,
   Input,
   OnInit,
+  OnDestroy,
+  OnChanges,
   ViewChild,
   inject,
 } from '@angular/core';
@@ -18,7 +20,7 @@ import {
   styleUrls: ['./dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DialogComponent implements OnInit {
+export class DialogComponent implements OnInit, OnDestroy, OnChanges {
   @Input() dialogTitle!: string;
   @Input() open!: boolean;
   @ViewChild('appDialog', { static: true })
@@ -26,19 +28,24 @@ export class DialogComponent implements OnInit {
 
   cdr = inject(ChangeDetectorRef);
 
-  lockScroll = function (e: any) {
+  lockScroll(e: Event): void {
     console.log('scroll');
     e.preventDefault();
-  };
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Initialize dialog state
+    if (this.open) {
+      this.dialog.nativeElement.showModal();
+    }
+  }
 
   ngOnDestroy(): void {
     this.dialog.nativeElement.close();
     this.cdr.detectChanges();
   }
 
-  closeDialog() {
+  closeDialog(): void {
     this.dialog.nativeElement.close();
     document.body.classList.remove('no-scroll');
     this.cdr.detectChanges();
