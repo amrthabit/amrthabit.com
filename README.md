@@ -9,6 +9,7 @@ Hello and welcome to my site's source code. The site is made with Angular and SC
 - **Animations**: Custom CSS animations and transitions
 - **Hosting**: AWS S3 with CloudFront CDN
 - **Domain Management**: Google Domains with AWS Route 53
+- **CI/CD**: AWS CodeBuild with GitHub integration
 
 ## Key Features
 
@@ -18,14 +19,28 @@ Hello and welcome to my site's source code. The site is made with Angular and SC
 - Form validation with haptic feedback
 - Dynamic glitch effects and visual interactions
 - Optimized performance with CDN delivery
+- Automated deployments with AWS CodeBuild
 
 ## Development
 
 See [INSTRUCTIONS.md](./INSTRUCTIONS.md) for setup and development guidelines.
 See [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) for codebase organization details.
 
+## AWS Infrastructure
+
+The AWS infrastructure is managed using CloudFormation. The configuration files are located in the `.aws` directory:
+
+- `.aws/cloudformation.yml`: Defines the AWS resources (CodeBuild, IAM roles)
+- `.aws/buildspec.yml`: Build instructions for AWS CodeBuild
+
+To deploy infrastructure changes:
+1. Update the CloudFormation template in `.aws/cloudformation.yml`
+2. Go to AWS CloudFormation console
+3. Update the stack with the new template
+
 ## Recent Updates
 
+- Added automated CI/CD with AWS CodeBuild
 - Added haptic feedback for form interactions
 - Implemented advanced glitch animations
 - Organized SCSS architecture for better maintainability
