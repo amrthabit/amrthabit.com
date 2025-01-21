@@ -1,5 +1,5 @@
-@import '../../styles/variables';
-@import '../../styles/animations';
+@import "../../styles/variables";
+@import "../../styles/animations";
 
 .title {
   display: flex;
@@ -10,7 +10,7 @@
   font-size: $font-size-xxl;
 
   span {
-    transition: all $duration-normal $curve-bounce;
+    transition: all $duration-normal $curve-smooth;
   }
 
   .name {
@@ -31,9 +31,8 @@
     position: absolute;
     display: flex;
     top: 0;
-    text-shadow: 0 0 0px rgba(255, 0, 0, 0.5),
-                 0 0 0px rgba(0, 255, 0, 0.5),
-                 0 0 0px rgba(0, 0, 255, 0.5);
+    text-shadow: 0 0 0px rgba(255, 0, 0, 0.5), 0 0 0px rgba(0, 255, 0, 0.5),
+      0 0 0px rgba(0, 0, 255, 0.5);
 
     span {
       opacity: 1;
@@ -43,17 +42,17 @@
   .name.glowing,
   .name:hover {
     .letters {
-      animation: glitch-scale 2s infinite;
-      animation: chromatic-aberration 3s infinite;
+      animation: glitch-scale 4s infinite $curve-smooth;
 
       span {
         opacity: 1;
-        animation: glitch-text 1.5s infinite;
-        animation-timing-function: steps(2, jump-none);
+        color: rgb(255, 0, 0);
+        animation: glitch-text 3s infinite $curve-smooth,
+          chromatic-aberration 1s infinite $curve-smooth;
 
         @for $i from 1 through 9 {
           &:nth-child(#{$i}) {
-            animation-delay: #{$i * 0.05}s;
+            animation-delay: #{$i * 0.1}s;
           }
         }
       }
@@ -66,30 +65,29 @@
         left: 0;
         width: 100%;
         height: 100%;
-        animation: glitch-clip 3s infinite linear alternate-reverse;
+        animation: glitch-clip 6s infinite $curve-smooth;
       }
 
       &::before {
-        left: 2px;
-        text-shadow: -2px 0 #ff0000;
+        left: 1px;
+        text-shadow: -1px 0 rgba(255, 0, 0, 0.5);
         clip: rect(44px, 450px, 56px, 0);
       }
 
       &::after {
-        left: -2px;
-        text-shadow: 2px 0 #00ff00;
+        left: -1px;
+        text-shadow: 1px 0 rgba(0, 255, 0, 0.5);
         clip: rect(44px, 450px, 56px, 0);
-        animation-delay: 0.1s;
+        animation-delay: 0.5s;
       }
     }
 
     .letters-below {
-      animation: chromatic-aberration 3s infinite;
-      transform: scaleX(1.03); 
-      transition: all $duration-slow $curve-glitch,
-                  opacity $duration-normal;
+      animation: chromatic-aberration 4s infinite $curve-smooth;
+      transform: scaleX(1.01);
+      transition: all$duration-slow $curve-smooth, opacity$duration-normal;
       opacity: 1;
-      animation: glitch-skew 4s infinite;
+      animation: glitch-skew 8s infinite $curve-smooth;
 
       @for $i from 0 through 8 {
         &:nth-child(#{$i + 1}) {

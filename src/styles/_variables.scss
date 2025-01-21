@@ -68,6 +68,16 @@ $border-radius-sm: 0.25rem;
 $border-radius-md: 0.5rem;
 $border-radius-lg: 1rem;
 
+// Animation Durations
+$duration-fast: 0.2s;
+$duration-normal: 0.3s;
+$duration-slow: 0.5s;
+
+// Animation Curves
+$curve-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+$curve-smooth: cubic-bezier(0.445, 0.050, 0.550, 0.950);
+$curve-glitch: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+
 // Transitions
 $transition-default: all 0.15s ease;
 $transition-fast: all 0.1s ease;
@@ -82,11 +92,6 @@ $z-index-overlay: 999;
 $z-index-dropdown: 100;
 $z-index-header: 90;
 $z-index-content: 1;
-
-// Animations
-$animation-duration-fast: 0.15s;
-$animation-duration-normal: 0.2s;
-$animation-duration-slow: 0.4s;
 
 // Component specific
 $input-height: 2.5rem;

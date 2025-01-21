@@ -1,5 +1,5 @@
-@import '../../styles/variables';
-@import '../../styles/animations';
+@import "../../styles/variables";
+@import "../../styles/animations";
 
 :host {
   dialog {
@@ -13,12 +13,12 @@
 
     &:focus {
       outline: none;
-    } 
+    }
   }
 
   dialog[open] {
     display: block;
-    animation: slide-up $animation-duration-normal ease-out forwards;
+    animation: slide-up$duration-normal ease-out forwards;
   }
 }
 
