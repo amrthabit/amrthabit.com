@@ -131,7 +131,7 @@
     a {
       color: $about-link-color;
       text-decoration: underline solid transparent;
-      transition: all $animation-duration-fast ease;
+      transition: all $duration-fast ease;
 
       @include hover-interaction {
         color: $about-link-color;
@@ -215,7 +215,6 @@
 @include small-mobile {
   .host {
     .about-title-text {
-      &:active,
       @include hover-interaction {
         scale: 1.05 !important;
       }
