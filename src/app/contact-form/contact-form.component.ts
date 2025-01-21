@@ -39,6 +39,13 @@ export class ContactFormComponent {
   success = false;
   error = false;
 
+  private tryVibrate(pattern: number[]) {
+    // Only try to vibrate if the API exists
+    if ('vibrate' in navigator) {
+      navigator.vibrate(pattern);
+    }
+  }
+
   closeDialog() {
     this.success = false;
     this.error = false;
@@ -59,50 +66,40 @@ export class ContactFormComponent {
       form.controls['name'].markAsTouched();
     }
     if (!form.valid) {
-      navigator.vibrate([5, 100, 5]);
+      this.tryVibrate([5, 100, 5]);  // Form validation error vibration
       document.getElementById('submit')?.classList.add('error');
       setTimeout(() => {
         document.getElementById('submit')?.classList.remove('error');
       }, 500);
-
       return;
     }
 
     this.loading = true;
 
-    /* function endpoint https://uynr3m7gfcirffdr45lwiqpfsq0ptjos.lambda-url.us-east-1.on.aws/
-     *
-     * takes a json body with the following properties:
-     * { name: string, email: string, message: string }
-     *
-     * validates input and sends email to me
-     *
-     * returns 200 if successful
-     * returns 500 if unsuccessful
-     */
-
-    await fetch(
-      'https://uynr3m7gfcirffdr45lwiqpfsq0ptjos.lambda-url.us-east-1.on.aws/',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(this.contact),
-      }
-    )
-      .then(async (response) => {
-        console.log(response);
-        if (response.status === 200) {
-          this.success = true;
-        } else {
-          this.error = true;
+    try {
+      const response = await fetch(
+        'https://uynr3m7gfcirffdr45lwiqpfsq0ptjos.lambda-url.us-east-1.on.aws/',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(this.contact),
         }
-      })
-      .catch((error) => {
-        console.log(error);
+      );
+
+      if (response.status === 200) {
+        this.success = true;
+        this.tryVibrate([50, 50, 100]); // Success vibration
+      } else {
         this.error = true;
-      });
+        this.tryVibrate([100, 50, 100]); // Error vibration
+      }
+    } catch (error) {
+      console.error(error);
+      this.error = true;
+      this.tryVibrate([100, 50, 100]); // Error vibration
+    }
 
     form.resetForm();
     this.loading = false;
