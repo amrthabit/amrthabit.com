@@ -1,0 +1,39 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - npm install -g @angular/cli
+      - npm install --legacy-peer-deps
+
+  pre_build:
+    commands:
+      - echo Starting pre-build phase...
+      - npm run lint || true  # Run linting but don't fail build if there are warnings
+
+  build:
+    commands:
+      - echo Starting build phase...
+      - ng build --configuration production
+
+  post_build:
+    commands:
+      - echo Starting post-build phase...
+      # Sync with proper cache headers
+      - aws s3 sync dist/ s3://amrthabit.com --delete --cache-control max-age=31536000,public
+      # But ensure index.html is not cached
+      - aws s3 cp dist/index.html s3://amrthabit.com/index.html --cache-control no-cache
+      # Create CloudFront invalidation
+      - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths "/*"
+
+cache:
+  paths:
+    - 'node_modules/**/*'
+    - '.angular/**/*'
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: 'dist'
