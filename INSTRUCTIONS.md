@@ -12,7 +12,7 @@
 2. **Installation**
    ```bash
    # Clone the repository
-   git clone https://github.com/yourusername/amrthabit.com.git
+   git clone https://github.com/amrthabit/amrthabit.com.git
    
    # Navigate to project directory
    cd amrthabit.com
@@ -51,22 +51,6 @@
    - Use provided mixins for breakpoints
    - Test all features on mobile devices
    - Ensure touch targets are adequate size
-
-### Form Development
-
-1. **Validation**
-   ```typescript
-   // Example of form validation with haptic feedback
-   if (!form.valid) {
-     this.tryVibrate([5, 100, 5]);
-     return;
-   }
-   ```
-
-2. **Haptic Feedback**
-   - Only use vibration after user interaction
-   - Keep vibrations short and meaningful
-   - Always provide visual feedback alongside haptic
 
 ### Animation Development
 
