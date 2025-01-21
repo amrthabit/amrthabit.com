@@ -1,9 +1,27 @@
 @import "../../mixins.scss";
+@import "../../styles/variables";
+@import "../../styles/animations";
 
 @mixin center {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
 }
 
 @mixin bounce($seconds: 0.3s) {
@@ -29,19 +47,20 @@
 
 .links {
   box-sizing: border-box;
-  min-height: 500px;
+  min-height: 600px;
   padding: 0.5rem;
   display: grid;
   grid-template-areas:
     "desc desc projects about"
-    "desc desc contact contact";
+    "desc desc contact contact"
+    "scroll scroll scroll scroll";
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   grid-gap: 0.5rem;
   overflow: hidden;
   max-width: 1000px;
   margin: 0 auto;
-  margin-top: calc(60vh - 500px);
+  margin-top: calc(50vh - 600px);
 
   // * {
   //   backface-visibility: hidden;
@@ -226,13 +245,16 @@
 
 @media screen and (max-width: 767px) {
   .links {
-    height: 80vh;
+    height: 50vh;
     grid-template-areas:
       "desc desc"
       "projects about"
-      "contact contact";
+      "contact contact"
+      "scroll scroll";
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+
+    margin-top: calc(50vh - 473px);
 
     .link {
       padding: 0.5rem;
@@ -299,5 +321,163 @@
   }
   100% {
     transform: translateX(-10%);
+  }
+}
+
+.scroll-button {
+  height: 10vh;
+  width: 100%;
+  grid-area: scroll;
+  padding: 0.5rem 2rem;
+  background: transparent;
+  border: 2px solid $color-text;
+  border-radius: 1rem;
+  color: $color-text;
+  font-family: $font-family-primary;
+  font-size: $font-size-md;
+  cursor: pointer;
+  transition: all $duration-normal $curve-smooth;
+  overflow: hidden;
+  position: relative;
+
+  // New repeating background styles
+  .content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transform: skew(-15deg);
+    pointer-events: none;
+    overflow: hidden;
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      black 10%,
+      black 90%,
+      transparent
+    );
+  }
+
+  @for $i from 0 through 4 {
+    .text-row-#{$i} {
+      white-space: nowrap;
+      font-weight: bold;
+      font-size: 1.25rem;
+      line-height: 0.7rem;
+      letter-spacing: 0.1em;
+      animation: scroll-text 2s linear infinite;
+      animation-delay: -#{$i * 5}s; // Stagger the animations
+      opacity: #{0.7 - $i * 0.15}; // Fade out lower rows
+      transform: translateY(#{$i * 1.5}rem);
+    }
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: $color-text;
+    transform: translateX(-100%);
+    transition: transform $duration-normal $curve-smooth;
+    z-index: -1;
+  }
+
+  .text-row-0 {
+    margin-top: 0.3rem;
+  }
+
+  .text-row-0,
+  .text-row-1,
+  .text-row-2,
+  .text-row-3,
+  .text-row-4 {
+    transform: translateX(4rem);
+  }
+
+  &:hover {
+    color: $color-background;
+    &::before {
+      transform: translateX(0);
+    }
+    .text-row-0,
+    .text-row-1,
+    .text-row-2,
+    .text-row-3,
+    .text-row-4 {
+      animation-play-state: paused;
+
+    }
+
+    &:active {
+      background-color: red;
+      filter: sepia(1) hue-rotate(180deg) saturate(5) brightness(0.5) contrast(1.5) invert(1) drop-shadow(0 0 0.5rem red);
+    }
+  }
+
+  .arrow {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    animation: bounce 2s infinite;
+    position: relative;
+    z-index: 2;
+  }
+}
+
+@keyframes scroll-text {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.scroll-button {
+  height: 10vh;
+  width: 100%;
+  grid-area: scroll;
+  padding: 0.5rem 2rem;
+  background: transparent;
+  border: 2px solid $color-text;
+  border-radius: 1rem;
+  color: $color-text;
+  font-family: $font-family-primary;
+  font-size: $font-size-md;
+  cursor: pointer;
+  transition: all $duration-normal $curve-smooth;
+  overflow: hidden;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: $color-text;
+    transform: translateX(-100%);
+    transition: transform $duration-normal $curve-smooth;
+    z-index: -1;
+  }
+
+  &:hover {
+    color: $color-background;
+    &::before {
+      transform: translateX(0);
+    }
+  }
+
+  // Add bounce animation
+  .arrow {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    animation: bounce 2s infinite;
   }
 }

@@ -6,6 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./title.component.scss'],
 })
 export class TitleComponent {
+  scroll(id: string) {
+    document.getElementById(id)?.scrollIntoView();
+  }
+
+  // Commented out animation cycles for reference
   //  add .glowing class to .name after 2 seconds
   // ngAfterViewInit() {
   //   setTimeout(() => {

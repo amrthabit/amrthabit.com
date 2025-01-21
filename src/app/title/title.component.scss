@@ -3,9 +3,10 @@
 
 .title {
   display: flex;
+  flex-direction: column; // Changed to column to accommodate button
   justify-content: center;
   align-items: center;
-  height: 40vh;
+  height: 50vh; // Reduced from 40vh to 30vh
   overflow: hidden;
   font-size: $font-size-xxl;
 
@@ -101,6 +102,7 @@
 @include mobile {
   .title {
     font-size: $font-size-xl;
+    height: 50vh;
   }
 }
 
