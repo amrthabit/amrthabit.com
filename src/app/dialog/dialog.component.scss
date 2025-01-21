@@ -1,12 +1,15 @@
+@import '../../styles/variables';
+@import '../../styles/animations';
+
 :host {
   dialog {
     display: none;
-    border-radius: 1rem;
+    border-radius: $spacing-lg;
     border: none;
-    background-color: #343434c4;
+    background-color: rgba($color-background-disabled, 0.77);
     backdrop-filter: blur(20px);
-    color: #e5e5e5;
-    padding: 1rem;
+    color: $color-text;
+    padding: $spacing-lg;
 
     &:focus {
       outline: none;
@@ -15,19 +18,8 @@
 
   dialog[open] {
     display: block;
-    animation: slide-up 0.2s ease-out forwards;
+    animation: slide-up $animation-duration-normal ease-out forwards;
   }
 }
 
-@keyframes slide-up {
-  from {
-    transform: translateY(-30%);
-    opacity: 0;
-    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0);
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
-  }
-}
+@include slide-up;

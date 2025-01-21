@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 :host {
   width: 100%;
   height: 100%;
@@ -9,136 +11,115 @@ form {
   align-items: center;
   height: 100%;
 
-
   .form-group {
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 0.5rem 0 0.4rem 0;
+    margin: $spacing-md 0 $spacing-sm 0;
 
     .form-control {
       width: 100%;
-      padding: 0.5rem;
-      border: 2px solid #ececec;
-      border-radius: 0.25rem;
-      font-size: 1rem;
-      font-weight: 700;
-      color: #ececec;
-      background-color: #000000;
-      transition: all 0.15s ease;
+      padding: $spacing-md;
+      border: 2px solid $color-border;
+      border-radius: $border-radius-sm;
+      font-size: $font-size-md;
+      font-weight: $font-weight-bold;
+      color: $color-text;
+      background-color: $color-background;
+      transition: $transition-default;
       resize: none;
       font-family: inherit;
-      margin-bottom: 0.1rem;
+      margin-bottom: $spacing-xxs;
 
       &:focus {
-        outline: none;
-        border-color: #ff6f00;
-        box-shadow: 0 0 0 0.2rem rgba(255, 111, 0, 0.25);
+        @include focus-outline;
       }
 
       &.error {
-        border-color: #ff0000;
-        box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.35) !important;
+        @include error-state;
       }
 
       &:disabled {
-        border-color: #a2a2a2;
-        box-shadow: none;
-        background-color: #2a2a2a;
-        color: #bdbdbd;
+        @include disabled-state;
+      }
+
+      &::placeholder {
+        color: $color-text-muted;
+        opacity: 1;
+      }
+
+      &:-ms-input-placeholder,
+      &::-ms-input-placeholder {
+        color: $color-text;
       }
     }
 
     .alert {
-      font-size: 0.75rem;
-      font-weight: 500;
-      padding-left: 0.5rem;
-      color: #ff0000;
-      height: 0.5rem;
-    }
-
-    .form-control:focus {
-      outline: none;
-      border-color: #ff6f00;
-      box-shadow: 0 0 0 0.2rem rgba(255, 111, 0, 0.25);
-    }
-
-    .form-control::placeholder {
-      color: #bdbdbd;
-      opacity: 1;
-    }
-
-    .form-control:-ms-input-placeholder {
-      color: #e3e3e3;
-    }
-
-    .form-control::-ms-input-placeholder {
-      color: #e3e3e3;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-regular;
+      padding-left: $spacing-md;
+      color: $color-error;
+      height: $spacing-md;
     }
   }
 
   button.submit {
     width: 100%;
-    margin: 0.5rem 0;
-    padding: 0.5rem;
-    border: 2px solid #ff6f00;
-    border-radius: 0.25rem;
-    font-size: 1rem;
-    font-weight: 700;
-    color: #000000;
-    background-color: #ff6f00;
-    transition: all 0.15s ease;
-    display: block;
+    margin: $spacing-md 0;
+    padding: $spacing-md;
+    border: 2px solid $color-primary;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-md;
+    font-weight: $font-weight-bold;
+    color: $color-background;
+    background-color: $color-primary;
+    transition: $transition-default;
     text-align: center;
     position: relative;
-    height: 2.5rem;
+    height: $button-height;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    &:hover {
-      background-color: #000000;
-      color: #ff6f00;
+    @include hover-interaction {
+      background-color: $color-background;
+      color: $color-primary;
     }
 
     &:focus {
-      outline: none;
-      border-color: #ff6f00;
-      box-shadow: 0 0 0 0.2rem rgba(255, 111, 0, 0.25);
+      @include focus-outline;
     }
 
     &.error {
-      animation: submit-error 0.4s linear;
+      animation: submit-error $animation-duration-slow linear;
     }
 
     &:disabled {
-      background-color: #313131;
-      color: #ff6f00;
-      border-color: #2a2a2a;
+      background-color: $color-background-disabled;
+      color: $color-primary;
+      border-color: $color-background-disabled;
     }
 
     .loading-container {
       position: relative;
-      display: inline-block;
-      width: 2.5rem;
-      height: 2.5rem;
       display: flex;
       justify-content: center;
       align-items: center;
+      width: $button-height;
+      height: $button-height;
 
       .loading-bars {
         position: absolute;
-
-        width: 1.5rem;
-        height: 1.5rem;
+        width: $loading-icon-size;
+        height: $loading-icon-size;
         animation: loading-bar 1s linear infinite;
       }
     }
   }
   
   input, textarea {
-    font-family: "Merriweather", serif !important;
+    font-family: $font-family-secondary !important;
   }
 }
 
@@ -150,26 +131,28 @@ form {
   button.dialog-button {
     width: 100%;
     margin: 0;
-    padding: 0.25rem;
-    border: 2px solid #b9b9b9;
-    border-radius: 0.25rem;
-    font-size: 1rem;
-    font-weight: 700;
-    color: #000000;
-    background-color: #9f9f9f;
-    transition: all 0.15s ease;
+    padding: $spacing-xs;
+    border: 2px solid $color-dialog-border;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-md;
+    font-weight: $font-weight-bold;
+    color: $color-background;
+    background-color: $color-dialog-button;
+    transition: $transition-default;
     display: block;
     text-align: center;
 
-    &:hover {
-      background-color: #000000;
+    @include hover-interaction {
+      background-color: $color-background;
       color: inherit;
     }
+
     &:focus {
       outline: none;
     }
+
     &:active {
-      outline: 2px solid #a3a3a3;
+      outline: 2px solid $color-dialog-outline;
     }
   }
 }
@@ -193,77 +176,28 @@ form {
 }
 
 @keyframes loading-bar {
-  // 12 bars 12 discrete rotations
-  0% {
-    transform: rotate(0deg);
-  }
-  8.329% {
-    transform: rotate(0deg);
-  }
-  8.33% {
-    transform: rotate(30deg);
-  }
-  16.659% {
-    transform: rotate(30deg);
-  }
-  16.66% {
-    transform: rotate(60deg);
-  }
-  24.999% {
-    transform: rotate(60deg);
-  }
-  25% {
-    transform: rotate(90deg);
-  }
-  33.329% {
-    transform: rotate(90deg);
-  }
-  33.33% {
-    transform: rotate(120deg);
-  }
-  41.659% {
-    transform: rotate(120deg);
-  }
-  41.66% {
-    transform: rotate(150deg);
-  }
-  49.999% {
-    transform: rotate(150deg);
-  }
-  50% {
-    transform: rotate(180deg);
-  }
-  58.329% {
-    transform: rotate(180deg);
-  }
-  58.33% {
-    transform: rotate(210deg);
-  }
-  66.659% {
-    transform: rotate(210deg);
-  }
-  66.66% {
-    transform: rotate(240deg);
-  }
-  74.999% {
-    transform: rotate(240deg);
-  }
-  75% {
-    transform: rotate(270deg);
-  }
-  83.329% {
-    transform: rotate(270deg);
-  }
-  83.33% {
-    transform: rotate(300deg);
-  }
-  91.659% {
-    transform: rotate(300deg);
-  }
-  91.66% {
-    transform: rotate(330deg);
-  }
-  100% {
-    transform: rotate(330deg);
-  }
+  0% { transform: rotate(0deg); }
+  8.329% { transform: rotate(0deg); }
+  8.33% { transform: rotate(30deg); }
+  16.659% { transform: rotate(30deg); }
+  16.66% { transform: rotate(60deg); }
+  24.999% { transform: rotate(60deg); }
+  25% { transform: rotate(90deg); }
+  33.329% { transform: rotate(90deg); }
+  33.33% { transform: rotate(120deg); }
+  41.659% { transform: rotate(120deg); }
+  41.66% { transform: rotate(150deg); }
+  49.999% { transform: rotate(150deg); }
+  50% { transform: rotate(180deg); }
+  58.329% { transform: rotate(180deg); }
+  58.33% { transform: rotate(210deg); }
+  66.659% { transform: rotate(210deg); }
+  66.66% { transform: rotate(240deg); }
+  74.999% { transform: rotate(240deg); }
+  75% { transform: rotate(270deg); }
+  83.329% { transform: rotate(270deg); }
+  83.33% { transform: rotate(300deg); }
+  91.659% { transform: rotate(300deg); }
+  91.66% { transform: rotate(330deg); }
+  100% { transform: rotate(330deg); }
 }

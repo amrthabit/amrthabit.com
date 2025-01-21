@@ -1,0 +1,167 @@
+// Typography
+$font-family-primary: "Satoshi", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+  "Segoe UI Symbol";
+$font-family-secondary: 'Merriweather', serif;
+$font-family-display: 'Gilroy', sans-serif;
+$font-family-decorative: 'matisan', sans-serif;
+$font-family-mono: 'MD Primer', monospace;
+
+// Font sizes
+$font-size-base: 20px;
+$font-size-sm: 0.75rem;   // 15px
+$font-size-md: 1rem;      // 20px
+$font-size-lg: 1.2rem;    // 24px
+$font-size-xl: 1.75rem;   // 35px
+$font-size-xxl: 4rem;     // 80px
+$font-size-huge: 5rem;    // 100px
+
+// Font weights
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+$font-weight-black: 900;
+
+// Colors
+$color-primary: #ff6f00;
+$color-primary-light: rgba($color-primary, 0.25);
+
+$color-background: #000000;
+$color-background-disabled: #2a2a2a;
+$color-background-hover: #1e1e1e;
+
+$color-text: #ececec;
+$color-text-muted: #bdbdbd;
+$color-text-disabled: #a2a2a2;
+
+$color-error: #ff0000;
+$color-error-light: rgba($color-error, 0.35);
+
+$color-border: #ececec;
+$color-border-focus: $color-primary;
+$color-border-error: $color-error;
+$color-border-disabled: #a2a2a2;
+
+// Dialog colors
+$color-dialog-button: #9f9f9f;
+$color-dialog-border: #b9b9b9;
+$color-dialog-outline: #a3a3a3;
+
+// Scrollbar colors
+$color-scrollbar-track: #1e1e1e;
+$color-scrollbar-thumb: #2e2e2e;
+$color-scrollbar-thumb-hover: #3e3e3e;
+
+// Spacing
+$spacing-xxs: 0.1rem;   // 2px
+$spacing-xs: 0.25rem;   // 5px
+$spacing-sm: 0.4rem;    // 8px
+$spacing-md: 0.5rem;    // 10px
+$spacing-lg: 1rem;      // 20px
+$spacing-xl: 1.5rem;    // 30px
+$spacing-xxl: 2rem;     // 40px
+$spacing-huge: 5rem;    // 100px
+
+// Border radius
+$border-radius-sm: 0.25rem;
+$border-radius-md: 0.5rem;
+$border-radius-lg: 1rem;
+
+// Transitions
+$transition-default: all 0.15s ease;
+$transition-fast: all 0.1s ease;
+$transition-slow: all 0.3s ease;
+
+// Shadows
+$shadow-focus: 0 0 0 0.2rem;
+
+// Z-indices
+$z-index-dialog: 1000;
+$z-index-overlay: 999;
+$z-index-dropdown: 100;
+$z-index-header: 90;
+$z-index-content: 1;
+
+// Animations
+$animation-duration-fast: 0.15s;
+$animation-duration-normal: 0.2s;
+$animation-duration-slow: 0.4s;
+
+// Component specific
+$input-height: 2.5rem;
+$button-height: 2.5rem;
+$loading-icon-size: 1.5rem;
+
+// Layout
+$max-width-content: 1000px;
+$max-width-text: 800px;
+
+// Media queries
+$breakpoint-mobile: 767px;
+$breakpoint-tablet: 1024px;
+$breakpoint-desktop: 1280px;
+$breakpoint-small-mobile: 575px;
+
+// Mixins
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin focus-outline {
+  outline: none;
+  border-color: $color-border-focus;
+  box-shadow: $shadow-focus $color-primary-light;
+}
+
+@mixin error-state {
+  border-color: $color-border-error;
+  box-shadow: $shadow-focus $color-error-light !important;
+}
+
+@mixin disabled-state {
+  border-color: $color-border-disabled;
+  box-shadow: none;
+  background-color: $color-background-disabled;
+  color: $color-text-disabled;
+}
+
+@mixin hover-interaction {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+@mixin mobile {
+  @media screen and (max-width: $breakpoint-mobile) {
+    @content;
+  }
+}
+
+@mixin small-mobile {
+  @media screen and (max-width: $breakpoint-small-mobile) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: $breakpoint-desktop) {
+    @content;
+  }
+}
+
+@mixin landscape-mobile {
+  @media screen and (orientation: landscape) and (max-width: $breakpoint-mobile) {
+    @content;
+  }
+}

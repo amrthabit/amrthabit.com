@@ -1,31 +1,6 @@
-@import "../../mixins.scss";
-
-@mixin center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@mixin bounce($seconds: 0.3s) {
-  transition: all $seconds cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@mixin background-image($image, $invert: 1) {
-  &::before {
-    @include bounce;
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url($image) no-repeat center center;
-    background-size: min(min(40%, 12vh), 20vw);
-    filter: invert($invert);
-    opacity: 0.3;
-    z-index: 1;
-  }
-}
+@import '../../styles/variables';
+@import '../../styles/animations';
+@import '../../styles/about';
 
 .about-background {
   position: absolute;
@@ -48,7 +23,7 @@
     animation: about-background 50s linear infinite;
     filter: invert(1);
   }
-  opacity: 0.05;
+  opacity: $about-background-opacity;
   z-index: 0;
   mask-image: radial-gradient(circle at 50% 50%, black 0%, transparent 200%);
 }
@@ -56,33 +31,32 @@
 :host {
   display: flex;
   flex-direction: column;
-  padding: 8rem 1rem 5rem 1rem;
+  padding: 8rem $spacing-lg 5rem $spacing-lg;
   overflow: hidden;
   position: relative;
   min-height: 100vh;
 
   .about-title {
     grid-area: title;
-    font-size: 3rem;
+    font-size: $about-title-size;
     margin-bottom: 5rem;
-    font-weight: 900;
+    font-weight: $font-weight-black;
     @include center;
 
     .about-title-text {
       @include center;
-      @include bounce(0.2s);
+      @include bounce($duration-fast);
 
       span {
-        animation: about-letter-reverse 0.3s
-          cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s forwards;
-        @include bounce(0.2s);
+        animation: about-letter-reverse $duration-normal $curve-bounce 0s forwards;
+        @include bounce($duration-fast);
       }
 
       &:active {
         scale: 1.2;
       }
 
-      @include on-hover {
+      @include hover-interaction {
         scale: 1.2;
       }
     }
@@ -98,10 +72,9 @@
         width: 100%;
         height: 100%;
 
-        @include on-hover {
+        @include hover-interaction {
           span {
-            animation: about-letter 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275)
-              0s forwards;
+            animation: about-letter $duration-fast $curve-bounce 0s forwards;
           }
         }
 
@@ -109,99 +82,14 @@
           opacity: 0;
         }
 
-        &:nth-child(1) {
-          background: green;
-          opacity: 0;
-          scale: 2;
+        @each $i, $scale in $about-hover-scales {
+          &:nth-child(#{$i}) {
+            scale: $scale;
 
-          @include on-hover {
-            ~ div.about-title-text span:nth-child(-n + 1) {
-              animation: about-letter 0.5s
-                cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s forwards;
-            }
-          }
-        }
-
-        &:nth-child(2) {
-          background: yellow;
-          scale: 1.9;
-
-          @include on-hover {
-            ~ div.about-title-text span:nth-child(-n + 2) {
-              animation: about-letter 0.5s
-                cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s forwards;
-            }
-          }
-        }
-
-        &:nth-child(3) {
-          background: pink;
-          scale: 1.8;
-
-          @include on-hover {
-            ~ div.about-title-text span:nth-child(-n + 3) {
-              animation: about-letter 0.5s
-                cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s forwards;
-            }
-          }
-        }
-
-        &:nth-child(4) {
-          background: purple;
-          scale: 1.7;
-
-          @include on-hover {
-            ~ div.about-title-text span:nth-child(-n + 4) {
-              animation: about-letter 0.5s
-                cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s forwards;
-            }
-          }
-        }
-
-        &:nth-child(5) {
-          background: orange;
-          scale: 1.6;
-
-          @include on-hover {
-            ~ div.about-title-text span:nth-child(-n + 5) {
-              animation: about-letter 0.5s
-                cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s forwards;
-            }
-          }
-        }
-
-        &:nth-child(6) {
-          background: brown;
-          scale: 1.5;
-
-          @include on-hover {
-            ~ div.about-title-text span:nth-child(-n + 6) {
-              animation: about-letter 0.5s
-                cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s forwards;
-            }
-          }
-        }
-
-        &:nth-child(7) {
-          background: rgb(114, 81, 81);
-          scale: 1.4;
-
-          @include on-hover {
-            ~ div.about-title-text span:nth-child(-n + 7) {
-              animation: about-letter 0.5s
-                cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s forwards;
-            }
-          }
-        }
-
-        &:nth-child(8) {
-          background: rgb(8, 0, 255);
-          scale: 1.3;
-
-          @include on-hover {
-            ~ div.about-title-text span:nth-child(-n + 8) {
-              animation: about-letter 0.5s
-                cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s forwards;
+            @include hover-interaction {
+              ~ div.about-title-text span:nth-child(-n + #{$i}) {
+                animation: about-letter $duration-slow $curve-bounce 0s forwards;
+              }
             }
           }
         }
@@ -210,83 +98,80 @@
   }
 
   .about-content {
-    max-width: 1000px;
+    max-width: $max-width-content;
     margin: auto;
     display: flex;
     flex-direction: row;
     z-index: 1;
-    background: rgb(22, 22, 22);
-    border-radius: 1rem;
-    padding: 1rem;
+    background: $about-section-background;
+    border-radius: $border-radius-lg;
+    padding: $spacing-lg;
   }
 
   .goofy {
-    font-family: "matisan";
-    // margin: -10px;
-    color: #515151;
+    font-family: $font-family-decorative;
+    color: $about-goofy-color;
   }
 
   .about-text {
     flex: 1.5;
-    border-radius: 1rem;
-    padding: 0 1rem;
+    border-radius: $border-radius-lg;
+    padding: 0 $spacing-lg;
 
     p {
-      font-size: 1rem;
-      color: #bfbfbf;
-    }
+      font-size: $font-size-md;
+      color: $about-text-color;
 
-    p.main {
-      font-size: 1.2rem;
-      color: #e4e4e4;
+      &.main {
+        font-size: $font-size-lg;
+        color: $about-text-color-main;
+      }
     }
 
     a {
-      color: #ff8400;
+      color: $about-link-color;
       text-decoration: underline solid transparent;
-      transition: all 0.1s ease;
+      transition: all $animation-duration-fast ease;
 
-      @include on-hover {
-        color: #ff8400;
-        text-decoration: underline solid #ff8400;
+      @include hover-interaction {
+        color: $about-link-color;
+        text-decoration: underline solid $about-link-color;
       }
     }
   }
 
   .about-contact {
     flex: 1;
-    border-radius: 1rem;
+    border-radius: $border-radius-lg;
 
     * {
-      margin: 1rem;
+      margin: $spacing-lg;
     }
 
     h2 {
-      margin: 1rem;
-      font-size: 1.75rem;
-      line-height: 1.6rem;
-      font-weight: 900;
+      font-size: $font-size-xl;
+      line-height: 1.6;
+      font-weight: $font-weight-black;
     }
 
     h3 {
-      margin: 1rem;
-      font-size: 1rem;
-      line-height: 1.6rem;
-      font-weight: 700;
-      color: #bfbfbf;
+      font-size: $font-size-md;
+      line-height: 1.6;
+      font-weight: $font-weight-bold;
+      color: $about-text-color;
     }
 
     button.contact-button {
-      margin: 1rem 1rem;
-      padding: 0.5rem 1rem;
-      border-radius: 1rem;
+      margin: $spacing-lg $spacing-lg;
+      padding: $spacing-md $spacing-lg;
+      border-radius: $border-radius-lg;
       border: none;
-      background: #ff8400;
-      color: #000000;
-      font-weight: 700;
-      font-size: 1rem;
+      background: $about-link-color;
+      color: $color-background;
+      font-weight: $font-weight-bold;
+      font-size: $font-size-md;
       cursor: pointer;
-      transition: background 0.15s ease, color 0.15s ease;
+      transition: $transition-default;
 
       &::after {
         content: "";
@@ -295,100 +180,54 @@
         background-size: contain;
         height: 1.25rem;
         width: 1.25rem;
-        margin-left: 0.5rem;
-        @include bounce(0.3s);
+        margin-left: $spacing-md;
+        @include bounce;
       }
 
-      @include on-hover {
-        background: #222;
-        color: #ffffff;
+      @include hover-interaction {
+        background: $color-background-hover;
+        color: $color-text;
 
         &::after {
           filter: invert(1);
-          transform: translateX(0.5rem);
+          transform: translateX($spacing-md);
         }
       }
     }
   }
 }
 
-@media screen and (max-width: 1023px) {
-}
-
-/* Responsive Styles */
-@media screen and (max-width: 767px) {
+// Responsive styles
+@include mobile {
   :host {
-    padding: 8rem 0.5rem 5rem 0.5rem;
+    padding: 8rem $spacing-xs 5rem $spacing-xs;
   }
 
   .about-content {
     flex-direction: column !important;
 
     .contact-button {
-      margin: 1rem !important;
+      margin: $spacing-lg !important;
     }
   }
 }
 
-@media screen and (max-width: 575px) {
+@include small-mobile {
   .host {
     .about-title-text {
-      &:active {
-        scale: 1.05 !important;
-      }
-
-      @include on-hover {
+      &:active,
+      @include hover-interaction {
         scale: 1.05 !important;
       }
     }
   }
 
   .about-content {
-    padding: 0rem !important;
+    padding: 0 !important;
   }
 }
 
-@media screen and (orientation: landscape) and (max-width: 767px) {
-}
-
-@keyframes about-background {
-  0% {
-    transform: translateX(0rem);
-  }
-  100% {
-    transform: translateX(1rem);
-  }
-}
-
-@keyframes external-link {
-  0% {
-    bottom: 5%;
-    right: 15%;
-  }
-  100% {
-    bottom: 10%;
-    right: 10%;
-  }
-}
-
-@keyframes about-letter {
-  0% {
-    font-size: 3rem;
-    font-weight: 900;
-  }
-  100% {
-    font-size: 4rem;
-    font-weight: 500;
-  }
-}
-
-@keyframes about-letter-reverse {
-  0% {
-    font-size: 4rem;
-    font-weight: 500;
-  }
-  100% {
-    font-size: 3rem;
-    font-weight: 900;
-  }
-}
+// Animations
+@include about-letter;
+@include about-letter-reverse;
+@include about-background;

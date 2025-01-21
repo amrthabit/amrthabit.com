@@ -1,0 +1,141 @@
+// Animation Curves
+$curve-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+$curve-glitch: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+
+// Glitch Variables
+$glitch-offset: 3px;
+$glitch-timing: 0.12s;
+
+// Animation Durations
+$duration-fast: 0.2s;
+$duration-normal: 0.3s;
+$duration-slow: 0.5s;
+
+// Common Animation Mixins
+@mixin bounce($duration: $duration-normal) {
+  transition: all $duration $curve-bounce;
+}
+
+@mixin glitch-text {
+  @keyframes glitch-text {
+    0% {
+      transform: translate(0);
+    }
+    20% {
+      transform: translate(-$glitch-offset, $glitch-offset);
+    }
+    40% {
+      transform: translate(-$glitch-offset, -$glitch-offset);
+    }
+    60% {
+      transform: translate($glitch-offset, $glitch-offset);
+    }
+    80% {
+      transform: translate($glitch-offset, -$glitch-offset);
+    }
+    100% {
+      transform: translate(0);
+    }
+  }
+}
+
+@mixin glitch-skew {
+  @keyframes glitch-skew {
+    0% {
+      transform: skew(0deg);
+    }
+    20% {
+      transform: skew(2deg);
+    }
+    40% {
+      transform: skew(-2deg);
+    }
+    60% {
+      transform: skew(1deg);
+    }
+    80% {
+      transform: skew(-1deg);
+    }
+    100% {
+      transform: skew(0deg);
+    }
+  }
+}
+
+@mixin glitch-scale {
+  @keyframes glitch-scale {
+    0% {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(1.02);
+    }
+    50% {
+      transform: scale(0.98);
+    }
+    75% {
+      transform: scale(1.01);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+}
+
+@mixin glitch-clip {
+  @keyframes glitch-clip {
+    0% {
+      clip-path: inset(0 0 0 0);
+    }
+    20% {
+      clip-path: inset(20% -6px 15% 0);
+    }
+    40% {
+      clip-path: inset(45% 0 40% 0);
+    }
+    60% {
+      clip-path: inset(10% 0 25% 0);
+    }
+    80% {
+      clip-path: inset(30% 0 15% 0);
+    }
+    100% {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+}
+
+@mixin chromatic-aberration {
+  @keyframes chromatic-aberration {
+    0% {
+      text-shadow: 5px 0 5px rgba(255, 0, 0, 0.75),
+                  -5px 0 5px rgba(0, 255, 0, 0.75),
+                  0 0 15px rgba(0, 0, 255, 0.75);
+    }
+    20% {
+      text-shadow: -5px 0 5px rgba(255, 0, 0, 0.75),
+                  5px 0 5px rgba(0, 255, 0, 0.75),
+                  0 0 15px rgba(0, 0, 255, 0.75);
+    }
+    40% {
+      text-shadow: 3px -3px 5px rgba(255, 0, 0, 0.75),
+                  -3px 3px 5px rgba(0, 255, 0, 0.75),
+                  0 0 15px rgba(0, 0, 255, 0.75);
+    }
+    60% {
+      text-shadow: -3px -3px 5px rgba(0, 255, 0, 0.75),
+                  3px 3px 5px rgba(0, 0, 255, 0.75),
+                  0 0 15px rgba(255, 0, 0, 0.75);
+    }
+    80% {
+      text-shadow: 3px 3px 5px rgba(0, 0, 255, 0.75),
+                  -3px -3px 5px rgba(255, 0, 0, 0.75),
+                  0 0 15px rgba(0, 255, 0, 0.75);
+    }
+    100% {
+      text-shadow: 5px 0 5px rgba(255, 0, 0, 0.75),
+                  -5px 0 5px rgba(0, 255, 0, 0.75),
+                  0 0 15px rgba(0, 0, 255, 0.75);
+    }
+  }
+}

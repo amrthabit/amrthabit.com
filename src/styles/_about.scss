@@ -1,0 +1,57 @@
+// About specific variables
+$about-background-opacity: 0.05;
+$about-title-size: 3rem;
+$about-title-hover-size: 4rem;
+$about-section-background: rgb(22, 22, 22);
+$about-text-color: #bfbfbf;
+$about-text-color-main: #e4e4e4;
+$about-link-color: #ff8400;
+$about-goofy-color: #515151;
+$about-hover-scales: (
+  1: 2,
+  2: 1.9,
+  3: 1.8,
+  4: 1.7,
+  5: 1.6,
+  6: 1.5,
+  7: 1.4,
+  8: 1.3
+);
+
+// About animations
+@mixin about-letter {
+  @keyframes about-letter {
+    0% {
+      font-size: $about-title-size;
+      font-weight: $font-weight-bold;
+    }
+    100% {
+      font-size: $about-title-hover-size;
+      font-weight: $font-weight-regular;
+    }
+  }
+}
+
+@mixin about-letter-reverse {
+  @keyframes about-letter-reverse {
+    0% {
+      font-size: $about-title-hover-size;
+      font-weight: $font-weight-regular;
+    }
+    100% {
+      font-size: $about-title-size;
+      font-weight: $font-weight-bold;
+    }
+  }
+}
+
+@mixin about-background {
+  @keyframes about-background {
+    0% {
+      transform: translateX(0rem);
+    }
+    100% {
+      transform: translateX(1rem);
+    }
+  }
+}
