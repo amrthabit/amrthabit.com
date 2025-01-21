@@ -1,3 +1,5 @@
+@use "sass:math";
+
 // Glitch variables
 $color-glitch-green: #00ff95;
 $color-glitch-bright: #80ffcc;
@@ -6,15 +8,15 @@ $color-glitch-intense: rgba(0, 255, 149, 0.8);
 $glitch-timing: 4s;
 
 // More frequent random durations for intense animations
-$random-duration1: random(4) + 1 + s; // Made faster
-$random-duration2: random(2) + 0.5 + s; // Even faster
-$random-duration3: random(1) + 0.2 + s; // Super fast
-$random-delay1: random(1) + s;
-$random-delay2: random(1) + s;
+$random-duration1: #{random(4) + 1}s;
+$random-duration2: #{random(2) + 0.5}s;
+$random-duration3: #{random(1) + 0.2}s;
+$random-delay1: #{random(1) + 0.5}s;
+$random-delay2: #{random(1) + 0.2}s;
 
 // Helper functions
 @function random-float() {
-  @return random(100) / 100;
+  @return math.div(random(100), 100);
 }
 
 @function random-neg() {
@@ -23,13 +25,16 @@ $random-delay2: random(1) + s;
 
 // Chromatic aberration mixin
 @mixin chromatic-aberration {
-  text-shadow: #{random-neg() * random(3)}px 0 #ff0000,
+  text-shadow: 
+    #{random-neg() * random(3)}px 0 #ff0000,
     #{random-neg() * random(3)}px 0 #00ff00,
     #{random-neg() * random(3)}px 0 #0000ff;
 }
 
 // RGB split mixin
 @mixin rgb-split($distance: 2) {
-  text-shadow: #{$distance * -1}px 0 #ff000080, #{$distance}px 0 #0000ff80;
+  text-shadow: 
+    #{$distance * -1}px 0 #ff000080,
+    #{$distance}px 0 #0000ff80;
   animation: rgb-animation $random-duration2 infinite;
 }

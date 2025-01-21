@@ -1,3 +1,4 @@
+/* Main imports */
 @import '../../styles/variables';
 @import '../../styles/animations';
 @import '../../styles/about';
@@ -9,6 +10,7 @@
 @import './styles/contact';
 @import './styles/animations';
 
+/* Host element styles */
 :host {
   display: flex;
   flex-direction: column;
@@ -18,7 +20,7 @@
   min-height: 100vh;
 }
 
-// Responsive styles
+/* Responsive styles */
 @include mobile {
   :host {
     padding: 8rem $spacing-xs 5rem $spacing-xs;
@@ -47,7 +49,7 @@
   }
 }
 
-// Animations
+/* Animation includes */
 @include about-letter;
 @include about-letter-reverse;
 @include about-background;

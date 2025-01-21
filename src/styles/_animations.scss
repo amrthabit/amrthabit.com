@@ -1,3 +1,4 @@
+@use "sass:math";
 @import 'variables';
 
 // Animation Curves
@@ -9,6 +10,8 @@ $curve-glitch: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 $glitch-offset: 2px;
 $glitch-color: rgba(255, 255, 255, 0.1);
 $scan-line-color: rgba(255, 255, 255, 0.05);
+$glow-color: rgba(255, 255, 255, 0.05);
+$scan-line-size: 2px;
 
 // Basic animations
 @mixin bounce($duration: $duration-normal) {
@@ -46,53 +49,85 @@ $scan-line-color: rgba(255, 255, 255, 0.05);
 @mixin soft-glow {
   @keyframes soft-glow {
     0%, 100% {
-      text-shadow: 0 0 2px rgba(255, 255, 255, 0.2),
-                   0 0 4px rgba(255, 255, 255, 0.1);
-      opacity: 0.95;
+      text-shadow: 0 0 2px $glow-color,
+                  0 0 4px rgba(255, 255, 255, 0.1);
+      opacity: 0.98;
     }
     50% {
-      text-shadow: 0 0 4px rgba(255, 255, 255, 0.3),
-                   0 0 8px rgba(255, 255, 255, 0.2);
+      text-shadow: 0 0 4px rgba(255, 255, 255, 0.2),
+                  0 0 8px rgba(255, 255, 255, 0.1);
       opacity: 1;
     }
   }
 }
 
-// Glitch Clip Effect
-@mixin glitch-clip {
-  @keyframes glitch-clip {
-    0%, 100% { 
-      clip-path: inset(0 0 0 0);
+// Glitch Text Effects
+@mixin glitch-text {
+  @keyframes glitch-text {
+    0% {
       transform: translate(0);
     }
-    98.5% { 
-      clip-path: inset(0 0 0 0);
+    25% {
+      transform: translate(-$glitch-offset, $glitch-offset);
+    }
+    50% {
+      $half-offset: math.div($glitch-offset, 2);
+      transform: translate(-$half-offset, -$half-offset);
+    }
+    75% {
+      $half-offset: math.div($glitch-offset, 2);
+      transform: translate($half-offset, $half-offset);
+    }
+    100% {
       transform: translate(0);
-    }
-    99% {
-      clip-path: inset(10% 0 20% 0);
-      transform: translate($glitch-offset);
-    }
-    99.5% {
-      clip-path: inset(30% 0 10% 0);
-      transform: translate(-$glitch-offset);
     }
   }
 }
 
-// Scan Line Effect
-@mixin scan-line {
-  @keyframes scan-line {
-    0% {
-      transform: translateY(-100%);
-      opacity: 0;
+@mixin glitch-skew {
+  @keyframes glitch-skew {
+    0%, 100% { transform: skew(0deg); }
+    25% { transform: skew(0.5deg); }
+    50% { transform: skew(-0.5deg); }
+    75% { transform: skew(0.25deg); }
+  }
+}
+
+@mixin glitch-scale {
+  @keyframes glitch-scale {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.01); }
+    50% { transform: scale(0.99); }
+    75% { transform: scale(1.005); }
+  }
+}
+
+@mixin glitch-clip {
+  @keyframes glitch-clip {
+    0%, 100% { clip-path: inset(0 0 0 0); }
+    25% { clip-path: inset(15% -3px 10% 0); }
+    50% { clip-path: inset(25% 0 20% 0); }
+    75% { clip-path: inset(5% 0 15% 0); }
+  }
+}
+
+// Chromatic Aberration Effect
+@mixin chromatic-aberration {
+  @keyframes chromatic-aberration {
+    0%, 100% {
+      text-shadow: 2px 0 2px rgba(255, 0, 0, 0.5),
+                  -2px 0 2px rgba(0, 255, 0, 0.5),
+                  0 0 8px rgba(0, 0, 255, 0.5);
     }
-    50% {
-      opacity: 0.5;
+    33% {
+      text-shadow: -2px 0 2px rgba(255, 0, 0, 0.5),
+                  2px 0 2px rgba(0, 255, 0, 0.5),
+                  0 0 8px rgba(0, 0, 255, 0.5);
     }
-    100% {
-      transform: translateY(100%);
-      opacity: 0;
+    66% {
+      text-shadow: 1px -1px 2px rgba(255, 0, 0, 0.5),
+                  -1px 1px 2px rgba(0, 255, 0, 0.5),
+                  0 0 8px rgba(0, 0, 255, 0.5);
     }
   }
 }
@@ -131,10 +166,10 @@ $scan-line-color: rgba(255, 255, 255, 0.05);
   }
 }
 
-// Background Movement
+// Background Animation
 @mixin about-background {
   @keyframes about-background {
-    0% {
+    0%, 100% {
       transform: translateX(0);
       opacity: $about-background-opacity;
     }
@@ -144,89 +179,37 @@ $scan-line-color: rgba(255, 255, 255, 0.05);
     }
     50% {
       transform: translateX(0.5rem);
-      opacity: $about-background-opacity * 1.5;
+      opacity: math.div($about-background-opacity * 3, 2);
     }
     52% {
       transform: translateX(-0.5rem);
       opacity: $about-background-opacity;
     }
-    100% {
+    75% {
       transform: translateX(1rem);
       opacity: $about-background-opacity;
     }
   }
 }
 
-// Hover Glitch Effect
-@mixin hover-glitch {
-  @keyframes hover-glitch {
-    0%, 100% { transform: translate(0); }
-    98% { transform: translate(0); }
-    99% { transform: translate($glitch-offset, -$glitch-offset); }
-  }
-}
-
-
-@mixin chromatic-aberration {
-  @keyframes chromatic-aberration {
+// Scan Line Effect
+@mixin scan-line {
+  @keyframes scan-line {
     0% {
-      text-shadow: 2px 0 2px rgba(255, 0, 0, 0.5),
-                  -2px 0 2px rgba(0, 255, 0, 0.5),
-                  0 0 8px rgba(0, 0, 255, 0.5);
-    }
-    33% {
-      text-shadow: -2px 0 2px rgba(255, 0, 0, 0.5),
-                  2px 0 2px rgba(0, 255, 0, 0.5),
-                  0 0 8px rgba(0, 0, 255, 0.5);
-    }
-    66% {
-      text-shadow: 1px -1px 2px rgba(255, 0, 0, 0.5),
-                  -1px 1px 2px rgba(0, 255, 0, 0.5),
-                  0 0 8px rgba(0, 0, 255, 0.5);
-    }
-    100% {
-      text-shadow: 2px 0 2px rgba(255, 0, 0, 0.5),
-                  -2px 0 2px rgba(0, 255, 0, 0.5),
-                  0 0 8px rgba(0, 0, 255, 0.5);
-    }
-  }
-}
-
-// Animation Curves
-$curve-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-$curve-smooth: cubic-bezier(0.445, 0.050, 0.550, 0.950);
-
-// Terminal effect variables
-$glow-color: rgba(255, 255, 255, 0.05);
-$scan-line-size: 2px;
-
-// Text effect mixins
-@mixin soft-glow {
-  @keyframes soft-glow {
-    0%, 100% {
-      text-shadow: 0 0 2px $glow-color;
-      opacity: 0.98;
+      transform: translateY(-100%);
+      opacity: 0;
     }
     50% {
-      text-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
-      opacity: 1;
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateY(100%);
+      opacity: 0;
     }
   }
 }
 
-@mixin subtle-flicker {
-  @keyframes subtle-flicker {
-    0%, 100% { opacity: 1; }
-    35% { opacity: 0.98; }
-    37% { opacity: 0.95; }
-    39% { opacity: 0.98; }
-    65% { opacity: 0.95; }
-    67% { opacity: 0.93; }
-    69% { opacity: 0.95; }
-    85% { opacity: 1; }
-  }
-}
-
+// Text Distortion Effect
 @mixin text-distort {
   @keyframes text-distort {
     0%, 100% { 
@@ -244,157 +227,16 @@ $scan-line-size: 2px;
   }
 }
 
-// Original animations
-@mixin bounce($duration: $duration-normal) {
-  transition: all $duration $curve-bounce;
-}
-
-@mixin about-letter {
-  @keyframes about-letter {
-    0% {
-      font-size: $about-title-size;
-      font-weight: $font-weight-bold;
-      filter: brightness(1);
-    }
-    50% {
-      filter: brightness(1.2);
-    }
-    100% {
-      font-size: $about-title-hover-size;
-      font-weight: $font-weight-regular;
-      filter: brightness(1);
-    }
-  }
-}
-
-@mixin about-letter-reverse {
-  @keyframes about-letter-reverse {
-    0% {
-      font-size: $about-title-hover-size;
-      font-weight: $font-weight-regular;
-      filter: brightness(1.2);
-    }
-    100% {
-      font-size: $about-title-size;
-      font-weight: $font-weight-bold;
-      filter: brightness(1);
-    }
-  }
-}
-
-@mixin about-background {
-  @keyframes about-background {
-    0% {
-      transform: translateX(0rem);
-    }
-    100% {
-      transform: translateX(1rem);
-    }
-  }
-}
-
-
-@mixin glitch-text {
-  @keyframes glitch-text {
-    0% {
-      transform: translate(0);
-    }
-    25% {
-      transform: translate(-$glitch-offset, $glitch-offset);
-    }
-    50% {
-      transform: translate(-$glitch-offset/2, -$glitch-offset/2);
-    }
-    75% {
-      transform: translate($glitch-offset/2, $glitch-offset/2);
-    }
-    100% {
-      transform: translate(0);
-    }
-  }
-}
-
-@mixin glitch-skew {
-  @keyframes glitch-skew {
-    0% {
-      transform: skew(0deg);
-    }
-    25% {
-      transform: skew(0.5deg);
-    }
-    50% {
-      transform: skew(-0.5deg);
-    }
-    75% {
-      transform: skew(0.25deg);
-    }
-    100% {
-      transform: skew(0deg);
-    }
-  }
-}
-
-@mixin glitch-scale {
-  @keyframes glitch-scale {
-    0% {
-      transform: scale(1);
-    }
-    25% {
-      transform: scale(1.01);
-    }
-    50% {
-      transform: scale(0.99);
-    }
-    75% {
-      transform: scale(1.005);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-}
-
-@mixin glitch-clip {
-  @keyframes glitch-clip {
-    0% {
-      clip-path: inset(0 0 0 0);
-    }
-    25% {
-      clip-path: inset(15% -3px 10% 0);
-    }
-    50% {
-      clip-path: inset(25% 0 20% 0);
-    }
-    75% {
-      clip-path: inset(5% 0 15% 0);
-    }
-    100% {
-      clip-path: inset(0 0 0 0);
-    }
-  }
-}
-
-@mixin chromatic-aberration {
-  @keyframes chromatic-aberration {
-    0% {
-      text-shadow: 2px 0 2px rgba(255, 0, 0, 0.5),
-                  -2px 0 2px rgba(0, 255, 0, 0.5),
-                  0 0 8px rgba(0, 0, 255, 0.5);
-    }
-    33% {
-      text-shadow: -2px 0 2px rgba(255, 0, 0, 0.5),
-                  2px 0 2px rgba(0, 255, 0, 0.5),
-                  0 0 8px rgba(0, 0, 255, 0.5);
-    }
-    66% {
-      text-shadow: 1px -1px 2px rgba(255, 0, 0, 0.5),
-                  -1px 1px 2px rgba(0, 255, 0, 0.5),
-                  0 0 8px rgba(0, 0, 255, 0.5);
-    }
-    100% {
-      text-shadow: 2px 0 2px rgba(255, 0, 0, 0.5),
-                  -2px 0 2px rgba(0, 255, 0, 0.5),
-                  0 0 8px rgba(0, 0, 255, 0.5);
-    }
+// Subtle Flicker Effect
+@mixin subtle-flicker {
+  @keyframes subtle-flicker {
+    0%, 100% { opacity: 1; }
+    35% { opacity: 0.98; }
+    37% { opacity: 0.95; }
+    39% { opacity: 0.98; }
+    65% { opacity: 0.95; }
+    67% { opacity: 0.93; }
+    69% { opacity: 0.95; }
+    85% { opacity: 1; }
   }
 }

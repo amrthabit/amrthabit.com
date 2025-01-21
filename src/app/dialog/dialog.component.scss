@@ -18,8 +18,17 @@
 
   dialog[open] {
     display: block;
-    animation: slide-up$duration-normal ease-out forwards;
+    animation: slide-up $duration-normal ease-out forwards;
   }
 }
 
-@include slide-up;
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(15%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
