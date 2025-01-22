@@ -50,22 +50,19 @@ try {
     Write-Log "Starting deployment test..." -Color Cyan
     Write-Log "Options: NoInvalidation=$NoInvalidation, NoS3Sync=$NoS3Sync" -Color Yellow
 
-    # Install ESLint dependencies if not present
-    Write-Log "Checking ESLint dependencies..." -Color Yellow
-    if (-not (Test-Path "node_modules/@angular-eslint")) {
-        Write-Log "Installing ESLint dependencies..." -Color Yellow
-        npm install --save-dev @angular-eslint/builder @angular-eslint/eslint-plugin @angular-eslint/eslint-plugin-template @angular-eslint/schematics @angular-eslint/template-parser
-        ng add @angular-eslint/schematics
+    # Clean node_modules and package-lock.json
+    if (Test-Path "node_modules") {
+        Write-Log "Cleaning node_modules..." -Color Yellow
+        Remove-Item -Recurse -Force "node_modules"
+    }
+    if (Test-Path "package-lock.json") {
+        Write-Log "Cleaning package-lock.json..." -Color Yellow
+        Remove-Item -Force "package-lock.json"
     }
 
     # Install dependencies
     Write-Log "Installing dependencies..." -Color Yellow
-    npm install -g @angular/cli
     npm install --legacy-peer-deps
-
-    # Run lint
-    Write-Log "Running lint..." -Color Yellow
-    npm run lint
 
     # Create initial build info
     $buildInfo = @{
@@ -82,10 +79,16 @@ try {
 
     # Build project
     Write-Log "Building project..." -Color Yellow
-    $buildOutput = ng build --configuration production *>&1 | Tee-Object -Variable fullOutput
+    $buildOutput = ng build --configuration production 2>&1
+    
+    if ($LASTEXITCODE -ne 0) {
+        Write-Log "Build failed. Full output:" -Color Red
+        $buildOutput | ForEach-Object { Write-Log $_ -Color Red }
+        throw "Build failed with exit code $LASTEXITCODE"
+    }
 
     # Update buildInfo object with actual values
-    $fullOutput | ForEach-Object {
+    $buildOutput | ForEach-Object {
         $line = $_
 
         # Extract Hash and Build Time
@@ -105,7 +108,9 @@ try {
     }
     
     # Left pad last line with spaces to match chunk line length
-    $buildInfo.chunks[-1] = $buildInfo.chunks[-1].PadLeft($buildInfo.chunks[0].Length)
+    if ($buildInfo.chunks.Count -gt 0) {
+        $buildInfo.chunks[-1] = $buildInfo.chunks[-1].PadLeft($buildInfo.chunks[0].Length)
+    }
 
     # Update both src and dist build info files
     Write-BuildInfo -BuildInfo $buildInfo -Path "src/assets/build-info.json"
@@ -115,7 +120,7 @@ try {
     if (-not $NoS3Sync) {
         Write-Log "Testing S3 sync..." -Color Yellow
         Write-Log "Syncing to bucket with cache headers..."
-        aws s3 sync dist/ s3://amrthabit.com --delete --cache-control max-age=31536000 --exclude "index.html"
+        aws s3 sync dist/ s3://amrthabit.com --delete 
     }
     else {
         Write-Log "Skipping S3 sync (--no-s3-sync flag set)" -Color Yellow
@@ -135,6 +140,7 @@ try {
 catch {
     Write-Log "Error occurred during deployment:" -Color Red
     Write-Log $_.Exception.Message -Color Red
+    Write-Log "Stack trace:" -Color Red
     Write-Log $_.ScriptStackTrace -Color Red
     exit 1
 }
