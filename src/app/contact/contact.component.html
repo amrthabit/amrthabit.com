@@ -100,13 +100,41 @@
   </div>
 
   <!-- Build Info -->
-  <div *ngIf="buildInfo" class="build-info" (mouseenter)="toggleDetails()" (mouseleave)="toggleDetails()">
-    Build at: {{buildInfo.timestamp}} - Hash: {{buildInfo.hash}}
-    
+  <div
+    *ngIf="buildInfo"
+    class="build-info"
+    (mouseenter)="toggleDetails()"
+    (mouseleave)="toggleDetails()"
+  >
+    <span
+      >Build at <strong>{{ buildInfo.timestamp }}</strong></span
+    ><span>
+      with hash <strong>{{ buildInfo.hash }}</strong></span
+    >
+
     <div *ngIf="showDetails" class="build-details">
-      <div>Build Time: {{buildInfo.buildTime}}ms - Build Location: {{buildInfo.buildLocation}}</div>
-      <div class="chunk-info">
-        <div *ngFor="let chunk of buildInfo.chunks">{{chunk}}</div>
+      <div class="build-details-header">
+        <span
+          >Build took <strong>{{ buildInfo.buildTime }}ms </strong>
+        </span>
+        <span
+          >using <strong>{{ buildInfo.buildLocation }}</strong></span
+        >
+      </div>
+      <div class="chunk-info" *ngIf="!isMobile">
+        <div *ngFor="let chunk of buildInfo.chunks">{{ chunk }}</div>
+      </div>
+
+      <!-- Mobile format -->
+      <div class="chunk-info mobile" *ngIf="isMobile">
+        <div class="a-chunk" *ngFor="let chunk of buildInfo.chunksMobile">
+          <div class="file">{{ chunk.file }}</div>
+          <div class="details">
+            <span class="size"
+              >{{ chunk.rawSize }} / {{ chunk.transferSize }}</span
+            >
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -24,6 +24,28 @@ function Write-Log {
     "$timeStamp - $Message" | Out-File -FilePath $logFile -Append
 }
 
+# Function to write build info to a specific path
+function Write-BuildInfo {
+    param($BuildInfo, $Path)
+    Write-Log "Writing build-info.json to: $Path" -Color Yellow
+    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $Path)
+    $BuildInfo | ConvertTo-Json | Out-File -FilePath $Path -Encoding UTF8
+}
+
+# Function to parse chunk line into mobile format
+function Format-ChunkForMobile {
+    param($ChunkLine)
+    if ($ChunkLine -match "^\s*(.*?)\s*\|\s*(.*?)\s*\|\s*(.*?)\s*\|\s*(.*?)\s*$") {
+        return @{
+            file         = $matches[1].Trim()
+            name         = $matches[2].Trim()
+            rawSize      = $matches[3].Trim()
+            transferSize = $matches[4].Trim()
+        }
+    }
+    return $null
+}
+
 try {
     Write-Log "Starting deployment test..." -Color Cyan
     Write-Log "Options: NoInvalidation=$NoInvalidation, NoS3Sync=$NoS3Sync" -Color Yellow
@@ -45,26 +67,26 @@ try {
     Write-Log "Running lint..." -Color Yellow
     npm run lint
 
+    # Create initial build info
+    $buildInfo = @{
+        timestamp     = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
+        hash          = "building..."
+        buildTime     = "0"
+        chunks        = @()
+        chunksMobile  = @()
+        buildLocation = "Local (PowerShell)"
+    }
+
+    # Write initial build info to src/assets (for ng serve)
+    Write-BuildInfo -BuildInfo $buildInfo -Path "src/assets/build-info.json"
+
     # Build project
     Write-Log "Building project..." -Color Yellow
     $buildOutput = ng build --configuration production *>&1 | Tee-Object -Variable fullOutput
 
-    # Ensure the assets directory exists
-    New-Item -ItemType Directory -Force -Path "dist/assets"
-
-    # Initialize buildInfo object
-    $buildInfo = @{
-        timestamp = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
-        hash = ""
-        buildTime = ""
-        chunks = @()
-        buildLocation = "Local (PowerShell)"
-    }
-
-    # Parse the build output
+    # Update buildInfo object with actual values
     $fullOutput | ForEach-Object {
         $line = $_
-        Write-Log $line
 
         # Extract Hash and Build Time
         if ($line -match "Hash: ([a-f0-9]+).*Time: (\d+)ms") {
@@ -73,25 +95,29 @@ try {
         }
 
         # Collect chunk information
-        if ($line -match "\.(js|css)\s+\|.*\|.*\|") {
-            $buildInfo.chunks += $line.Trim()
+        if ($line -match "\|.*\|.*\|") {
+            $buildInfo.chunks += $line
+            $mobileChunk = Format-ChunkForMobile -ChunkLine $line
+            if ($mobileChunk) {
+                $buildInfo.chunksMobile += $mobileChunk
+            }
         }
     }
+    
+    # Left pad last line with spaces to match chunk line length
+    $buildInfo.chunks[-1] = $buildInfo.chunks[-1].PadLeft($buildInfo.chunks[0].Length)
 
-    # Save build info to JSON file
-    $buildInfoJson = $buildInfo | ConvertTo-Json
-    Write-Log "Saving build info to dist/assets/build-info.json" -Color Yellow
-    $buildInfoJson | Out-File -FilePath "dist/assets/build-info.json" -Encoding UTF8
+    # Update both src and dist build info files
+    Write-BuildInfo -BuildInfo $buildInfo -Path "src/assets/build-info.json"
+    Write-BuildInfo -BuildInfo $buildInfo -Path "dist/assets/build-info.json"
 
     # S3 sync if not disabled
     if (-not $NoS3Sync) {
         Write-Log "Testing S3 sync..." -Color Yellow
         Write-Log "Syncing to bucket with cache headers..."
-        aws s3 sync dist/ s3://amrthabit.com --delete --cache-control max-age=31536000,public
-
-        Write-Log "Updating index.html with no-cache..."
-        aws s3 cp dist/index.html s3://amrthabit.com/index.html --cache-control no-cache
-    } else {
+        aws s3 sync dist/ s3://amrthabit.com --delete --cache-control max-age=31536000 --exclude "index.html"
+    }
+    else {
         Write-Log "Skipping S3 sync (--no-s3-sync flag set)" -Color Yellow
     }
 
@@ -99,7 +125,8 @@ try {
     if (-not $NoInvalidation) {
         Write-Log "Creating CloudFront invalidation..." -Color Yellow
         aws cloudfront create-invalidation --distribution-id E2AOZ72PC8R9GV --paths "/*"
-    } else {
+    }
+    else {
         Write-Log "Skipping CloudFront invalidation (--no-invalidation flag set)" -Color Yellow
     }
 

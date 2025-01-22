@@ -1,0 +1,52 @@
+﻿{
+    "buildLocation":  "Local (PowerShell)",
+    "hash":  "55cad1c2167e9a60",
+    "timestamp":  "2025-01-22T00:57:13.938Z",
+    "buildTime":  "2552",
+    "chunksMobile":  [
+                         {
+                             "rawSize":  "Raw Size",
+                             "name":  "Names",
+                             "file":  "Initial Chunk Files",
+                             "transferSize":  "Estimated Transfer Size"
+                         },
+                         {
+                             "rawSize":  "406.43 kB",
+                             "name":  "main",
+                             "file":  "main.bb2003b1915d2fbd.js",
+                             "transferSize":  "94.32 kB"
+                         },
+                         {
+                             "rawSize":  "32.98 kB",
+                             "name":  "polyfills",
+                             "file":  "polyfills.243c3b3b9949db5d.js",
+                             "transferSize":  "10.66 kB"
+                         },
+                         {
+                             "rawSize":  "2.94 kB",
+                             "name":  "styles",
+                             "file":  "styles.ee6755d96bf775f4.css",
+                             "transferSize":  "884 bytes"
+                         },
+                         {
+                             "rawSize":  "890 bytes",
+                             "name":  "runtime",
+                             "file":  "runtime.a9340aa0e1064d4f.js",
+                             "transferSize":  "504 bytes"
+                         },
+                         {
+                             "rawSize":  "443.22 kB",
+                             "name":  "Initial Total",
+                             "file":  "",
+                             "transferSize":  "106.33 kB"
+                         }
+                     ],
+    "chunks":  [
+                   "Initial Chunk Files           | Names         |  Raw Size | Estimated Transfer Size",
+                   "main.bb2003b1915d2fbd.js      | main          | 406.43 kB |                94.32 kB",
+                   "polyfills.243c3b3b9949db5d.js | polyfills     |  32.98 kB |                10.66 kB",
+                   "styles.ee6755d96bf775f4.css   | styles        |   2.94 kB |               884 bytes",
+                   "runtime.a9340aa0e1064d4f.js   | runtime       | 890 bytes |               504 bytes",
+                   "                              | Initial Total | 443.22 kB |               106.33 kB"
+               ]
+}
