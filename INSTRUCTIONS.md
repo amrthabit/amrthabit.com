@@ -3,178 +3,59 @@
 ## Setup
 
 1. **Prerequisites**
-   ```bash
-   # Install Node.js LTS version
-   # Install Angular CLI globally
-   npm install -g @angular/cli
-   ```
+- Node.js 16.x
+- Docker Desktop
+- AWS CLI (configured)
+- Angular CLI: `npm install -g @angular/cli`
 
 2. **Installation**
-   ```bash
-   # Clone the repository
-   git clone https://github.com/yourusername/amrthabit.com.git
-   
-   # Navigate to project directory
-   cd amrthabit.com
-   
-   # Install dependencies
-   npm install
-   ```
+```bash
+git clone https://github.com/amrthabit/amrthabit.com.git
+cd amrthabit.com
+npm install --legacy-peer-deps
+```
 
-3. **Development Server**
-   ```bash
-   # Start development server
-   ng serve
-   
-   # For HTTPS (needed for vibration API)
-   ng serve --ssl true
-   
-   # For custom cert
-   ng serve --ssl true --ssl-cert path/to/cert.pem --ssl-key path/to/key.pem
-   ```
+## Development
 
-## Development Guidelines
+1. **Local Server**
+```bash
+# Development with SSL (required for haptic feedback)
+ng serve --ssl true
+```
 
-### Working with Styles
+2. **Docker Build**
+```powershell
+# Build and deploy using Docker
+.\build-local.ps1
+```
 
-1. **Using Variables**
-   - Always use variables from `_variables.scss` for consistency
-   - Add new variables to appropriate sections
-   - Use semantic naming for new variables
+3. **Manual Deployment**
+```powershell
+# Full deployment with CloudFront invalidation
+.\deploy.ps1
 
-2. **Adding Animations**
-   - Define new animations in `_animations.scss`
-   - Use existing animation curves when possible
-   - Test performance on mobile devices
+# Skip invalidation
+.\deploy.ps1 -NoInvalidation
 
-3. **Responsive Design**
-   - Use provided mixins for breakpoints
-   - Test all features on mobile devices
-   - Ensure touch targets are adequate size
-
-### Form Development
-
-1. **Validation**
-   ```typescript
-   // Example of form validation with haptic feedback
-   if (!form.valid) {
-     this.tryVibrate([5, 100, 5]);
-     return;
-   }
-   ```
-
-2. **Haptic Feedback**
-   - Only use vibration after user interaction
-   - Keep vibrations short and meaningful
-   - Always provide visual feedback alongside haptic
-
-### Animation Development
-
-1. **Glitch Effects**
-   ```scss
-   // Example of adding glitch effect
-   .element {
-     animation: glitch-text 3s infinite $curve-smooth;
-   }
-   ```
-
-2. **Performance**
-   - Use hardware-accelerated properties
-   - Test animations on lower-end devices
-   - Provide reduced motion alternatives
-
-## Testing
-
-1. **Unit Tests**
-   ```bash
-   # Run unit tests
-   ng test
-   ```
-
-2. **End-to-End Tests**
-   ```bash
-   # Run e2e tests
-   ng e2e
-   ```
-
-3. **Manual Testing Checklist**
-   - Test on multiple browsers
-   - Test on various mobile devices
-   - Verify form validation
-   - Check animation performance
-   - Test haptic feedback
-   - Verify responsive layouts
-
-## Building
-
-1. **Development Build**
-   ```bash
-   ng build
-   ```
-
-2. **Production Build**
-   ```bash
-   ng build --configuration production
-   ```
-
-## Deployment
-
-1. **AWS S3 Deployment**
-   ```bash
-   # Install AWS CLI
-   # Configure AWS credentials
-   
-   # Sync build folder with S3
-   aws s3 sync dist/amrthabit s3://your-bucket-name
-   ```
-
-2. **CloudFront Update**
-   ```bash
-   # Invalidate CloudFront cache
-   aws cloudfront create-invalidation --distribution-id YOUR_DISTRIBUTION_ID --paths "/*"
-   ```
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Vibration API Not Working**
-   - Ensure HTTPS is enabled
-   - Check browser support
-   - Verify user interaction occurred
-
-2. **Animation Performance**
-   - Reduce animation complexity
-   - Use hardware acceleration
-   - Check browser dev tools performance panel
-
-3. **CORS Issues**
-   - Check API endpoint configuration
-   - Verify SSL certificates
-   - Review security headers
+# Skip S3 sync
+.\deploy.ps1 -NoS3Sync
+```
 
 ## Best Practices
 
-1. **Code Organization**
-   - Follow Angular style guide
-   - Keep components focused and small
-   - Use TypeScript features appropriately
-   - Always write complete code, never use "previous styles remain the same" or similar
-   - Reread files before modifying them if they're frequently updated
+1. **Styling**
+- Use variables from `_variables.scss`
+- Follow existing animation patterns
+- Test responsive layouts
 
 2. **Performance**
-   - Optimize images and assets
-   - Minimize bundle size
-   - Use lazy loading where appropriate
-   - Consider animation performance impact
+- Optimize animations for mobile
+- Test touch interactions
+- Monitor bundle size
 
-3. **Security**
-   - Validate all inputs
-   - Sanitize user content
-   - Keep dependencies updated
+3. **Development Flow**
+- Test locally with Docker
+- Verify AWS credentials
+- Check build-info.json generation
 
-4. **Code Clarity**
-   - Write complete, explicit code without shortcuts
-   - Include all necessary styles even if unchanged
-   - Document changes comprehensively
-   - Maintain full context in code reviews
+See [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) for codebase organization.

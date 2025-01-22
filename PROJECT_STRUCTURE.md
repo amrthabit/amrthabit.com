@@ -1,106 +1,56 @@
 # Project Structure
 
-## Directory Organization
+## Core Directories
 
 ```
-src/
-├── app/                      # Application components
-│   ├── about/               # About page component
-│   ├── contact/             # Contact section
-│   ├── contact-form/        # Contact form component
-│   ├── dialog/             # Reusable dialog component
-│   ├── links/              # Links section
-│   ├── projects/           # Projects section
-│   ├── title/              # Title component with animations
-│   └── app.component.*     # Root component files
-├── assets/                  # Static assets
-│   ├── fonts/              # Custom fonts
-│   └── icons/              # SVG icons
-└── styles/                  # Global styles
-    ├── _variables.scss     # Global SCSS variables
-    ├── _animations.scss    # Animation definitions
-    ├── _about.scss        # About-specific variables
-    └── _mixins.scss       # Reusable mixins
-
+.
+├── .aws/                   # AWS configuration files
+├── src/
+│   ├── app/               # Angular components
+│   ├── assets/            # Static files
+│   └── styles/            # Global SCSS files
+├── build.sh               # Docker build script
+├── deploy.ps1             # PowerShell deployment
+└── build-local.ps1        # Local Docker build
 ```
 
-## Style Architecture
+## Key Components
 
-### Variables Organization (`_variables.scss`)
-- Typography (fonts, sizes, weights)
-- Colors (primary, background, text, states)
-- Spacing scales
-- Breakpoints
-- Animation timings
-- Component-specific variables
-- Z-index scales
+### AWS Configuration
+- `cloudformation.yml`: Resources and IAM roles
+- `buildspec.yml`: CodeBuild pipeline
+- `deployment.yml`: S3 and CloudFront settings
 
-### Animations (`_animations.scss`)
-- Transition curves
-- Animation mixins
-- Keyframe definitions
-- Interactive effects
+### Build Scripts
+- `build.sh`: Docker container build process
+- `deploy.ps1`: Manual deployment script
+- `build-local.ps1`: Local Docker environment
 
-### Mixins (`_mixins.scss`)
-- Responsive design helpers
-- Common patterns
-- Layout utilities
-- Interactive states
+### Angular Components
+- `about/`: Bio and information
+- `contact/`: Email form with haptic feedback
+- `projects/`: Portfolio showcase
+- `title/`: Animated header
+- `links/`: Social and external links
 
-## Component Structure
+### Styles
+- `_variables.scss`: Global variables
+- `_animations.scss`: Custom animations
+- `_mixins.scss`: Reusable patterns
 
-### Each component typically includes:
-- Component class (`.ts`)
-- Template (`.html`)
-- Styles (`.scss`)
-- Tests (`.spec.ts`)
+## Development Guidelines
 
-### Key Components:
+1. **Component Structure**
+- Maintain single responsibility
+- Keep styles scoped
+- Document complex animations
 
-#### Contact Form
-- Form validation
-- Haptic feedback
-- Success/error states
-- Loading states
-- Responsive layout
+2. **Style Architecture**
+- Follow existing naming patterns
+- Use provided mixins
+- Maintain responsive design
 
-#### Title
-- Advanced glitch effects
-- Chromatic aberration
-- Interactive animations
-- Responsive scaling
-
-#### Dialog
-- Modal overlay
-- Animation transitions
-- Backdrop effects
-
-## Style Guidelines
-
-### SCSS Best Practices
-- Use variables for repeated values
-- Nest selectors max 3 levels deep
-- Follow BEM naming when applicable
-- Use mixins for repeated patterns
-- Keep component styles modular
-
-### Animation Guidelines
-- Use curves for smooth transitions
-- Keep animations under 400ms
-- Provide reduced-motion alternatives
-- Use transform over position properties
-- Optimize for performance
-
-### Responsive Design
-- Mobile-first approach
-- Use standard breakpoints
-- Fluid typography
-- Flexible layouts
-- Touch-optimized interactions
-
-### Accessibility
-- Semantic HTML
-- ARIA labels where needed
-- Keyboard navigation
-- Focus management
-- Screen reader support
+3. **Build Process**
+- Test Docker builds locally
+- Verify AWS deployments
+- Monitor build artifacts
