@@ -34,6 +34,6 @@ switch ($Mode) {
     'wsl' {
         Write-Host "Running WSL build..."
         $flags = Get-FlagString
-        wsl bash ./scripts/docker/build.sh $flags
+        wsl bash ./scripts/docker/build.sh $flags   
     }
-}
+} 
