@@ -8,41 +8,42 @@ Run from the root directory:
 
 ```powershell
 # Local build (PowerShell)
-.\scripts\build.ps1
+.\scripts\build-all.ps1
 
 # Docker build
-.\scripts\build.ps1 -Mode docker
+.\scripts\build-all.ps1 -Environment docker
 
 # WSL build
-.\scripts\build.ps1 -Mode wsl
+.\scripts\build-all.ps1 -Environment wsl
 ```
 
 ## Available Flags
 
 - `-NoInvalidation` - Skip CloudFront invalidation
 - `-NoS3Sync` - Skip S3 sync
-- `-Mode` - Build mode: 'local' (default), 'docker', or 'wsl'
+- `-KeepPackages` - Skip removing and reinstalling node_modules (faster builds for debugging)
+- `-Environment` - Build environment: 'local' (default), 'docker', or 'wsl'
 
 ## Directory Structure
 
 - `/scripts`
-  - `build.ps1` - Main build script
-  - `deploy.ps1` - Local deployment script
+  - `build-all.ps1` - Main build script that handles all environments
+  - `build-local.ps1` - Local build script with build-info.json generation
   - `/docker`
     - `Dockerfile` - Docker configuration
     - `build.sh` - Build script for Docker/WSL
-    - `docker-build.ps1` - Docker image builder
-    - `docker-run.ps1` - Docker container runner
+    - `create-image.ps1` - Docker image builder
+    - `run-container.ps1` - Docker container runner
 
 ## Examples
 
 ```powershell
 # Build locally without deployment
-.\scripts\build.ps1 -NoS3Sync
+.\scripts\build-all.ps1 -NoS3Sync
 
 # Build with Docker, no CloudFront invalidation
-.\scripts\build.ps1 -Mode docker -NoInvalidation
+.\scripts\build-all.ps1 -Environment docker -NoInvalidation
 
 # Full build in WSL
-.\scripts\build.ps1 -Mode wsl
+.\scripts\build-all.ps1 -Environment wsl
 ```

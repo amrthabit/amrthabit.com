@@ -36,9 +36,6 @@ ng serve --ssl true
 # Using PowerShell
 .\deploy.ps1
 ```
-
-See [INSTRUCTIONS.md](./INSTRUCTIONS.md) for detailed setup and [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) for codebase organization.
-
 ## AWS Configuration
 
 Configuration in `.aws/`:
@@ -46,3 +43,5 @@ Configuration in `.aws/`:
 - `buildspec.yml`: AWS CodeBuild instructions
 - `deployment.yml`: Deployment parameters
 - `certificate.yml`: SSL/TLS configuration
+
+IMPORTANT: Next, read [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) for codebase organization.

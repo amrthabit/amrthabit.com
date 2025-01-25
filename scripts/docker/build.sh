@@ -38,7 +38,7 @@ npm install --legacy-peer-deps
 
 # Create initial build-info.json
 mkdir -p src/assets
-cat > src/assets/build-info.json << BUILDJSON
+cat > src/assets/build-info.json <<EOF
 {
     "timestamp": "$(date -u +"%Y-%m-%dT%H:%M:%S.%3NZ")",
     "hash": "building...",
@@ -47,7 +47,7 @@ cat > src/assets/build-info.json << BUILDJSON
     "chunksMobile": [],
     "buildLocation": "$BUILD_LOCATION"
 }
-BUILDJSON
+EOF
 
 # Run lint (ignore errors)
 echo "Running lint..."

@@ -10,8 +10,7 @@
 │   ├── assets/            # Static files
 │   └── styles/            # Global SCSS files
 ├── build.sh               # Docker build script
-├── deploy.ps1             # PowerShell deployment
-└── build-local.ps1        # Local Docker build
+├── scripts/                # Build scripts
 ```
 
 ## Key Components
@@ -22,9 +21,7 @@
 - `deployment.yml`: S3 and CloudFront settings
 
 ### Build Scripts
-- `build.sh`: Docker container build process
-- `deploy.ps1`: Manual deployment script
-- `build-local.ps1`: Local Docker environment
+- `README.md`: Read this to understand what is happening in this directory
 
 ### Angular Components
 - `about/`: Bio and information

@@ -1,7 +1,8 @@
-# Test deployment script for amrthabit.com
+# Local build script for amrthabit.com
 param(
     [switch]$NoInvalidation = $false,
-    [switch]$NoS3Sync = $false
+    [switch]$NoS3Sync = $false,
+    [switch]$KeepPackages = $false
 )
 
 # Create logs directory if it doesn't exist
@@ -9,7 +10,7 @@ New-Item -ItemType Directory -Force -Path "logs"
 
 # Setup logging
 $timestamp = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
-$logFile = "logs/deploy_$timestamp.log"
+$logFile = "logs/build_$timestamp.log"
 
 function Write-Log {
     param($Message, $Color = "White")
@@ -47,22 +48,39 @@ function Format-ChunkForMobile {
 }
 
 try {
-    Write-Log "Starting deployment test..." -Color Cyan
+    Write-Log "Starting local build..." -Color Cyan
     Write-Log "Options: NoInvalidation=$NoInvalidation, NoS3Sync=$NoS3Sync" -Color Yellow
 
-    # Clean node_modules and package-lock.json
-    if (Test-Path "node_modules") {
-        Write-Log "Cleaning node_modules..." -Color Yellow
-        Remove-Item -Recurse -Force "node_modules"
-    }
-    if (Test-Path "package-lock.json") {
-        Write-Log "Cleaning package-lock.json..." -Color Yellow
-        Remove-Item -Force "package-lock.json"
-    }
+    # Clean and install packages if not keeping existing ones
+    if (-not $KeepPackages) {
+        if (Test-Path "node_modules") {
+            Write-Log "Cleaning node_modules..." -Color Yellow
+            Remove-Item -Recurse -Force "node_modules"
+        }
+        if (Test-Path "package-lock.json") {
+            Write-Log "Cleaning package-lock.json..." -Color Yellow
+            Remove-Item -Force "package-lock.json"
+        }
 
-    # Install dependencies
-    Write-Log "Installing dependencies..." -Color Yellow
-    npm install --legacy-peer-deps
+        Write-Log "Installing dependencies..." -Color Yellow
+        $npmOutput = npm install --legacy-peer-deps 2>&1
+        if ($LASTEXITCODE -ne 0) {
+            Write-Log "npm install failed. Output:" -Color Red
+            $npmOutput | ForEach-Object { Write-Log $_ -Color Red }
+            throw "npm install failed with exit code $LASTEXITCODE"
+        }
+    } else {
+        Write-Log "Keeping existing packages (--keep-packages flag set)" -Color Yellow
+        if (-not (Test-Path "node_modules")) {
+            Write-Log "Warning: node_modules not found. Installing dependencies despite --keep-packages flag..." -Color Yellow
+            $npmOutput = npm install --legacy-peer-deps 2>&1
+            if ($LASTEXITCODE -ne 0) {
+                Write-Log "npm install failed. Output:" -Color Red
+                $npmOutput | ForEach-Object { Write-Log $_ -Color Red }
+                throw "npm install failed with exit code $LASTEXITCODE"
+            }
+        }
+    }
 
     # Create initial build info
     $buildInfo = @{
@@ -79,7 +97,8 @@ try {
 
     # Build project
     Write-Log "Building project..." -Color Yellow
-    $buildOutput = ng build --configuration production 2>&1
+    Write-Log "Running build command: ng build --configuration production --verbose" -Color Yellow
+    $buildOutput = ng build --configuration production --verbose 2>&1
     
     if ($LASTEXITCODE -ne 0) {
         Write-Log "Build failed. Full output:" -Color Red
@@ -118,7 +137,7 @@ try {
 
     # S3 sync if not disabled
     if (-not $NoS3Sync) {
-        Write-Log "Testing S3 sync..." -Color Yellow
+        Write-Log "Syncing to S3..." -Color Yellow
         Write-Log "Syncing to bucket with cache headers..."
         aws s3 sync dist/ s3://amrthabit.com --delete 
     }
@@ -135,12 +154,13 @@ try {
         Write-Log "Skipping CloudFront invalidation (--no-invalidation flag set)" -Color Yellow
     }
 
-    Write-Log "Test deployment complete!" -Color Green
+    Write-Log "Local build complete!" -Color Green
 }
 catch {
-    Write-Log "Error occurred during deployment:" -Color Red
+    Write-Log "Error during build:" -Color Red
     Write-Log $_.Exception.Message -Color Red
     Write-Log "Stack trace:" -Color Red
     Write-Log $_.ScriptStackTrace -Color Red
+    Write-Log "Full log file: $logFile" -Color Red
     exit 1
 }

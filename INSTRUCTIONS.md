@@ -8,38 +8,8 @@
 - AWS CLI (configured)
 - Angular CLI: `npm install -g @angular/cli`
 
-2. **Installation**
-```bash
-git clone https://github.com/amrthabit/amrthabit.com.git
-cd amrthabit.com
-npm install --legacy-peer-deps
-```
-
-## Development
-
-1. **Local Server**
-```bash
-# Development with SSL (required for haptic feedback)
-ng serve --ssl true
-```
-
-2. **Docker Build**
-```powershell
-# Build and deploy using Docker
-.\build-local.ps1
-```
-
-3. **Manual Deployment**
-```powershell
-# Full deployment with CloudFront invalidation
-.\deploy.ps1
-
-# Skip invalidation
-.\deploy.ps1 -NoInvalidation
-
-# Skip S3 sync
-.\deploy.ps1 -NoS3Sync
-```
+2. **Assumption**
+- Using Windows for development
 
 ## Best Practices
 
@@ -58,4 +28,4 @@ ng serve --ssl true
 - Verify AWS credentials
 - Check build-info.json generation
 
-See [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) for codebase organization.
+IMPORTANT: Next, read [README.md](./README.md)

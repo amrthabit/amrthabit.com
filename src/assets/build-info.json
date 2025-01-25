@@ -1,8 +1,12 @@
-{
-    "timestamp": "2025-01-22T23:23:23.963Z",
-    "hash": "93425bdd6337be56",
-    "buildTime": "34257",
-    "chunks": [],
-    "chunksMobile": [],
-    "buildLocation": "Docker Container"
+﻿{
+    "buildLocation":  "Local (PowerShell)",
+    "hash":  "building...",
+    "timestamp":  "2025-01-24T21:17:45.816Z",
+    "buildTime":  "0",
+    "chunksMobile":  [
+
+                     ],
+    "chunks":  [
+
+               ]
 }
