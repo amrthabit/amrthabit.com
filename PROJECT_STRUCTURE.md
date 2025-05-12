@@ -1,106 +1,56 @@
 # Project Structure
 
-## Directory Organization
+This is a minimal personal website built with SvelteKit. Here's a breakdown of the project structure:
 
-```
-src/
-├── app/                      # Application components
-│   ├── about/               # About page component
-│   ├── contact/             # Contact section
-│   ├── contact-form/        # Contact form component
-│   ├── dialog/             # Reusable dialog component
-│   ├── links/              # Links section
-│   ├── projects/           # Projects section
-│   ├── title/              # Title component with animations
-│   └── app.component.*     # Root component files
-├── assets/                  # Static assets
-│   ├── fonts/              # Custom fonts
-│   └── icons/              # SVG icons
-└── styles/                  # Global styles
-    ├── _variables.scss     # Global SCSS variables
-    ├── _animations.scss    # Animation definitions
-    ├── _about.scss        # About-specific variables
-    └── _mixins.scss       # Reusable mixins
+## Root Files
+- `package.json` - Project dependencies and scripts
+- `svelte.config.js` - SvelteKit configuration
+- `vite.config.js` - Vite bundler configuration
+- `tsconfig.json` - TypeScript configuration
+- `.gitignore` - Files to be ignored by git
 
-```
+## Directories
 
-## Style Architecture
+### /src
+The main source code directory.
 
-### Variables Organization (`_variables.scss`)
-- Typography (fonts, sizes, weights)
-- Colors (primary, background, text, states)
-- Spacing scales
-- Breakpoints
-- Animation timings
-- Component-specific variables
-- Z-index scales
+#### /src/app.html
+The main HTML template for the entire application. Contains:
+- Meta tags
+- Fonts (TeX Gyre Pagella, JetBrains Mono, Public Sans)
+- Head placeholders for SvelteKit
 
-### Animations (`_animations.scss`)
-- Transition curves
-- Animation mixins
-- Keyframe definitions
-- Interactive effects
+#### /src/app.d.ts
+TypeScript declarations for the project.
 
-### Mixins (`_mixins.scss`)
-- Responsive design helpers
-- Common patterns
-- Layout utilities
-- Interactive states
+#### /src/routes
+SvelteKit uses file-based routing.
 
-## Component Structure
+- `/src/routes/+layout.svelte` - The main layout that wraps all pages
+- `/src/routes/+page.svelte` - The main page of the site
+- `/src/routes/styles.scss` - Global styles for the site
 
-### Each component typically includes:
-- Component class (`.ts`)
-- Template (`.html`)
-- Styles (`.scss`)
-- Tests (`.spec.ts`)
+#### /src/lib
+Custom components and utilities.
 
-### Key Components:
+- `/src/lib/components/Nav.svelte` - The navigation component
 
-#### Contact Form
-- Form validation
-- Haptic feedback
-- Success/error states
-- Loading states
-- Responsive layout
+### /static
+Static assets like favicons and images.
 
-#### Title
-- Advanced glitch effects
-- Chromatic aberration
-- Interactive animations
-- Responsive scaling
+- `/static/favicon.svg` - SVG favicon
 
-#### Dialog
-- Modal overlay
-- Animation transitions
-- Backdrop effects
+## Styling Approach
+- SCSS is used for styling
+- A mix of global styles and component-scoped styles
+- CSS reset included in global styles
+- Dark color scheme with soft whites for text
 
-## Style Guidelines
+## Design Decisions
+- Minimalist design with focus on typography
+- Limited color palette (dark backgrounds, soft white text)
+- Mobile-responsive using media queries
+- Simple but elegant transitions and hover effects
 
-### SCSS Best Practices
-- Use variables for repeated values
-- Nest selectors max 3 levels deep
-- Follow BEM naming when applicable
-- Use mixins for repeated patterns
-- Keep component styles modular
-
-### Animation Guidelines
-- Use curves for smooth transitions
-- Keep animations under 400ms
-- Provide reduced-motion alternatives
-- Use transform over position properties
-- Optimize for performance
-
-### Responsive Design
-- Mobile-first approach
-- Use standard breakpoints
-- Fluid typography
-- Flexible layouts
-- Touch-optimized interactions
-
-### Accessibility
-- Semantic HTML
-- ARIA labels where needed
-- Keyboard navigation
-- Focus management
-- Screen reader support
+## Build Output
+When built (`npm run build`), the output is generated in the `/build` directory, ready for deployment.

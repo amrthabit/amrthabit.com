@@ -1,48 +1,88 @@
-# [amrthabit.com](https://amrthabit.com)
+# amrthabit.com
 
-Hello and welcome to my site's source code. The site is made with Angular and SCSS. It is a single page static web application hosted on [S3](https://aws.amazon.com/s3/) paired with [Cloudfront](https://aws.amazon.com/cloudfront/) for CDN. I get my domains from [Google Domains](https://domains.google.com) and I manage them with [Route 53](https://aws.amazon.com/route53/).
+A minimalist personal portfolio website built with SvelteKit.
 
-## Technology Stack
+## Features
 
-- **Frontend Framework**: [Angular CLI](https://github.com/angular/angular-cli) version 16.0.4
-- **Styling**: [SCSS](https://github.com/sass/sass) with organized variables and mixins
-- **Animations**: Custom CSS animations and transitions
-- **Hosting**: AWS S3 with CloudFront CDN
-- **Domain Management**: Google Domains with AWS Route 53
-- **CI/CD**: AWS CodeBuild with GitHub integration
+- Clean, elegant design with dark theme
+- Responsive layout for all device sizes
+- Fast and lightweight
+- Built with modern web technologies
 
-## Key Features
+## Tech Stack
 
-- Responsive design with mobile-first approach
-- Advanced CSS animations and transitions
-- Organized SCSS architecture with variables and mixins
-- Form validation with haptic feedback
-- Dynamic glitch effects and visual interactions
-- Optimized performance with CDN delivery
-- Automated deployments with AWS CodeBuild
+- **SvelteKit** - Modern JavaScript framework with server-side rendering
+- **SCSS** - For advanced styling capabilities
+- **TypeScript** - For type safety
+- **Vite** - Fast bundling and development server
 
 ## Development
 
-See [INSTRUCTIONS.md](./INSTRUCTIONS.md) for setup and development guidelines.
-See [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) for codebase organization details.
+### Prerequisites
 
-## AWS Infrastructure
+- Node.js (v16+)
+- npm or yarn
 
-The AWS infrastructure is managed using CloudFormation. The configuration files are located in the `.aws` directory:
+### Setup
 
-- `.aws/cloudformation.yml`: Defines the AWS resources (CodeBuild, IAM roles)
-- `.aws/buildspec.yml`: Build instructions for AWS CodeBuild
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/amrthabit.com.git
+   cd amrthabit.com
+   ```
 
-To deploy infrastructure changes:
-1. Update the CloudFormation template in `.aws/cloudformation.yml`
-2. Go to AWS CloudFormation console
-3. Update the stack with the new template
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-## Recent Updates
+3. Start development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
 
-- Added automated CI/CD with AWS CodeBuild
-- Added haptic feedback for form interactions
-- Implemented advanced glitch animations
-- Organized SCSS architecture for better maintainability
-- Enhanced mobile responsiveness
-- Added form validation improvements
+4. Open your browser and visit `http://localhost:5173`
+
+### Building for Production
+
+To create a production build:
+
+```bash
+npm run build
+# or
+yarn build
+```
+
+The output will be in the `build` directory.
+
+### Deployment
+
+This site is configured for easy deployment to various platforms:
+
+- **Vercel/Netlify**: Just connect your repository
+- **Static hosting**: Upload the contents of the `build` directory
+
+## Project Structure
+
+See [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) for a detailed breakdown of the project architecture.
+
+## Customization
+
+To customize this site for your own use:
+
+1. Update personal information in `src/routes/+page.svelte`
+2. Modify colors and styling in `src/routes/styles.scss`
+3. Replace contact links with your own
+4. Update the favicon in `static/favicon.svg`
+
+## License
+
+MIT
+
+## Author
+
+Amr Thabit
