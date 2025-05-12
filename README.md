@@ -1,47 +1,38 @@
-# [amrthabit.com](https://amrthabit.com)
+# sv
 
-Personal website built with Angular, featuring dynamic UI elements and automated AWS deployment.
+Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
-## Technology Stack
+## Creating a project
 
-- **Frontend**: Angular 16.0.4 with SCSS
-- **Infrastructure**: AWS (S3, CloudFront, Route 53)
-- **CI/CD**: AWS CodeBuild with GitHub integration
-- **Build Tools**: Docker for local development
+If you're seeing this, you've probably already done this step. Congrats!
 
-## Key Features
+```bash
+# create a new project in the current directory
+npx sv create
 
-- Dynamic UI with custom animations and glitch effects
-- Responsive design with mobile-first approach
-- Form validation with haptic feedback
-- Automated AWS deployment pipeline
-- Local development environment with Docker
-
-## Quick Start
-
-1. **Local Development**
-```powershell
-# Start development server
-ng serve --ssl true
-
-# Build and deploy locally (with Docker)
-.\build-local.ps1
+# create a new project in my-app
+npx sv create my-app
 ```
 
-2. **Production Deployment**
-```powershell
-# Using Docker (recommended)
-.\build-local.ps1
+## Developing
 
-# Using PowerShell
-.\deploy.ps1
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+
+```bash
+npm run dev
+
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
 ```
-## AWS Configuration
 
-Configuration in `.aws/`:
-- `cloudformation.yml`: AWS resources
-- `buildspec.yml`: AWS CodeBuild instructions
-- `deployment.yml`: Deployment parameters
-- `certificate.yml`: SSL/TLS configuration
+## Building
 
-IMPORTANT: Next, read [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) for codebase organization.
+To create a production version of your app:
+
+```bash
+npm run build
+```
+
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
