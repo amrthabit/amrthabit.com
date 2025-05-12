@@ -17,7 +17,7 @@
     <p>
       Software developer based in Ontario, Canada with a background in computer science 
       from McMaster University. Currently working as a Project Engineer II at Evertz 
-      Microsystems, I like collaborating, learning, and building. Feel free to reach out:
+      Microsystems. I like collaborating, learning, and building. Feel free to reach out:
     </p>
     
     <div class="social">
