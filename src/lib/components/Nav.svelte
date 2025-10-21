@@ -1,5 +1,5 @@
-<script>
-  let scrollY;
+<script lang="ts">
+  let scrollY: number = 0;
   $: isScrolled = scrollY > 20;
 </script>
 
