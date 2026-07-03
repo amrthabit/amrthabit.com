@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>amrthabit.com: 20 directions</title>
+<style>
+  :root{
+    --bg:#f5f5f2; --card:#ffffff; --ink:#1b1d24; --mut:#6b6f7c; --line:#e2e2dc;
+    --acc:#2952e3; --acc-ink:#ffffff;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#121317; --card:#1a1c21; --ink:#e9e9ec; --mut:#8d919d; --line:#2a2d34; --acc:#8aa2ff; --acc-ink:#10121a; }
+  }
+  :root[data-theme="dark"]{ --bg:#121317; --card:#1a1c21; --ink:#e9e9ec; --mut:#8d919d; --line:#2a2d34; --acc:#8aa2ff; --acc-ink:#10121a; }
+  :root[data-theme="light"]{ --bg:#f5f5f2; --card:#ffffff; --ink:#1b1d24; --mut:#6b6f7c; --line:#e2e2dc; --acc:#2952e3; --acc-ink:#ffffff; }
+
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;margin:0;line-height:1.55}
+  .wrap{max-width:860px;margin:0 auto;padding:48px 20px 96px}
+
+  /* ---------- deck header ---------- */
+  .deck-head{margin-bottom:40px}
+  .deck-kicker{font-family:ui-monospace,"JetBrains Mono","Cascadia Code",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+  .deck-head h1{font-size:clamp(28px,5vw,44px);line-height:1.1;margin:10px 0 12px;letter-spacing:-.02em;text-wrap:balance}
+  .deck-head h1 em{font-style:normal;color:var(--acc)}
+  .deck-head p{max-width:62ch;color:var(--mut);margin:0}
+  .toc{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px}
+  .toc a{font-family:ui-monospace,"JetBrains Mono",monospace;font-size:11px;text-decoration:none;color:var(--ink);border:1px solid var(--line);background:var(--card);padding:4px 9px;border-radius:999px}
+  .toc a:hover,.toc a:focus-visible{border-color:var(--acc);color:var(--acc);outline:none}
+
+  /* ---------- proposal cards ---------- */
+  .prop{margin:44px 0;scroll-margin-top:24px}
+  .prop-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+  .num{font-family:ui-monospace,"JetBrains Mono",monospace;font-size:13px;color:var(--acc);font-variant-numeric:tabular-nums}
+  .prop-head h2{font-size:20px;margin:0;letter-spacing:-.01em}
+  .tag{font-family:ui-monospace,"JetBrains Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);border:1px solid var(--line);padding:2px 7px;border-radius:999px}
+  .gauge{margin-left:auto;display:flex;align-items:center;gap:7px;font-family:ui-monospace,"JetBrains Mono",monospace;font-size:10px;color:var(--mut)}
+  .gauge .track{width:72px;height:4px;border-radius:2px;background:var(--line);overflow:hidden}
+  .gauge .fill{height:100%;background:var(--acc)}
+  .pitch{color:var(--mut);font-size:14px;max-width:68ch;margin:0 0 14px}
+  .frame{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;overflow-x:auto}
+  .mock{min-width:640px;border-radius:6px;overflow:hidden}
+  a{color:inherit}
+
+  /* =============== 01 plain =============== */
+  .m1{background:#fff;color:#000;font-family:"Times New Roman",Times,serif;padding:28px 34px;font-size:16px}
+  .m1 h3{font-size:22px;margin:0 0 4px}
+  .m1 hr{border:none;border-top:1px solid #999;margin:8px 0 14px}
+  .m1 a{color:#0000ee;text-decoration:underline}
+  .m1 ul{margin:10px 0;padding-left:26px}
+  .m1 .upd{font-style:italic;color:#555;font-size:13px;margin-top:18px}
+
+  /* =============== 02 business card =============== */
+  .m2{background:#e9e6e0;padding:52px 0;display:flex;justify-content:center}
+  .m2 .card{background:#fbfaf7;width:360px;padding:34px 30px 26px;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,.14),0 8px 24px rgba(0,0,0,.10);border-radius:2px}
+  .m2 .name{font-family:Georgia,serif;font-size:21px;letter-spacing:.28em;text-transform:uppercase;color:#23252b;margin:0 0 10px}
+  .m2 .rule{width:44px;height:1px;background:#b7ab93;margin:0 auto 12px}
+  .m2 .role{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:#8a8474;margin:0 0 22px}
+  .m2 .links{font-size:11px;letter-spacing:.06em;color:#55524a;display:flex;justify-content:center;gap:14px}
+  .m2 .links a{text-decoration:none}
+
+  /* =============== 03 editorial =============== */
+  .m3{background:#fff;color:#181818;padding:36px 44px;font-family:Georgia,serif}
+  .m3 .kick{font-family:system-ui,sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#9a3412}
+  .m3 h3{font-size:34px;font-weight:400;font-style:italic;line-height:1.15;margin:8px 0 6px;letter-spacing:-.01em}
+  .m3 .byline{font-family:system-ui,sans-serif;font-size:11px;color:#777;border-bottom:1px solid #ddd;padding-bottom:12px;margin-bottom:14px}
+  .m3 p{font-size:15px;line-height:1.7;max-width:58ch;margin:0}
+  .m3 p::first-letter{font-size:44px;float:left;line-height:.85;padding:4px 8px 0 0}
+  .m3 sup a{color:#9a3412;text-decoration:none;font-family:system-ui,sans-serif;font-size:10px}
+  .m3 .refs{margin-top:16px;border-top:1px solid #ddd;padding-top:8px;font-size:11.5px;color:#666;font-family:system-ui,sans-serif}
+  .m3 .refs a{color:#9a3412}
+
+  /* =============== 04 swiss =============== */
+  .m4{background:#fff;color:#111;font-family:Helvetica,Arial,sans-serif;padding:0}
+  .m4 .bar{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid #111}
+  .m4 .bar div{padding:8px 12px;font-size:10px;letter-spacing:.05em;border-right:1px solid #111}
+  .m4 .bar div:last-child{border-right:none}
+  .m4 .hero{padding:34px 12px 30px;border-bottom:1px solid #111}
+  .m4 .hero h3{font-size:58px;font-weight:700;letter-spacing:-.04em;line-height:.95;margin:0}
+  .m4 .hero h3 span{color:#e30613}
+  .m4 .cols{display:grid;grid-template-columns:1fr 1fr 1fr}
+  .m4 .cols div{padding:12px;font-size:11.5px;line-height:1.5;border-right:1px solid #111}
+  .m4 .cols div:last-child{border-right:none}
+  .m4 .cols b{display:block;font-size:10px;letter-spacing:.08em;margin-bottom:4px}
+  .m4 a{text-decoration:none;border-bottom:1px solid #e30613}
+
+  /* =============== 05 brutalist =============== */
+  .m5{background:#ffe600;color:#000;font-family:Arial,Helvetica,sans-serif;padding:20px}
+  .m5 .box{border:4px solid #000;background:#fff;padding:18px;box-shadow:8px 8px 0 #000;margin-bottom:16px}
+  .m5 h3{font-size:44px;margin:0;letter-spacing:-.02em;text-transform:uppercase;line-height:.95}
+  .m5 .tick{background:#000;color:#ffe600;font-family:ui-monospace,monospace;font-size:12px;padding:6px 10px;white-space:nowrap;overflow:hidden;text-transform:uppercase;letter-spacing:.08em}
+  .m5 .row{display:flex;gap:12px;flex-wrap:wrap}
+  .m5 .row a{border:3px solid #000;background:#fff;color:#000;font-weight:700;text-transform:uppercase;font-size:13px;padding:8px 14px;text-decoration:none;box-shadow:5px 5px 0 #000}
+  .m5 p{font-size:14px;font-weight:700;max-width:52ch;margin:12px 0 0;text-transform:uppercase}
+
+  /* =============== 06 terminal =============== */
+  .m6{background:#0c0e12;color:#c7d0d9;font-family:ui-monospace,"JetBrains Mono","Cascadia Code",Menlo,monospace;font-size:13px;padding:0}
+  .m6 .tbar{background:#171a20;display:flex;align-items:center;gap:6px;padding:8px 12px;font-size:11px;color:#79818c}
+  .m6 .dot{width:10px;height:10px;border-radius:50%}
+  .m6 .body{padding:16px 18px;line-height:1.65}
+  .m6 .ps{color:#5ad07a}
+  .m6 .path{color:#6aa7ff}
+  .m6 .out{color:#c7d0d9}
+  .m6 .dim{color:#79818c}
+  .m6 .dir{color:#6aa7ff}
+  .m6 .cur{display:inline-block;width:8px;height:15px;background:#c7d0d9;vertical-align:-2px;animation:m6blink 1s steps(1) infinite}
+  @keyframes m6blink{50%{opacity:0}}
+  @media (prefers-reduced-motion: reduce){.m6 .cur{animation:none}}
+
+  /* =============== 07 man page =============== */
+  .m7{background:#fdfdf8;color:#222;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;padding:20px 26px;line-height:1.6}
+  .m7 .hd{display:flex;justify-content:space-between;font-weight:700}
+  .m7 h4{font-weight:700;font-size:12.5px;margin:16px 0 2px;text-transform:uppercase}
+  .m7 .in{padding-left:28px}
+  .m7 b{font-weight:700}
+  .m7 i{font-style:italic}
+  .m7 .ft{display:flex;justify-content:space-between;margin-top:20px;color:#555}
+
+  /* =============== 08 github =============== */
+  .m8{background:#0d1117;color:#e6edf3;font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;padding:24px;display:grid;grid-template-columns:200px 1fr;gap:24px}
+  .m8 .av{width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,#1f6feb,#238636);display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:600;border:1px solid #30363d}
+  .m8 .nm{font-size:22px;font-weight:600;margin:12px 0 0}
+  .m8 .hdl{color:#8d96a0;font-size:15px;margin:0 0 10px}
+  .m8 .bio{font-size:13px;margin:0 0 8px}
+  .m8 .loc{color:#8d96a0;font-size:12px}
+  .m8 .btn{display:block;text-align:center;background:#21262d;border:1px solid #363b42;border-radius:6px;color:#e6edf3;font-size:13px;padding:5px 0;margin:12px 0;text-decoration:none}
+  .m8 .sec{font-size:14px;margin:0 0 8px;color:#e6edf3}
+  .m8 .repos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+  .m8 .repo{border:1px solid #30363d;border-radius:6px;padding:12px;font-size:12px}
+  .m8 .repo a{color:#4493f8;font-weight:600;text-decoration:none}
+  .m8 .repo p{color:#8d96a0;margin:5px 0 8px}
+  .m8 .lang{display:inline-flex;align-items:center;gap:5px;color:#8d96a0;font-size:11px}
+  .m8 .lang i{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .m8 .graph{display:grid;grid-template-columns:repeat(40,1fr);gap:2px}
+  .m8 .graph i{aspect-ratio:1;border-radius:2px;background:#161b22}
+  .m8 .g1{background:#0e4429!important}.m8 .g2{background:#006d32!important}.m8 .g3{background:#26a641!important}.m8 .g4{background:#39d353!important}
+  .m8 .gcap{color:#8d96a0;font-size:11px;margin-top:6px}
+
+  /* =============== 09 wikipedia =============== */
+  .m9{background:#fff;color:#202122;font-family:Georgia,"Times New Roman",serif;padding:20px 26px}
+  .m9 h3{font-size:26px;font-weight:400;border-bottom:1px solid #a2a9b1;padding-bottom:4px;margin:0 0 2px;font-family:Georgia,serif}
+  .m9 .site{font-family:sans-serif;font-size:11px;color:#54595d;margin-bottom:10px}
+  .m9 .hat{font-style:italic;font-size:12.5px;color:#54595d;margin-bottom:10px;font-family:sans-serif}
+  .m9 .body{font-family:sans-serif;font-size:13.5px;line-height:1.65}
+  .m9 .infobox{float:right;width:230px;border:1px solid #a2a9b1;background:#f8f9fa;font-family:sans-serif;font-size:11.5px;margin:0 0 12px 16px;padding:4px}
+  .m9 .infobox th{background:#eaecf0;text-align:center;padding:5px;font-size:12.5px}
+  .m9 .infobox td{padding:3px 6px;vertical-align:top}
+  .m9 .infobox .k{font-weight:700;width:74px}
+  .m9 a{color:#3366cc;text-decoration:none}
+  .m9 .cn{color:#d33}
+  .m9 table{border-collapse:collapse;width:100%}
+
+  /* =============== 10 youtube =============== */
+  .m10{background:#0f0f0f;color:#f1f1f1;font-family:Roboto,Arial,sans-serif}
+  .m10 .banner{height:86px;background:linear-gradient(100deg,#7b2ff7 0%,#f107a3 55%,#ffb86c 100%)}
+  .m10 .ch{display:flex;gap:16px;align-items:center;padding:14px 22px 4px}
+  .m10 .av{width:70px;height:70px;border-radius:50%;background:#3b3b3b;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;flex:none}
+  .m10 .ch h3{margin:0;font-size:20px}
+  .m10 .meta{color:#aaa;font-size:12px;margin-top:3px}
+  .m10 .sub{margin-left:auto;background:#f1f1f1;color:#0f0f0f;border-radius:999px;font-size:13px;font-weight:600;padding:8px 16px;text-decoration:none}
+  .m10 .tabs{display:flex;gap:22px;padding:12px 22px 0;border-bottom:1px solid #2a2a2a;font-size:13px;color:#aaa}
+  .m10 .tabs b{color:#f1f1f1;border-bottom:2px solid #f1f1f1;padding-bottom:10px;font-weight:600}
+  .m10 .tabs span{padding-bottom:10px}
+  .m10 .vids{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px 22px 22px}
+  .m10 .thumb{aspect-ratio:16/9;border-radius:8px;position:relative;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff9;font-family:ui-monospace,monospace}
+  .m10 .t1{background:linear-gradient(135deg,#0f2027,#2c5364)}
+  .m10 .t2{background:linear-gradient(135deg,#42275a,#734b6d)}
+  .m10 .t3{background:linear-gradient(135deg,#1d976c,#2f3c4e)}
+  .m10 .dur{position:absolute;right:6px;bottom:6px;background:#000c;font-size:11px;padding:1px 4px;border-radius:3px;color:#fff}
+  .m10 .vt{font-size:13px;font-weight:500;margin:8px 0 2px;line-height:1.35}
+  .m10 .vm{color:#aaa;font-size:11.5px}
+
+  /* =============== 11 google =============== */
+  .m11{background:#fff;color:#202124;font-family:Arial,sans-serif;padding:18px 26px 26px}
+  .m11 .top{display:flex;align-items:center;gap:22px;margin-bottom:6px}
+  .m11 .logo{font-size:26px;font-weight:500;font-family:Arial,sans-serif}
+  .m11 .sb{flex:1;max-width:440px;border:1px solid #dfe1e5;border-radius:999px;padding:9px 18px;font-size:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);display:flex;justify-content:space-between;align-items:center}
+  .m11 .sb span:last-child{color:#4285f4}
+  .m11 .stats{color:#70757a;font-size:12px;border-top:1px solid #ebebeb;padding:10px 0 14px}
+  .m11 .res{margin-bottom:18px;max-width:560px}
+  .m11 .url{font-size:12px;color:#202124}
+  .m11 .url span{color:#5f6368}
+  .m11 .res h4{margin:2px 0 3px;font-weight:400}
+  .m11 .res h4 a{font-size:18px;color:#1a0dab;text-decoration:none}
+  .m11 .snip{font-size:13px;color:#4d5156;line-height:1.5}
+  .m11 .snip em{font-style:normal;font-weight:700}
+  .m11 .paa{border:1px solid #ebebeb;border-radius:8px;max-width:560px;margin-bottom:18px}
+  .m11 .paa .h{padding:10px 14px;font-size:15px}
+  .m11 .paa .q{border-top:1px solid #ebebeb;padding:10px 14px;font-size:13.5px;display:flex;justify-content:space-between;color:#202124}
+  .m11 .paa .q span:last-child{color:#70757a}
+
+  /* =============== 12 x =============== */
+  .m12{background:#000;color:#e7e9ea;font-family:-apple-system,"Segoe UI",Roboto,sans-serif}
+  .m12 .banner{height:90px;background:linear-gradient(110deg,#16202c,#1d9bf0 140%)}
+  .m12 .px{padding:0 18px}
+  .m12 .avrow{display:flex;align-items:flex-end;justify-content:space-between;margin-top:-34px}
+  .m12 .av{width:76px;height:76px;border-radius:50%;background:#16202c;border:3px solid #000;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:#8ecdf8}
+  .m12 .follow{background:#eff3f4;color:#0f1419;font-weight:700;font-size:13px;border-radius:999px;padding:7px 16px;text-decoration:none}
+  .m12 .nm{font-size:18px;font-weight:800;margin:8px 0 0}
+  .m12 .hdl{color:#71767b;font-size:13px;margin:0 0 8px}
+  .m12 .bio{font-size:13.5px;margin:0 0 8px}
+  .m12 .meta{color:#71767b;font-size:12.5px;margin-bottom:8px}
+  .m12 .ff{font-size:12.5px;color:#71767b;margin-bottom:12px}
+  .m12 .ff b{color:#e7e9ea}
+  .m12 .post{border-top:1px solid #2f3336;padding:12px 18px 16px}
+  .m12 .pin{color:#71767b;font-size:11.5px;margin-bottom:6px}
+  .m12 .pt{font-size:13.5px;line-height:1.5}
+  .m12 .acts{display:flex;gap:38px;color:#71767b;font-size:12px;margin-top:10px}
+
+  /* =============== 13 spotify =============== */
+  .m13{background:#121212;color:#fff;font-family:-apple-system,"Segoe UI",Helvetica,sans-serif}
+  .m13 .hero{background:linear-gradient(180deg,#3a6b5b 0%,#1f3a33 70%,#121212 100%);padding:34px 26px 20px}
+  .m13 .ver{display:flex;align-items:center;gap:6px;font-size:12px}
+  .m13 .chk{width:16px;height:16px;border-radius:50%;background:#3d91f4;display:inline-flex;align-items:center;justify-content:center;font-size:10px;color:#fff}
+  .m13 h3{font-size:56px;margin:6px 0 10px;letter-spacing:-.03em;font-weight:900}
+  .m13 .ml{font-size:13px;color:#e0e0e0}
+  .m13 .bar{display:flex;align-items:center;gap:18px;padding:16px 26px}
+  .m13 .play{width:48px;height:48px;border-radius:50%;background:#1ed760;display:flex;align-items:center;justify-content:center;color:#000;font-size:18px}
+  .m13 .fol{border:1px solid #727272;border-radius:999px;font-size:12px;font-weight:700;padding:6px 14px}
+  .m13 .pop{padding:4px 26px 24px}
+  .m13 .pop h4{font-size:16px;margin:0 0 10px}
+  .m13 .tr{display:grid;grid-template-columns:20px 1fr 90px 44px;gap:12px;align-items:center;padding:7px 8px;border-radius:4px;font-size:13px}
+  .m13 .tr:hover{background:#ffffff14}
+  .m13 .tr .n{color:#b3b3b3;font-variant-numeric:tabular-nums}
+  .m13 .tr .pl{color:#b3b3b3;font-size:12px;text-align:right;font-variant-numeric:tabular-nums}
+  .m13 .tr .d{color:#b3b3b3;font-size:12px;text-align:right;font-variant-numeric:tabular-nums}
+
+  /* =============== 14 netflix =============== */
+  .m14{background:#141414;color:#fff;font-family:Helvetica,Arial,sans-serif;position:relative;padding:26px 30px 30px;background-image:radial-gradient(120% 160% at 85% 0%,#3d1d24 0%,#141414 55%)}
+  .m14 .nlogo{color:#e50914;font-weight:900;font-size:22px;letter-spacing:-.02em;margin-bottom:34px}
+  .m14 h3{font-size:52px;font-weight:900;letter-spacing:-.02em;margin:0 0 10px;line-height:.95;text-transform:uppercase}
+  .m14 .meta{display:flex;gap:12px;font-size:13px;align-items:center;margin-bottom:12px}
+  .m14 .match{color:#46d369;font-weight:700}
+  .m14 .badge{border:1px solid #ffffff66;font-size:10px;padding:0 5px;border-radius:2px}
+  .m14 p{max-width:52ch;font-size:14px;color:#ddd;margin:0 0 18px;line-height:1.55}
+  .m14 .btns{display:flex;gap:10px}
+  .m14 .b1{background:#fff;color:#000;font-weight:700;font-size:14px;border-radius:4px;padding:9px 22px;text-decoration:none}
+  .m14 .b2{background:#6d6d6eb3;color:#fff;font-weight:700;font-size:14px;border-radius:4px;padding:9px 22px;text-decoration:none}
+  .m14 .eps{margin-top:22px;font-size:12.5px;color:#aaa}
+  .m14 .eps b{color:#fff}
+
+  /* =============== 15 amazon =============== */
+  .m15{background:#fff;color:#0f1111;font-family:Arial,sans-serif}
+  .m15 .hd{background:#131921;color:#fff;display:flex;align-items:center;gap:14px;padding:10px 16px;font-size:13px}
+  .m15 .hd .lg{font-weight:700;font-size:17px}
+  .m15 .hd .srch{flex:1;background:#fff;color:#555;border-radius:4px;padding:7px 10px;font-size:12px}
+  .m15 .bd{display:grid;grid-template-columns:190px 1fr 170px;gap:20px;padding:18px}
+  .m15 .img{border:1px solid #e3e6e6;border-radius:4px;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;font-size:46px;font-weight:700;color:#232f3e;background:#f7f8f8}
+  .m15 h3{font-size:19px;font-weight:400;margin:0 0 2px;line-height:1.3}
+  .m15 .store{color:#007185;font-size:12.5px}
+  .m15 .stars{color:#de7921;font-size:13px;margin:6px 0}
+  .m15 .stars span{color:#007185;font-size:12px}
+  .m15 .rule{border-top:1px solid #e3e6e6;margin:8px 0}
+  .m15 .price{font-size:24px}
+  .m15 .price sup{font-size:12px}
+  .m15 ul{font-size:12.5px;padding-left:18px;margin:8px 0;line-height:1.5}
+  .m15 .buy{border:1px solid #d5d9d9;border-radius:8px;padding:14px;font-size:12.5px}
+  .m15 .stock{color:#007600;font-size:15px;margin:8px 0}
+  .m15 .btn1{display:block;text-align:center;background:#ffd814;border-radius:999px;padding:7px 0;margin-bottom:8px;font-size:12.5px;text-decoration:none;color:#0f1111}
+  .m15 .btn2{display:block;text-align:center;background:#ffa41c;border-radius:999px;padding:7px 0;font-size:12.5px;text-decoration:none;color:#0f1111}
+
+  /* =============== 16 imessage =============== */
+  .m16{background:#f4f4f6;color:#111;font-family:-apple-system,"Segoe UI",Roboto,sans-serif;padding:0}
+  .m16 .hd{background:#f9f9fbea;border-bottom:1px solid #e0e0e3;text-align:center;padding:10px;font-size:12px;color:#555}
+  .m16 .hd b{display:block;color:#111;font-size:13px}
+  .m16 .chat{padding:16px 18px 20px;display:flex;flex-direction:column;gap:6px;max-width:560px;margin:0 auto}
+  .m16 .ts{text-align:center;color:#8e8e93;font-size:10.5px;margin:4px 0}
+  .m16 .in,.m16 .out{max-width:72%;padding:8px 13px;border-radius:18px;font-size:13.5px;line-height:1.4}
+  .m16 .in{background:#e9e9eb;align-self:flex-start;border-bottom-left-radius:4px}
+  .m16 .out{background:#0a84ff;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+  .m16 .out a{color:#fff}
+  .m16 .stat{align-self:flex-end;color:#8e8e93;font-size:10.5px}
+
+  /* =============== 17 win95 =============== */
+  .m17{background:#008080;font-family:Tahoma,"MS Sans Serif",Arial,sans-serif;padding:22px 22px 0;color:#000;position:relative;min-height:360px}
+  .m17 .icon{width:64px;text-align:center;color:#fff;font-size:10.5px;margin-bottom:14px;text-shadow:1px 1px 0 #00000088}
+  .m17 .icon .gl{font-size:26px;display:block}
+  .m17 .win{background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;box-shadow:1px 1px 0 #000;width:430px;margin:-150px 0 0 110px;position:relative}
+  .m17 .tb{background:linear-gradient(90deg,#000080,#1084d0);color:#fff;font-weight:700;font-size:11.5px;display:flex;justify-content:space-between;align-items:center;padding:3px 4px 3px 8px}
+  .m17 .tb .btns span{background:#c0c0c0;border:1px solid;border-color:#fff #404040 #404040 #fff;color:#000;font-size:9px;width:16px;height:14px;display:inline-flex;align-items:center;justify-content:center;margin-left:2px;font-family:Arial}
+  .m17 .menu{font-size:11px;padding:3px 8px;border-bottom:1px solid #808080}
+  .m17 .menu span{margin-right:12px}
+  .m17 .body{background:#fff;border:2px solid;border-color:#404040 #fff #fff #404040;margin:6px;padding:12px;font-size:11.5px;line-height:1.6}
+  .m17 .body h3{font-size:13px;margin:0 0 6px}
+  .m17 .ok{display:flex;justify-content:center;padding:4px 0 8px}
+  .m17 .ok a{background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;font-size:11px;padding:3px 26px;text-decoration:none;color:#000}
+  .m17 .task{position:absolute;left:0;right:0;bottom:0;background:#c0c0c0;border-top:2px solid #fff;display:flex;align-items:center;gap:8px;padding:3px 6px;font-size:11px}
+  .m17 .start{border:2px solid;border-color:#fff #404040 #404040 #fff;font-weight:700;padding:2px 8px;display:flex;gap:4px;align-items:center}
+  .m17 .appt{border:2px solid;border-color:#404040 #fff #fff #404040;padding:2px 10px;flex:1;max-width:180px}
+  .m17 .clock{margin-left:auto;border:2px solid;border-color:#404040 #fff #fff #404040;padding:2px 8px}
+
+  /* =============== 18 newspaper =============== */
+  .m18{background:#f7f4ec;color:#1c1a16;font-family:Georgia,"Times New Roman",serif;padding:26px 30px}
+  .m18 .mast{text-align:center;border-bottom:3px double #1c1a16;padding-bottom:8px}
+  .m18 .mast h3{font-size:38px;margin:0;letter-spacing:.02em;font-variant:small-caps;font-weight:700}
+  .m18 .dl{display:flex;justify-content:space-between;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid #1c1a16;padding:5px 2px;margin-bottom:14px}
+  .m18 .head{font-size:27px;line-height:1.1;text-align:center;margin:0 0 4px;font-weight:700;text-wrap:balance}
+  .m18 .sub{text-align:center;font-style:italic;font-size:13px;margin:0 0 14px}
+  .m18 .cols{column-count:3;column-gap:18px;column-rule:1px solid #cfc9ba;font-size:11.5px;line-height:1.55;text-align:justify}
+  .m18 .cols p{margin:0 0 8px}
+  .m18 .cols .lede::first-letter{font-size:30px;float:left;line-height:.9;padding-right:5px}
+  .m18 .ad{border:1px solid #1c1a16;padding:8px;text-align:center;font-size:10.5px;margin-top:6px;break-inside:avoid}
+  .m18 .ad b{display:block;font-variant:small-caps;font-size:12px}
+
+  /* =============== 19 receipt =============== */
+  .m19{background:#d8d8d4;padding:30px 0;display:flex;justify-content:center}
+  .m19 .paper{background:#fdfdfa;width:300px;font-family:"Courier New",Courier,monospace;font-size:11.5px;color:#222;padding:18px 16px 22px;box-shadow:0 6px 18px rgba(0,0,0,.18);
+    -webkit-mask:linear-gradient(#000 0 0) padding-box, conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/12px 8px repeat-x border-box;
+    mask:linear-gradient(#000 0 0) padding-box, conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/12px 8px repeat-x border-box;
+    border-bottom:8px solid transparent}
+  .m19 .c{text-align:center}
+  .m19 .row{display:flex;justify-content:space-between}
+  .m19 .dash{border-top:1px dashed #999;margin:8px 0}
+  .m19 .tot{font-weight:700}
+  .m19 .bar{height:34px;margin:12px 8px 4px;background:repeating-linear-gradient(90deg,#111 0 2px,#fff 2px 4px,#111 4px 5px,#fff 5px 9px,#111 9px 12px,#fff 12px 14px)}
+  .m19 a{color:#222}
+
+  /* =============== 20 vaporwave =============== */
+  .m20{background:linear-gradient(180deg,#1b0f3b 0%,#4b1e6b 40%,#c33764 72%,#1b0f3b 72.2%);color:#fff;font-family:Arial,Helvetica,sans-serif;position:relative;overflow:hidden;min-height:380px}
+  .m20 .sun{position:absolute;left:50%;top:34%;transform:translate(-50%,-50%);width:190px;height:190px;border-radius:50%;
+    background:linear-gradient(#ffd319,#ff2975 60%,#8c1eff);
+    -webkit-mask:linear-gradient(#000 0 55%, transparent 55%, transparent 58%, #000 58%, #000 66%, transparent 66%, transparent 70%, #000 70%, #000 80%, transparent 80%, transparent 85%, #000 85%);
+    mask:linear-gradient(#000 0 55%, transparent 55%, transparent 58%, #000 58%, #000 66%, transparent 66%, transparent 70%, #000 70%, #000 80%, transparent 80%, transparent 85%, #000 85%)}
+  .m20 .floor{position:absolute;left:-40%;right:-40%;bottom:0;height:28%;
+    background:repeating-linear-gradient(90deg,#ff2975 0 2px,transparent 2px 56px),repeating-linear-gradient(0deg,#ff2975 0 2px,transparent 2px 26px);
+    transform:perspective(200px) rotateX(58deg);transform-origin:top;opacity:.75}
+  .m20 .inner{position:relative;z-index:2;text-align:center;padding-top:52px}
+  .m20 h3{font-size:52px;font-style:italic;font-weight:900;letter-spacing:.06em;margin:0;
+    background:linear-gradient(180deg,#fff 30%,#7df9ff 50%,#ff71ce 55%,#fff 80%);-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 12px #ff2975aa) drop-shadow(0 0 2px #7df9ff)}
+  .m20 .jp{font-size:14px;letter-spacing:.5em;color:#7df9ff;text-shadow:0 0 8px #7df9ff;margin-top:4px}
+  .m20 .role{font-size:13px;letter-spacing:.42em;color:#ffd319;margin-top:10px;text-shadow:0 0 8px #ffd31988}
+  .m20 .links{display:flex;justify-content:center;gap:10px;margin-top:150px;flex-wrap:wrap}
+  .m20 .links a{border:1px solid #7df9ff;color:#7df9ff;text-decoration:none;font-size:11px;letter-spacing:.18em;padding:7px 14px;border-radius:999px;background:#0008;text-shadow:0 0 6px #7df9ff;box-shadow:0 0 10px #7df9ff55, inset 0 0 10px #7df9ff22}
+
+  /* footer */
+  .deck-foot{margin-top:56px;border-top:1px solid var(--line);padding-top:18px;color:var(--mut);font-size:13px;max-width:68ch}
+</style>
+
+<div class="wrap">
+  <header class="deck-head">
+    <div class="deck-kicker">amrthabit.com / design study</div>
+    <h1>Twenty directions, <em>plain to wild</em></h1>
+    <p>Every mockup below is built with your real content: the bio, the four links, the projects. The gauge on each card marks where it sits on the plain-to-wild scale. Pick a number and I will build it in the Svelte repo.</p>
+    <nav class="toc">
+      <a href="#p1">01 plain</a><a href="#p2">02 card</a><a href="#p3">03 editorial</a><a href="#p4">04 swiss</a><a href="#p5">05 brutalist</a><a href="#p6">06 terminal</a><a href="#p7">07 man page</a><a href="#p8">08 github</a><a href="#p9">09 wikipedia</a><a href="#p10">10 youtube</a><a href="#p11">11 google</a><a href="#p12">12 x</a><a href="#p13">13 spotify</a><a href="#p14">14 netflix</a><a href="#p15">15 amazon</a><a href="#p16">16 imessage</a><a href="#p17">17 win95</a><a href="#p18">18 newspaper</a><a href="#p19">19 receipt</a><a href="#p20">20 vaporwave</a>
+    </nav>
+  </header>
+
+  <!-- ================= 01 ================= -->
+  <section class="prop" id="p1">
+    <div class="prop-head"><span class="num">01</span><h2>Plain, 1993</h2><span class="tag">plain</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:5%"></span></span>wild</span></div>
+    <p class="pitch">The web before CSS: Times, blue underlined links, one horizontal rule. Loads in a millisecond and quietly signals confidence.</p>
+    <div class="frame"><div class="mock m1">
+      <h3>Amr Thabit</h3>
+      <hr>
+      <p>Software developer based in Ontario, Canada. Computer science at McMaster University. Currently a Project Engineer II at Evertz Microsystems. I like collaborating, learning, and building.</p>
+      <ul>
+        <li><a href="mailto:contact@amrthabit.com">Email me</a></li>
+        <li><a href="https://github.com/amrthabit">My GitHub page</a></li>
+        <li><a href="https://linkedin.com/in/AmrThabit">My LinkedIn page</a></li>
+        <li><a href="https://instagram.com/thbbit">My Instagram</a></li>
+      </ul>
+      <p class="upd">Last updated: July 2, 2026. Best viewed in any browser.</p>
+    </div></div>
+  </section>
+
+  <!-- ================= 02 ================= -->
+  <section class="prop" id="p2">
+    <div class="prop-head"><span class="num">02</span><h2>Business card</h2><span class="tag">plain</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:10%"></span></span>wild</span></div>
+    <p class="pitch">The whole site is one letterpress card on a desk. Nothing to scroll, nothing to click except the four links.</p>
+    <div class="frame"><div class="mock m2">
+      <div class="card">
+        <p class="name">Amr Thabit</p>
+        <div class="rule"></div>
+        <p class="role">Software Developer &middot; Ontario</p>
+        <div class="links">
+          <a href="mailto:contact@amrthabit.com">Email</a><a href="https://github.com/amrthabit">GitHub</a><a href="https://linkedin.com/in/AmrThabit">LinkedIn</a><a href="https://instagram.com/thbbit">Instagram</a>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ================= 03 ================= -->
+  <section class="prop" id="p3">
+    <div class="prop-head"><span class="num">03</span><h2>Editorial</h2><span class="tag">classic</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:15%"></span></span>wild</span></div>
+    <p class="pitch">A magazine profile of one: italic serif headline, drop cap, and your links demoted to footnotes like citations.</p>
+    <div class="frame"><div class="mock m3">
+      <div class="kick">Profile &middot; No. 01</div>
+      <h3>Software, made carefully.</h3>
+      <div class="byline">AMR THABIT &nbsp;&middot;&nbsp; Ontario, Canada &nbsp;&middot;&nbsp; est. reading time: 20 seconds</div>
+      <p>Amr Thabit is a software developer with a computer science background from McMaster University<sup><a href="#">1</a></sup>, currently a Project Engineer II at Evertz Microsystems<sup><a href="#">2</a></sup>. He likes collaborating, learning, and building, in roughly that order.</p>
+      <div class="refs">1. <a href="https://github.com/amrthabit">github.com/amrthabit</a> &nbsp; 2. <a href="https://linkedin.com/in/AmrThabit">linkedin.com/in/AmrThabit</a> &nbsp; 3. <a href="mailto:contact@amrthabit.com">contact@amrthabit.com</a> &nbsp; 4. <a href="https://instagram.com/thbbit">@thbbit</a></div>
+    </div></div>
+  </section>
+
+  <!-- ================= 04 ================= -->
+  <section class="prop" id="p4">
+    <div class="prop-head"><span class="num">04</span><h2>Swiss grid</h2><span class="tag">classic</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:20%"></span></span>wild</span></div>
+    <p class="pitch">International Typographic Style: Helvetica, hairline grid, one red accent. The name is the poster.</p>
+    <div class="frame"><div class="mock m4">
+      <div class="bar"><div>AMRTHABIT.COM</div><div>SOFTWARE DEVELOPER</div><div>43.25&deg;N, 79.87&deg;W</div></div>
+      <div class="hero"><h3>Amr<br>Thabit<span>.</span></h3></div>
+      <div class="cols">
+        <div><b>WORK</b>Project Engineer II, Evertz Microsystems. Previously: computer science, McMaster University.</div>
+        <div><b>PRACTICE</b>Collaborating, learning, and building. Clean, elegant solutions preferred.</div>
+        <div><b>CONTACT</b><a href="mailto:contact@amrthabit.com">Email</a> &middot; <a href="https://github.com/amrthabit">GitHub</a> &middot; <a href="https://linkedin.com/in/AmrThabit">LinkedIn</a> &middot; <a href="https://instagram.com/thbbit">Instagram</a></div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ================= 05 ================= -->
+  <section class="prop" id="p5">
+    <div class="prop-head"><span class="num">05</span><h2>Brutalist</h2><span class="tag">classic</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:25%"></span></span>wild</span></div>
+    <p class="pitch">Hazard-yellow ground, four-pixel borders, hard shadows. Loud, fast, impossible to mistake for a template.</p>
+    <div class="frame"><div class="mock m5">
+      <div class="tick">/// OPEN TO COLLABORATION /// ONTARIO, CANADA /// SHIPS CLEAN CODE /// OPEN TO COLLABORATION ///</div>
+      <div class="box" style="margin-top:16px">
+        <h3>Amr Thabit</h3>
+        <p>Software developer. McMaster CS. Project Engineer II at Evertz Microsystems.</p>
+      </div>
+      <div class="row">
+        <a href="mailto:contact@amrthabit.com">Email</a><a href="https://github.com/amrthabit">GitHub</a><a href="https://linkedin.com/in/AmrThabit">LinkedIn</a><a href="https://instagram.com/thbbit">Instagram</a>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ================= 06 ================= -->
+  <section class="prop" id="p6">
+    <div class="prop-head"><span class="num">06</span><h2>Terminal</h2><span class="tag">classic</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:30%"></span></span>wild</span></div>
+    <p class="pitch">A shell session that introduces you. Honest to how you actually work (you did port your statusline to C), and the cursor blinks.</p>
+    <div class="frame"><div class="mock m6">
+      <div class="tbar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span>&nbsp;amr@surface: ~</div>
+      <div class="body">
+        <div><span class="ps">amr@surface</span>:<span class="path">~</span>$ whoami</div>
+        <div class="out">Amr Thabit, software developer (Ontario, Canada)</div>
+        <div><span class="ps">amr@surface</span>:<span class="path">~</span>$ cat about.txt</div>
+        <div class="out">CS at McMaster University. Project Engineer II at Evertz Microsystems.<br>Likes: collaborating, learning, building.</div>
+        <div><span class="ps">amr@surface</span>:<span class="path">~</span>$ ls links/</div>
+        <div><span class="dir">email</span>&nbsp;&nbsp;<span class="dir">github</span>&nbsp;&nbsp;<span class="dir">linkedin</span>&nbsp;&nbsp;<span class="dir">instagram</span></div>
+        <div><span class="ps">amr@surface</span>:<span class="path">~</span>$ <span class="cur"></span></div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ================= 07 ================= -->
+  <section class="prop" id="p7">
+    <div class="prop-head"><span class="num">07</span><h2>Man page</h2><span class="tag">classic</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:35%"></span></span>wild</span></div>
+    <p class="pitch">Your bio as AMR(1), a Unix manual page. Deeply nerdy without a single pixel of decoration.</p>
+    <div class="frame"><div class="mock m7">
+      <div class="hd"><span>AMR(1)</span><span>User Commands</span><span>AMR(1)</span></div>
+      <h4>Name</h4>
+      <div class="in"><b>amr</b> - software developer (Ontario, Canada)</div>
+      <h4>Synopsis</h4>
+      <div class="in"><b>amr</b> [<b>--collaborate</b>] [<b>--learn</b>] [<b>--build</b>] <i>project</i></div>
+      <h4>Description</h4>
+      <div class="in">Runs as <b>Project Engineer II</b> at Evertz Microsystems. Compiled at McMaster University with the computer science flag set. Optimizes for clean, elegant solutions.</div>
+      <h4>Options</h4>
+      <div class="in"><b>--contact</b>&nbsp;&nbsp;write to <a href="mailto:contact@amrthabit.com">contact@amrthabit.com</a></div>
+      <h4>See also</h4>
+      <div class="in"><a href="https://github.com/amrthabit">github(1)</a>, <a href="https://linkedin.com/in/AmrThabit">linkedin(1)</a>, <a href="https://instagram.com/thbbit">instagram(1)</a></div>
+      <div class="ft"><span>amrthabit.com</span><span>July 2026</span><span>AMR(1)</span></div>
+    </div></div>
+  </section>
+
+  <!-- ================= 08 ================= -->
+  <section class="prop" id="p8">
+    <div class="prop-head"><span class="num">08</span><h2>GitHub profile</h2><span class="tag">parody</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:40%"></span></span>wild</span></div>
+    <p class="pitch">Your homepage as your own GitHub profile: pinned repos, a contribution graph, and the bio in the sidebar. Uses your real repositories.</p>
+    <div class="frame"><div class="mock m8">
+      <div>
+        <div class="av">AT</div>
+        <p class="nm">Amr Thabit</p>
+        <p class="hdl">amrthabit</p>
+        <p class="bio">Software developer. Clean, elegant solutions. Project Engineer II @evertz.</p>
+        <a class="btn" href="mailto:contact@amrthabit.com">Follow</a>
+        <p class="loc">&#128205; Ontario, Canada &middot; &#127891; McMaster</p>
+      </div>
+      <div>
+        <p class="sec">Pinned</p>
+        <div class="repos">
+          <div class="repo"><a href="https://github.com/amrthabit/claude-statusline">claude-statusline</a><p>A statusline that renders in 0.7 ms</p><span class="lang"><i style="background:#555555"></i>C</span></div>
+          <div class="repo"><a href="#">amrthabit.com</a><p>Landing page for my personal brand &#128748;&#128195;</p><span class="lang"><i style="background:#ff3e00"></i>Svelte</span></div>
+          <div class="repo"><a href="#">istrend.ing</a><p>The most popular news since your last visit</p><span class="lang"><i style="background:#3178c6"></i>TypeScript</span></div>
+          <div class="repo"><a href="https://linkedin.com/in/AmrThabit">career</a><p>Evertz Microsystems, Project Engineer II</p><span class="lang"><i style="background:#0a66c2"></i>LinkedIn</span></div>
+        </div>
+        <p class="sec">1,247 contributions in the last year</p>
+        <div class="graph" id="ghgraph"></div>
+        <p class="gcap">Learn how we count contributions (we make it up)</p>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ================= 09 ================= -->
+  <section class="prop" id="p9">
+    <div class="prop-head"><span class="num">09</span><h2>Wikipedia article</h2><span class="tag">parody</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:45%"></span></span>wild</span></div>
+    <p class="pitch">An encyclopedia entry about you, complete with infobox, hatnote, and a strategically placed citation-needed.</p>
+    <div class="frame"><div class="mock m9">
+      <h3>Amr Thabit</h3>
+      <div class="site">From Wikipedia, the free encyclopedia</div>
+      <div class="hat">For the domain, see <a href="#">amrthabit.com</a>. Not to be confused with anyone less collaborative.</div>
+      <div class="body">
+        <table class="infobox">
+          <tr><th colspan="2">Amr Thabit</th></tr>
+          <tr><td class="k">Born</td><td>Some time ago</td></tr>
+          <tr><td class="k">Residence</td><td>Ontario, Canada</td></tr>
+          <tr><td class="k">Alma mater</td><td><a href="#">McMaster University</a> (CS)</td></tr>
+          <tr><td class="k">Occupation</td><td>Software developer</td></tr>
+          <tr><td class="k">Employer</td><td><a href="#">Evertz Microsystems</a></td></tr>
+          <tr><td class="k">Known for</td><td>Collaborating, learning, building</td></tr>
+          <tr><td class="k">Website</td><td><a href="#">amrthabit.com</a></td></tr>
+        </table>
+        <p><b>Amr Thabit</b> is a Canadian <a href="#">software developer</a> known for a passion for clean, elegant solutions<sup class="cn">[citation needed]</sup>. He studied computer science at <a href="#">McMaster University</a> and serves as a Project Engineer II at <a href="#">Evertz Microsystems</a>.<sup><a href="#">[1]</a></sup></p>
+        <p>Thabit maintains an active presence on <a href="https://github.com/amrthabit">GitHub</a><sup><a href="#">[2]</a></sup>, <a href="https://linkedin.com/in/AmrThabit">LinkedIn</a><sup><a href="#">[3]</a></sup>, and <a href="https://instagram.com/thbbit">Instagram</a>, and can be reached by <a href="mailto:contact@amrthabit.com">electronic mail</a>.</p>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ================= 10 ================= -->
+  <section class="prop" id="p10">
+    <div class="prop-head"><span class="num">10</span><h2>YouTube channel</h2><span class="tag">parody</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:50%"></span></span>wild</span></div>
+    <p class="pitch">Your life as a channel page: banner, subscribe button, and your projects as video thumbnails with view counts.</p>
+    <div class="frame"><div class="mock m10">
+      <div class="banner"></div>
+      <div class="ch">
+        <div class="av">AT</div>
+        <div><h3>Amr Thabit</h3><div class="meta">@thbbit &middot; 1.02K subscribers &middot; 14 videos</div></div>
+        <a class="sub" href="mailto:contact@amrthabit.com">Subscribe</a>
+      </div>
+      <div class="tabs"><b>Home</b><span>Videos</span><span>Shorts</span><span>About</span></div>
+      <div class="vids">
+        <div><div class="thumb t1">statusline.c<span class="dur">0:47</span></div><div class="vt">I ported my statusline from Python to C (60x faster)</div><div class="vm">3.4K views &middot; 2 weeks ago</div></div>
+        <div><div class="thumb t2">day in the life<span class="dur">8:12</span></div><div class="vt">Day in the life: Project Engineer II at Evertz</div><div class="vm">1.8K views &middot; 1 month ago</div></div>
+        <div><div class="thumb t3">mcmaster cs<span class="dur">12:03</span></div><div class="vt">McMaster CS: what I would do differently</div><div class="vm">7.1K views &middot; 3 months ago</div></div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ================= 11 ================= -->
+  <section class="prop" id="p11">
+    <div class="prop-head"><span class="num">11</span><h2>Search results</h2><span class="tag">parody</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:55%"></span></span>wild</span></div>
+    <p class="pitch">Visitors land on the results page for "amr thabit": every result is one of your links, and the People Also Ask box answers the bio.</p>
+    <div class="frame"><div class="mock m11">
+      <div class="top">
+        <div class="logo"><span style="color:#4285f4">G</span><span style="color:#ea4335">o</span><span style="color:#fbbc05">o</span><span style="color:#4285f4">g</span><span style="color:#34a853">l</span><span style="color:#ea4335">e</span></div>
+        <div class="sb"><span>amr thabit</span><span>&#128269;</span></div>
+      </div>
+      <div class="stats">About 1,240 results (0.42 seconds)</div>
+      <div class="res">
+        <div class="url">amrthabit.com<span> &rsaquo; home</span></div>
+        <h4><a href="#">Amr Thabit | Software Developer</a></h4>
+        <div class="snip">Software developer based in <em>Ontario, Canada</em> with a background in computer science from McMaster University. Currently <em>Project Engineer II at Evertz</em>...</div>
+      </div>
+      <div class="paa">
+        <div class="h">People also ask</div>
+        <div class="q"><span>Does Amr like collaborating?</span><span>&#8964;</span></div>
+        <div class="q"><span>What about learning and building?</span><span>&#8964;</span></div>
+        <div class="q"><span>How do I reach him?</span><span>&#8964;</span></div>
+      </div>
+      <div class="res">
+        <div class="url">github.com<span> &rsaquo; amrthabit</span></div>
+        <h4><a href="https://github.com/amrthabit">amrthabit (Amr Thabit) &middot; GitHub</a></h4>
+        <div class="snip">Ships a statusline that renders in 0.7 milliseconds. 1,247 contributions in the last year.</div>
+      </div>
+      <div class="res">
+        <div class="url">linkedin.com<span> &rsaquo; in &rsaquo; AmrThabit</span></div>
+        <h4><a href="https://linkedin.com/in/AmrThabit">Amr Thabit - Project Engineer II - Evertz Microsystems</a></h4>
+        <div class="snip">Ontario, Canada &middot; Evertz Microsystems &middot; McMaster University. 500+ connections.</div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ================= 12 ================= -->
+  <section class="prop" id="p12">
+    <div class="prop-head"><span class="num">12</span><h2>X profile</h2><span class="tag">parody</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:60%"></span></span>wild</span></div>
+    <p class="pitch">Profile header, bio line, follower counts, and one pinned post doing the work of a hero section.</p>
+    <div class="frame"><div class="mock m12">
+      <div class="banner"></div>
+      <div class="px">
+        <div class="avrow"><div class="av">AT</div><a class="follow" href="mailto:contact@amrthabit.com">Follow</a></div>
+        <p class="nm">Amr Thabit</p>
+        <p class="hdl">@thbbit</p>
+        <p class="bio">software developer &middot; project engineer II @evertz &middot; mcmaster cs &middot; collaborating, learning, building</p>
+        <p class="meta">&#128205; Ontario, Canada &nbsp; &#128279; amrthabit.com &nbsp; &#128197; Joined some time ago</p>
+        <p class="ff"><b>182</b> Following &nbsp; <b>1,024</b> Followers</p>
+      </div>
+      <div class="post">
+        <div class="pin">&#128204; Pinned</div>
+        <div class="pt">ported my statusline from python to C this week. 45ms &rarr; 0.7ms per render. yes it was necessary. no i will not be taking questions</div>
+        <div class="acts"><span>&#128172; 12</span><span>&#128257; 34</span><span>&#10084;&#65039; 256</span><span>&#128202; 12K</span></div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ================= 13 ================= -->
+  <section class="prop" id="p13">
+    <div class="prop-head"><span class="num">13</span><h2>Spotify artist</h2><span class="tag">parody</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:65%"></span></span>wild</span></div>
+    <p class="pitch">Verified Artist page where your projects are the discography. Track durations are build times.</p>
+    <div class="frame"><div class="mock m13">
+      <div class="hero">
+        <div class="ver"><span class="chk">&#10003;</span> Verified Artist</div>
+        <h3>Amr Thabit</h3>
+        <div class="ml">1,024 monthly listeners</div>
+      </div>
+      <div class="bar"><div class="play">&#9654;</div><div class="fol">Follow</div></div>
+      <div class="pop">
+        <h4>Popular</h4>
+        <div class="tr"><span class="n">1</span><span>claude-statusline (C major)</span><span class="pl">2,431,908</span><span class="d">0:47</span></div>
+        <div class="tr"><span class="n">2</span><span>amrthabit.com (Svelte remix)</span><span class="pl">1,022,341</span><span class="d">1:12</span></div>
+        <div class="tr"><span class="n">3</span><span>istrend.ing feat. The News</span><span class="pl">640,552</span><span class="d">2:38</span></div>
+        <div class="tr"><span class="n">4</span><span>Clean, Elegant Solutions (Extended Mix)</span><span class="pl">412,090</span><span class="d">3:14</span></div>
+        <div class="tr"><span class="n">5</span><span>Collaborating, Learning, and Building</span><span class="pl">128,004</span><span class="d">4:04</span></div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ================= 14 ================= -->
+  <section class="prop" id="p14">
+    <div class="prop-head"><span class="num">14</span><h2>Netflix title</h2><span class="tag">parody</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:70%"></span></span>wild</span></div>
+    <p class="pitch">You as an original series. The Play button emails you; More Info goes to LinkedIn. 98% match, obviously.</p>
+    <div class="frame"><div class="mock m14">
+      <div class="nlogo">N</div>
+      <h3>Amr Thabit</h3>
+      <div class="meta"><span class="match">98% Match</span><span>2026</span><span class="badge">HD</span><span>4 Seasons</span><span class="badge">CC</span></div>
+      <p>A software developer in Ontario pursues clean, elegant solutions against all odds. From McMaster lecture halls to the engineering floor at Evertz Microsystems, every episode ships.</p>
+      <div class="btns"><a class="b1" href="mailto:contact@amrthabit.com">&#9654; Play</a><a class="b2" href="https://linkedin.com/in/AmrThabit">&#9432; More Info</a></div>
+      <div class="eps"><b>Episodes</b> &middot; S1: McMaster &middot; S2: Evertz &middot; S3: The Statusline Incident &middot; S4: Collaborating, Learning, Building</div>
+    </div></div>
+  </section>
+
+  <!-- ================= 15 ================= -->
+  <section class="prop" id="p15">
+    <div class="prop-head"><span class="num">15</span><h2>Amazon listing</h2><span class="tag">parody</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:75%"></span></span>wild</span></div>
+    <p class="pitch">You as a product page: star rating, bullet points, and a Buy Now button that opens your email. Free returns.</p>
+    <div class="frame"><div class="mock m15">
+      <div class="hd"><span class="lg">amazon</span><span class="srch">software developer, ontario, collaborative</span><span>Returns &amp; Orders</span><span>&#128722;</span></div>
+      <div class="bd">
+        <div class="img">AT</div>
+        <div>
+          <h3>Amr Thabit: Software Developer, Ontario Edition (Project Engineer II, Evertz Compatible)</h3>
+          <div class="store"><a href="https://github.com/amrthabit" class="store">Visit the Thabit Store</a></div>
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9734; <span>1,024 ratings</span></div>
+          <div class="rule"></div>
+          <div class="price"><sup>$</sup>0<sup>00</sup> &nbsp;<span style="font-size:12px;color:#565959">FREE Returns</span></div>
+          <div class="rule"></div>
+          <b style="font-size:13px">About this item</b>
+          <ul>
+            <li>Computer science background from McMaster University</li>
+            <li>Passion for clean, elegant solutions (built-in)</li>
+            <li>Collaborates, learns, and builds out of the box</li>
+            <li>Frequently bought together: coffee</li>
+          </ul>
+        </div>
+        <div class="buy">
+          <div class="price"><sup>$</sup>0<sup>00</sup></div>
+          <div class="stock">In Stock</div>
+          <a class="btn1" href="https://linkedin.com/in/AmrThabit">Add to Cart</a>
+          <a class="btn2" href="mailto:contact@amrthabit.com">Buy Now</a>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ================= 16 ================= -->
+  <section class="prop" id="p16">
+    <div class="prop-head"><span class="num">16</span><h2>iMessage</h2><span class="tag">parody</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:80%"></span></span>wild</span></div>
+    <p class="pitch">The bio delivered as a text conversation. Visitors read you introducing yourself the way you actually would.</p>
+    <div class="frame"><div class="mock m16">
+      <div class="hd"><b>Amr Thabit</b>amrthabit.com</div>
+      <div class="chat">
+        <div class="ts">Today 9:41 AM</div>
+        <div class="in">hey! are you the amr that codes?</div>
+        <div class="out">that's me. software developer in Ontario, McMaster CS grad</div>
+        <div class="out">Project Engineer II at Evertz Microsystems these days</div>
+        <div class="in">nice, what are you into?</div>
+        <div class="out">collaborating, learning, building. roughly in that order</div>
+        <div class="in">how do I reach you?</div>
+        <div class="out"><a href="mailto:contact@amrthabit.com">contact@amrthabit.com</a>, or github/linkedin/insta: @amrthabit, @AmrThabit, @thbbit</div>
+        <div class="stat">Delivered</div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ================= 17 ================= -->
+  <section class="prop" id="p17">
+    <div class="prop-head"><span class="num">17</span><h2>Windows 95</h2><span class="tag">retro</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:85%"></span></span>wild</span></div>
+    <p class="pitch">Teal desktop, beveled window chrome, and your bio running as amr.exe. The Start button works overtime as the contact menu.</p>
+    <div class="frame"><div class="mock m17">
+      <div class="icon"><span class="gl">&#128193;</span>My Projects</div>
+      <div class="icon"><span class="gl">&#128196;</span>Resume.txt</div>
+      <div class="icon"><span class="gl">&#128465;&#65039;</span>Recycle Bin</div>
+      <div class="win">
+        <div class="tb"><span>amr.exe - [About]</span><span class="btns"><span>_</span><span>&#9633;</span><span>&#10005;</span></span></div>
+        <div class="menu"><span><u>F</u>ile</span><span><u>E</u>dit</span><span><u>C</u>ontact</span><span><u>H</u>elp</span></div>
+        <div class="body">
+          <h3>Amr Thabit</h3>
+          Software developer, Ontario, Canada.<br>
+          McMaster University (Computer Science).<br>
+          Project Engineer II @ Evertz Microsystems.<br><br>
+          Status: collaborating, learning, building...
+        </div>
+        <div class="ok"><a href="mailto:contact@amrthabit.com">OK</a></div>
+      </div>
+      <div class="task"><span class="start">&#129411; Start</span><span class="appt">amr.exe</span><span class="clock">9:41 AM</span></div>
+    </div></div>
+  </section>
+
+  <!-- ================= 18 ================= -->
+  <section class="prop" id="p18">
+    <div class="prop-head"><span class="num">18</span><h2>Broadsheet</h2><span class="tag">retro</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:90%"></span></span>wild</span></div>
+    <p class="pitch">Front page of The Ontario Ledger. The headline is your bio, the classifieds are your links, and the ink smells faintly of 1924.</p>
+    <div class="frame"><div class="mock m18">
+      <div class="mast"><h3>The Ontario Ledger</h3></div>
+      <div class="dl"><span>Vol. XXVI, No. 183</span><span>Hamilton &amp; Environs</span><span>Thursday, July 2, 2026</span><span>Price: Free</span></div>
+      <h4 class="head">LOCAL DEVELOPER LIKES COLLABORATING, LEARNING, AND BUILDING</h4>
+      <p class="sub">Sources confirm passion for clean, elegant solutions; Evertz engineering floor reportedly calm</p>
+      <div class="cols">
+        <p class="lede">ONTARIO. Amr Thabit, a software developer educated in computer science at McMaster University, continues to serve as Project Engineer II at Evertz Microsystems, according to persons familiar with the matter.</p>
+        <p>Witnesses describe a practitioner who collaborates readily, learns continuously, and builds with unusual regularity. "Every episode ships," one colleague remarked, before returning to the broadcast floor.</p>
+        <p>Investigators reviewing the developer's public repositories note a statusline utility rewritten from Python into the C language, reducing render time from forty-five milliseconds to under one. Experts are divided on whether this was necessary. The developer is said to be unrepentant.</p>
+        <div class="ad"><b>Classifieds</b>ELECTRONIC MAIL: <a href="mailto:contact@amrthabit.com">contact@amrthabit.com</a><br>CODE: <a href="https://github.com/amrthabit">github.com/amrthabit</a><br>COMMERCE: <a href="https://linkedin.com/in/AmrThabit">linkedin.com/in/AmrThabit</a><br>SOCIETY PAGES: <a href="https://instagram.com/thbbit">@thbbit</a></div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ================= 19 ================= -->
+  <section class="prop" id="p19">
+    <div class="prop-head"><span class="num">19</span><h2>Receipt</h2><span class="tag">wild</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:95%"></span></span>wild</span></div>
+    <p class="pitch">A thermal receipt itemizing you. The barcode scans as nothing, the total is priceless, and the whole site is 300 pixels wide on purpose.</p>
+    <div class="frame"><div class="mock m19">
+      <div class="paper">
+        <div class="c">*** AMR THABIT ***<br>SOFTWARE DEVELOPMENT CO.<br>ONTARIO, CANADA<br>EST. McMASTER U</div>
+        <div class="dash"></div>
+        <div class="row"><span>QTY 1&nbsp; DEVELOPER</span><span>$0.00</span></div>
+        <div class="row"><span>&nbsp;&nbsp;- CS DEGREE (McMASTER)</span><span>INCL.</span></div>
+        <div class="row"><span>&nbsp;&nbsp;- PROJ ENGINEER II (EVERTZ)</span><span>INCL.</span></div>
+        <div class="row"><span>&nbsp;&nbsp;- COLLABORATING</span><span>INCL.</span></div>
+        <div class="row"><span>&nbsp;&nbsp;- LEARNING</span><span>INCL.</span></div>
+        <div class="row"><span>&nbsp;&nbsp;- BUILDING</span><span>INCL.</span></div>
+        <div class="dash"></div>
+        <div class="row tot"><span>TOTAL</span><span>PRICELESS</span></div>
+        <div class="row"><span>TENDER: ONE EMAIL</span><span><a href="mailto:contact@amrthabit.com">SEND</a></span></div>
+        <div class="dash"></div>
+        <div class="c">GITHUB.COM/AMRTHABIT<br>LINKEDIN.COM/IN/AMRTHABIT<br>INSTAGRAM: @THBBIT</div>
+        <div class="bar"></div>
+        <div class="c">THANK YOU, COME AGAIN<br>YOU WERE SERVED BY: AMR</div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ================= 20 ================= -->
+  <section class="prop" id="p20">
+    <div class="prop-head"><span class="num">20</span><h2>Vaporwave</h2><span class="tag">wild</span>
+      <span class="gauge">plain<span class="track"><span class="fill" style="width:100%"></span></span>wild</span></div>
+    <p class="pitch">Chrome text, striped sun, perspective grid. Maximum wild: a landing page you hear as much as see.</p>
+    <div class="frame"><div class="mock m20">
+      <div class="sun"></div>
+      <div class="floor"></div>
+      <div class="inner">
+        <h3>AMR THABIT</h3>
+        <div class="jp">アムル・サビト</div>
+        <div class="role">S O F T W A R E &nbsp; D E V E L O P E R</div>
+        <div class="links">
+          <a href="mailto:contact@amrthabit.com">EMAIL</a><a href="https://github.com/amrthabit">GITHUB</a><a href="https://linkedin.com/in/AmrThabit">LINKEDIN</a><a href="https://instagram.com/thbbit">INSTAGRAM</a>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <footer class="deck-foot">
+    <p>All twenty use your live content and four links; none need a backend. The parodies (08 to 16) walk a line: they read as affectionate homage at mockup fidelity, and I would keep them clearly "in the style of" rather than pixel-perfect clones of trademarked interfaces. Tell me a number to build, or ask for a hybrid (a terminal hero with editorial body text is a strong combination).</p>
+  </footer>
+</div>
+
+<script>
+  (function(){
+    var g = document.getElementById('ghgraph');
+    if(!g) return;
+    var seed = 42;
+    function rnd(){ seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
+    for(var i = 0; i < 280; i++){
+      var cell = document.createElement('i');
+      var r = rnd();
+      if(r > 0.86){ cell.className = 'g4'; }
+      else if(r > 0.72){ cell.className = 'g3'; }
+      else if(r > 0.55){ cell.className = 'g2'; }
+      else if(r > 0.38){ cell.className = 'g1'; }
+      g.appendChild(cell);
+    }
+  })();
+</script>
+
+</html>

@@ -4,20 +4,28 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%sveltekit.assets%/favicon.svg" type="image/svg+xml">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Public+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=TeX+Gyre+Pagella:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- Meta Tags -->
-    <meta property="og:title" content="Amr Thabit | Software Developer">
-    <meta property="og:description" content="Software developer based in Ontario, Canada">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://amrthabit.com">
-    <meta name="theme-color" content="#1a1a1a">
-    
+
+    <!-- Browser chrome color follows the effective theme (see also the script below) -->
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#101418" media="(prefers-color-scheme: dark)">
+
+    <!-- Apply saved appearance (theme, text size, width) before first paint -->
+    <script>
+      try {
+        var s = JSON.parse(localStorage.getItem('appearance') || '{}');
+        var d = document.documentElement.dataset;
+        if (s.theme === 'light' || s.theme === 'dark') {
+          d.theme = s.theme;
+          var c = s.theme === 'dark' ? '#101418' : '#ffffff';
+          document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+            m.setAttribute('content', c);
+          });
+        }
+        if (s.font === 'small' || s.font === 'large') d.font = s.font;
+        if (s.width === 'wide') d.width = 'wide';
+      } catch (e) {}
+    </script>
+
     %sveltekit.head%
   </head>
   <body data-sveltekit-preload-data="hover">
