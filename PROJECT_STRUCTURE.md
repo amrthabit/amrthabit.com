@@ -3,7 +3,8 @@
 This is a personal website built with SvelteKit, styled as a Wikipedia article about its subject. Here's a breakdown of the project structure:
 
 ## Root Files
-- `package.json` - Project dependencies and scripts
+- `deploy.sh` - Deploys the site: build, S3 sync (immutable cache headers for hashed assets), extensionless `/ar` copy, CloudFront invalidation. Uses the scoped `amrthabit-deploy` AWS profile.
+- `package.json` - Project dependencies and scripts (note: `overrides` pins `cookie` to a patched version)
 - `svelte.config.js` - SvelteKit configuration (adapter-static; every route is prerendered)
 - `vite.config.ts` - Vite bundler configuration
 - `tsconfig.json` - TypeScript configuration
