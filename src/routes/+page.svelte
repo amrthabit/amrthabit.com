@@ -13,22 +13,26 @@
 
   const personSchema = JSON.stringify({
     '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: 'Amr Thabit',
-    url: 'https://amrthabit.com',
-    email: 'mailto:contact@amrthabit.com',
-    birthDate: '2001-08',
-    birthPlace: { '@type': 'Country', name: 'Yemen' },
-    homeLocation: { '@type': 'City', name: 'Hamilton, Ontario, Canada' },
-    jobTitle: 'Project Engineer II',
-    worksFor: { '@type': 'Organization', name: 'Evertz Microsystems' },
-    alumniOf: { '@type': 'CollegeOrUniversity', name: 'McMaster University' },
-    knowsLanguage: ['en', 'ar'],
-    sameAs: [
-      'https://github.com/amrthabit',
-      'https://linkedin.com/in/AmrThabit',
-      'https://instagram.com/thbbit'
-    ]
+    '@type': 'ProfilePage',
+    dateModified: '2026-07-03',
+    mainEntity: {
+      '@type': 'Person',
+      name: 'Amr Thabit',
+      url: 'https://amrthabit.com',
+      email: 'mailto:contact@amrthabit.com',
+      birthDate: '2001-08',
+      birthPlace: { '@type': 'Country', name: 'Yemen' },
+      homeLocation: { '@type': 'City', name: 'Hamilton, Ontario, Canada' },
+      jobTitle: 'Project Engineer II',
+      worksFor: { '@type': 'Organization', name: 'Evertz Microsystems' },
+      alumniOf: { '@type': 'CollegeOrUniversity', name: 'McMaster University' },
+      knowsLanguage: ['en', 'ar'],
+      sameAs: [
+        'https://github.com/amrthabit',
+        'https://linkedin.com/in/AmrThabit',
+        'https://instagram.com/thbbit'
+      ]
+    }
   });
 </script>
 
