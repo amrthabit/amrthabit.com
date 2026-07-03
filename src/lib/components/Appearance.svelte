@@ -2,7 +2,7 @@
   import { browser } from '$app/environment';
 
   let { labels = {} } = $props();
-  const L = {
+  const L = $derived({
     button: 'Appearance',
     text: 'Text',
     color: 'Color',
@@ -15,7 +15,7 @@
     dark: 'Dark',
     wide: 'Wide',
     ...labels
-  };
+  });
 
   // The inline script in app.html applied saved settings before paint;
   // read them back as the initial state. On the server, defaults are fine.
