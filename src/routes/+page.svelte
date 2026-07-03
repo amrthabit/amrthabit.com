@@ -14,7 +14,7 @@
   const personSchema = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'ProfilePage',
-    dateModified: '2026-07-03',
+    dateModified: __BUILD_DATE__,
     mainEntity: {
       '@type': 'Person',
       name: 'Amr Thabit',
