@@ -25,6 +25,13 @@ aws s3 cp build/ar.html "$BUCKET/ar" --profile "$PROFILE" \
   --content-type "text/html; charset=utf-8" \
   --cache-control "public,max-age=0,must-revalidate"
 
+# PPL Tally's App Store pages, extensionless the same way
+for page in privacy-policy support; do
+  aws s3 cp "build/ppltally/$page.html" "$BUCKET/ppltally/$page" --profile "$PROFILE" \
+    --content-type "text/html; charset=utf-8" \
+    --cache-control "public,max-age=0,must-revalidate"
+done
+
 aws cloudfront create-invalidation --profile "$PROFILE" \
   --distribution-id "$DIST_ID" --paths "/*" \
   --query "Invalidation.[Id,Status]" --output text
